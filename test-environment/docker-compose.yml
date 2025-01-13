@@ -1,29 +1,35 @@
-version: '3.9'
 services:
   sender:
     build: ./sender
     container_name: sender
     networks:
       test_net:
-        ipv4_address: 192.168.0.10
-    command: python3 sender.py
+        ipv4_address: ${IP_SENDER}
+    command: /bin/sh -c "python3 sender.py && tail -f /dev/null"
+
   receiver:
     build: ./receiver
     container_name: receiver
     networks:
       test_net:
-        ipv4_address: 192.168.0.20
-    command: python3 receiver.py
+        ipv4_address: ${IP_RECEIVER}
+    ports:
+      - "80:80"
+    command: /bin/sh -c "python3 receiver.py"
+
   monitor:
     build: ./monitor
     container_name: monitor
     networks:
       test_net:
-        ipv4_address: 192.168.0.30
-    command: python3 monitor.py
+        ipv4_address: ${IP_MONITOR}
+    command: /bin/sh -c "python3 monitor.py && tail -f /dev/null"
+    stdin_open: true
+    tty: true
+
 networks:
   test_net:
     driver: bridge
     ipam:
       config:
-        - subnet: 192.168.0.0/16
+        - subnet: ${SUBNET_TEST_NET}
