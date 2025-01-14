@@ -5,6 +5,8 @@ services:
     networks:
       test_net:
         ipv4_address: ${IP_SENDER}
+    environment:
+      - PYTHONUNBUFFERED=1
     command: /bin/sh -c "python3 sender.py && tail -f /dev/null"
 
   receiver:
@@ -13,8 +15,14 @@ services:
     networks:
       test_net:
         ipv4_address: ${IP_RECEIVER}
+    environment:
+      - PYTHONUNBUFFERED=1
     ports:
       - "80:80"
+      - "443:443"
+    volumes:
+    - ./cert.pem:/app/cert.pem
+    - ./key.pem:/app/key.pem
     command: /bin/sh -c "python3 receiver.py"
 
   monitor:
@@ -23,9 +31,9 @@ services:
     networks:
       test_net:
         ipv4_address: ${IP_MONITOR}
+    environment:
+      - PYTHONUNBUFFERED=1
     command: /bin/sh -c "python3 monitor.py && tail -f /dev/null"
-    stdin_open: true
-    tty: true
 
 networks:
   test_net:
