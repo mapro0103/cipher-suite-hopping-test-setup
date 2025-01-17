@@ -4,17 +4,14 @@ import threading
 
 class SimpleRequestHandler(BaseHTTPRequestHandler):
     def do_GET(self):
-        # Check if the request is secure (HTTPS)
-        if isinstance(self.request, ssl.SSLSocket):
-            protocol = "HTTPS"
-        else:
-            protocol = "HTTP"
+        # Ensure HTTP/1.1 is used
+        self.protocol_version = "HTTP/1.1"
 
-        # Respond with the detected protocol
+        # Respond with a simple message
         self.send_response(200)
         self.send_header("Content-type", "text/plain")
         self.end_headers()
-        response_message = f"Receiver is running with {protocol}!".encode()
+        response_message = f"Receiver is running with {self.protocol_version}!".encode()
         self.wfile.write(response_message)
 
 def run_http_server():
@@ -29,18 +26,22 @@ def run_https_server():
     https_server_address = ('0.0.0.0', 443)
     httpd = HTTPServer(https_server_address, SimpleRequestHandler)
 
-    # Enable SSL/TLS
-    httpd.socket = ssl.wrap_socket(
-        httpd.socket,
-        keyfile="key.pem",     # Path to private key
-        certfile="cert.pem",   # Path to certificate
-        server_side=True
-    )
+    # Create SSL context with both TLS 1.2 and TLS 1.3 enabled
+    context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
+    context.minimum_version = ssl.TLSVersion.TLSv1_3  # Allow TLS 1.2 as minimum
+    #context.maximum_version = ssl.TLSVersion.TLSv1_2  # Allow TLS 1.3 as maximum
+
+    # Load the server's certificate and private key
+    context.load_cert_chain(certfile="cert.pem", keyfile="key.pem")
+ 
+    # Wrap the HTTP server's socket with the SSL context
+    httpd.socket = context.wrap_socket(httpd.socket, server_side=True)
+
     print("HTTPS server is running on port 443...")
     httpd.serve_forever()
 
 if __name__ == "__main__":
-    print("Hello, I am the Receiver")
+    print("I am receiver.py")
 
     # Start HTTP and HTTPS servers in separate threads
     http_thread = threading.Thread(target=run_http_server, daemon=True)

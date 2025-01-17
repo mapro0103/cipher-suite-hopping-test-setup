@@ -7,7 +7,10 @@ services:
         ipv4_address: ${IP_SENDER}
     environment:
       - PYTHONUNBUFFERED=1
-    command: /bin/sh -c "python3 sender.py && tail -f /dev/null"
+    env_file:
+      - .env  
+    cap_add:
+      - NET_ADMIN
 
   receiver:
     build: ./receiver
@@ -17,13 +20,16 @@ services:
         ipv4_address: ${IP_RECEIVER}
     environment:
       - PYTHONUNBUFFERED=1
+    env_file:
+      - .env  
     ports:
       - "80:80"
       - "443:443"
     volumes:
     - ./cert.pem:/app/cert.pem
     - ./key.pem:/app/key.pem
-    command: /bin/sh -c "python3 receiver.py"
+    cap_add:
+      - NET_ADMIN
 
   monitor:
     build: ./monitor
@@ -33,11 +39,17 @@ services:
         ipv4_address: ${IP_MONITOR}
     environment:
       - PYTHONUNBUFFERED=1
-    command: /bin/sh -c "python3 monitor.py && tail -f /dev/null"
+    env_file:
+    - .env  
+    sysctls:
+    - net.ipv4.ip_forward=1
+    cap_add:
+    - NET_ADMIN
 
 networks:
   test_net:
     driver: bridge
+    internal: true
     ipam:
       config:
         - subnet: ${SUBNET_TEST_NET}

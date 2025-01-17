@@ -1,8 +1,15 @@
 FROM python:3.9-slim
+
 WORKDIR /app
+
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    iputils-ping traceroute curl && \
+    iputils-ping traceroute curl iproute2 iptables && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
+
 COPY sender.py requirements.txt .
 RUN pip install -r requirements.txt
-CMD ["python3", "sender.py"]
+
+COPY entrypoint.sh /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
+
+ENTRYPOINT ["/app/entrypoint.sh"]
