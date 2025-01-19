@@ -1,3 +1,4 @@
+# FROM nicolaka/netshoot
 FROM python:3.9-slim
 
 WORKDIR /app
@@ -9,7 +10,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY monitor.py requirements.txt .
 RUN pip install -r requirements.txt
 
-COPY entrypoint.sh /app/entrypoint.sh
-RUN chmod +x /app/entrypoint.sh
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
-ENTRYPOINT ["/app/entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh"]
