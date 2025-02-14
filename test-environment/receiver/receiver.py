@@ -28,8 +28,8 @@ def run_https_server():
 
     # Create SSL context with both TLS 1.2 and TLS 1.3 enabled
     context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
-    context.minimum_version = ssl.TLSVersion.TLSv1_3  # Allow TLS 1.2 as minimum
-    #context.maximum_version = ssl.TLSVersion.TLSv1_2  # Allow TLS 1.3 as maximum
+    context.minimum_version = ssl.TLSVersion.TLSv1_2  # Allow TLS 1.2 as minimum
+    context.maximum_version = ssl.TLSVersion.TLSv1_3  # Allow TLS 1.3 as maximum
 
     # Load the server's certificate and private key
     context.load_cert_chain(certfile="cert.pem", keyfile="key.pem")

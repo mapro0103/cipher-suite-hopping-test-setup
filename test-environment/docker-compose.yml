@@ -11,6 +11,8 @@ services:
       - .env
     cap_add:
       - NET_ADMIN
+    stdin_open: true
+    tty: true
     
   receiver:
     build: ./receiver

@@ -119,8 +119,8 @@ def packet_callback(packet):
                     print(f"    Cipher Suite: {', '.join([get_cipher_suite_name(cipher) for cipher in cipher_suites])}")
                 if hasattr(handshake, 'version'):
                     print(f"    TLS Version: {get_tls_version(handshake.version)}")
-            else:
-                print(f"[+] Intercepted packet: {ip_src} -> {ip_dst} (Non-Handshake TLS traffic)")
+            # else:
+            #     print(f"[+] Intercepted packet: {ip_src} -> {ip_dst} (Non-Handshake TLS traffic)")
 
 def main():
     print("I am monitor.py")
