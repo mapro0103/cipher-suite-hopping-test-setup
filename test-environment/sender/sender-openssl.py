@@ -2,7 +2,6 @@ import socket
 import ssl
 
 print(ssl.OPENSSL_VERSION)
-print(ssl.PROTOCOL_TLS)
 
 def update_openssl_config(ciphers):
     openssl_conf_path = '/etc/ssl/openssl.cnf'  # Path to OpenSSL config file
@@ -63,7 +62,6 @@ def create_tls_connection(tls_version, ip_address):
         else:
             raise ValueError(f"Invalid or unsupported TLS version: {tls_version}")
 
-
         # Establish connection to the receiver (port 443 for HTTPS)
         connection = socket.create_connection((ip_address, 443))
         
@@ -77,7 +75,7 @@ def create_tls_connection(tls_version, ip_address):
         return None
 
 def main():
-    print("I am sender.py - Waiting for commands...")
+    print("Waiting for commands...")
 
     # Infinite loop waiting for user input
     while True:

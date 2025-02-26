@@ -20,6 +20,8 @@ services:
     networks:
       test_net:
         ipv4_address: ${IP_RECEIVER}
+    depends_on:
+      - sender
     environment:
       - PYTHONUNBUFFERED=1
     env_file:
@@ -32,13 +34,34 @@ services:
       - ./key.pem:/app/key.pem
     cap_add:
       - NET_ADMIN
+  
+  intermediate:
+    build: ./intermediate
+    container_name: intermediate
+    networks:
+      test_net:
+        ipv4_address: ${IP_INTERMEDIATE}
+    #network_mode: "container:sender"
+    depends_on:
+      - sender
+      - receiver
+    environment:
+      - PYTHONUNBUFFERED=1
+    env_file:
+      - .env
+    sysctls:
+      - net.ipv4.ip_forward=1
+    cap_add:
+      - NET_ADMIN
 
   monitor:
     build: ./monitor
     container_name: monitor
-    network_mode: "container:sender"
+    networks:
+      test_net:
+        ipv4_address: ${IP_MONITOR}
     depends_on:
-      - sender
+      - intermediate
     environment:
       - PYTHONUNBUFFERED=1
     env_file:
@@ -46,9 +69,7 @@ services:
     volumes:
       - ./monitor_pcap_data:/tmp
     sysctls:
-      - net.ipv4.ip_forward=1
-    cap_add:
-      - NET_ADMIN
+      - net.ipv4.ip_forward=0
     
 networks:
   test_net:

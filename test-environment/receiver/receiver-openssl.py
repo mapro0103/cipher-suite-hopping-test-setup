@@ -41,7 +41,6 @@ def run_https_server():
     httpd.serve_forever()
 
 if __name__ == "__main__":
-    print("I am receiver.py")
 
     # Start HTTP and HTTPS servers in separate threads
     http_thread = threading.Thread(target=run_http_server, daemon=True)
