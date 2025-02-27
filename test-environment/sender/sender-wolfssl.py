@@ -1,5 +1,6 @@
 import socket
 import wolfssl
+import time
 
 def create_tls_connection(ip_address):
     try:     
@@ -8,7 +9,6 @@ def create_tls_connection(ip_address):
         context = wolfssl.SSLContext(wolfssl.PROTOCOL_TLSv1_3)
 
         # Set Cipher-Suite list
-        # ciphers = "TLS13-AES128-CCM-SHA256:TLS13-AES128-CCM-8-SHA256"
         ciphers = "TLS13-AES128-GCM-SHA256:TLS13-CHACHA20-POLY1305-SHA256:TLS13-AES256-GCM-SHA384:TLS13-AES128-CCM-SHA256:TLS13-AES128-CCM-8-SHA256"
         context.set_ciphers(ciphers)
 
@@ -40,6 +40,14 @@ def main():
                 tls_connection = create_tls_connection(ip_address)
                 if tls_connection:
                     print(f"Successfully connected to {ip_address}!")
+
+                    # Wait 1 second before terminating
+                    time.sleep(1)
+
+                    # Terminate connection after 1 second
+                    print("Terminating connection after 1 second...")
+                    tls_connection.close()
+                    print(f"Connection to {ip_address} closed.")
                 else:
                     print("Connection could not be established.")
             except ValueError:
