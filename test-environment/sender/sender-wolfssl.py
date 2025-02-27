@@ -8,6 +8,7 @@ def create_tls_connection(ip_address):
         context = wolfssl.SSLContext(wolfssl.PROTOCOL_TLSv1_3)
 
         # Set Cipher-Suite list
+        # ciphers = "TLS13-AES128-CCM-SHA256:TLS13-AES128-CCM-8-SHA256"
         ciphers = "TLS13-AES128-GCM-SHA256:TLS13-CHACHA20-POLY1305-SHA256:TLS13-AES256-GCM-SHA384:TLS13-AES128-CCM-SHA256:TLS13-AES128-CCM-8-SHA256"
         context.set_ciphers(ciphers)
 
