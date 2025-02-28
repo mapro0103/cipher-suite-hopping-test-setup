@@ -15,7 +15,6 @@ def generate_keys(n, key_type, encode_data):
             key_file.write(key_data)
         return filename
 
-
     def convert_to_ascii(key_data):
         """Attempts to convert binary key data to an ASCII string, falling back to UTF-8 if needed."""
         try:
@@ -77,7 +76,6 @@ def create_tls_connection(ip_address, ciphers):
 def main():
     """Main function to handle interactive user input commands."""
     print("Waiting for commands...")
-
 
     while True:
         command = input("Enter command (e.g., test rsa 50, connect 192.68.0.20, exit): ").strip().lower()
