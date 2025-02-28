@@ -1,0 +1,1292 @@
+[
+    {
+        "ID": 1,
+        "Permutation": "c1 c2 c3 c4 c5 c1 c2 c3 c4 c5",
+        "ASCII": 0
+    },
+    {
+        "ID": 2,
+        "Permutation": "c1 c2 c3 c4 c5 c1 c2 c3 c5 c4",
+        "ASCII": 1
+    },
+    {
+        "ID": 3,
+        "Permutation": "c1 c2 c3 c4 c5 c1 c2 c4 c3 c5",
+        "ASCII": 2
+    },
+    {
+        "ID": 4,
+        "Permutation": "c1 c2 c3 c4 c5 c1 c2 c4 c5 c3",
+        "ASCII": 3
+    },
+    {
+        "ID": 5,
+        "Permutation": "c1 c2 c3 c4 c5 c1 c2 c5 c3 c4",
+        "ASCII": 4
+    },
+    {
+        "ID": 6,
+        "Permutation": "c1 c2 c3 c4 c5 c1 c2 c5 c4 c3",
+        "ASCII": 5
+    },
+    {
+        "ID": 7,
+        "Permutation": "c1 c2 c3 c4 c5 c1 c3 c2 c4 c5",
+        "ASCII": 6
+    },
+    {
+        "ID": 8,
+        "Permutation": "c1 c2 c3 c4 c5 c1 c3 c2 c5 c4",
+        "ASCII": 7
+    },
+    {
+        "ID": 9,
+        "Permutation": "c1 c2 c3 c4 c5 c1 c3 c4 c2 c5",
+        "ASCII": 8
+    },
+    {
+        "ID": 10,
+        "Permutation": "c1 c2 c3 c4 c5 c1 c3 c4 c5 c2",
+        "ASCII": 9
+    },
+    {
+        "ID": 11,
+        "Permutation": "c1 c2 c3 c4 c5 c1 c3 c5 c2 c4",
+        "ASCII": 10
+    },
+    {
+        "ID": 12,
+        "Permutation": "c1 c2 c3 c4 c5 c1 c3 c5 c4 c2",
+        "ASCII": 11
+    },
+    {
+        "ID": 13,
+        "Permutation": "c1 c2 c3 c4 c5 c1 c4 c2 c3 c5",
+        "ASCII": 12
+    },
+    {
+        "ID": 14,
+        "Permutation": "c1 c2 c3 c4 c5 c1 c4 c2 c5 c3",
+        "ASCII": 13
+    },
+    {
+        "ID": 15,
+        "Permutation": "c1 c2 c3 c4 c5 c1 c4 c3 c2 c5",
+        "ASCII": 14
+    },
+    {
+        "ID": 16,
+        "Permutation": "c1 c2 c3 c4 c5 c1 c4 c3 c5 c2",
+        "ASCII": 15
+    },
+    {
+        "ID": 17,
+        "Permutation": "c1 c2 c3 c4 c5 c1 c4 c5 c2 c3",
+        "ASCII": 16
+    },
+    {
+        "ID": 18,
+        "Permutation": "c1 c2 c3 c4 c5 c1 c4 c5 c3 c2",
+        "ASCII": 17
+    },
+    {
+        "ID": 19,
+        "Permutation": "c1 c2 c3 c4 c5 c1 c5 c2 c3 c4",
+        "ASCII": 18
+    },
+    {
+        "ID": 20,
+        "Permutation": "c1 c2 c3 c4 c5 c1 c5 c2 c4 c3",
+        "ASCII": 19
+    },
+    {
+        "ID": 21,
+        "Permutation": "c1 c2 c3 c4 c5 c1 c5 c3 c2 c4",
+        "ASCII": 20
+    },
+    {
+        "ID": 22,
+        "Permutation": "c1 c2 c3 c4 c5 c1 c5 c3 c4 c2",
+        "ASCII": 21
+    },
+    {
+        "ID": 23,
+        "Permutation": "c1 c2 c3 c4 c5 c1 c5 c4 c2 c3",
+        "ASCII": 22
+    },
+    {
+        "ID": 24,
+        "Permutation": "c1 c2 c3 c4 c5 c1 c5 c4 c3 c2",
+        "ASCII": 23
+    },
+    {
+        "ID": 25,
+        "Permutation": "c1 c2 c3 c4 c5 c2 c1 c3 c4 c5",
+        "ASCII": 24
+    },
+    {
+        "ID": 26,
+        "Permutation": "c1 c2 c3 c4 c5 c2 c1 c3 c5 c4",
+        "ASCII": 25
+    },
+    {
+        "ID": 27,
+        "Permutation": "c1 c2 c3 c4 c5 c2 c1 c4 c3 c5",
+        "ASCII": 26
+    },
+    {
+        "ID": 28,
+        "Permutation": "c1 c2 c3 c4 c5 c2 c1 c4 c5 c3",
+        "ASCII": 27
+    },
+    {
+        "ID": 29,
+        "Permutation": "c1 c2 c3 c4 c5 c2 c1 c5 c3 c4",
+        "ASCII": 28
+    },
+    {
+        "ID": 30,
+        "Permutation": "c1 c2 c3 c4 c5 c2 c1 c5 c4 c3",
+        "ASCII": 29
+    },
+    {
+        "ID": 31,
+        "Permutation": "c1 c2 c3 c4 c5 c2 c3 c1 c4 c5",
+        "ASCII": 30
+    },
+    {
+        "ID": 32,
+        "Permutation": "c1 c2 c3 c4 c5 c2 c3 c1 c5 c4",
+        "ASCII": 31
+    },
+    {
+        "ID": 33,
+        "Permutation": "c1 c2 c3 c4 c5 c2 c3 c4 c1 c5",
+        "ASCII": 32
+    },
+    {
+        "ID": 34,
+        "Permutation": "c1 c2 c3 c4 c5 c2 c3 c4 c5 c1",
+        "ASCII": 33
+    },
+    {
+        "ID": 35,
+        "Permutation": "c1 c2 c3 c4 c5 c2 c3 c5 c1 c4",
+        "ASCII": 34
+    },
+    {
+        "ID": 36,
+        "Permutation": "c1 c2 c3 c4 c5 c2 c3 c5 c4 c1",
+        "ASCII": 35
+    },
+    {
+        "ID": 37,
+        "Permutation": "c1 c2 c3 c4 c5 c2 c4 c1 c3 c5",
+        "ASCII": 36
+    },
+    {
+        "ID": 38,
+        "Permutation": "c1 c2 c3 c4 c5 c2 c4 c1 c5 c3",
+        "ASCII": 37
+    },
+    {
+        "ID": 39,
+        "Permutation": "c1 c2 c3 c4 c5 c2 c4 c3 c1 c5",
+        "ASCII": 38
+    },
+    {
+        "ID": 40,
+        "Permutation": "c1 c2 c3 c4 c5 c2 c4 c3 c5 c1",
+        "ASCII": 39
+    },
+    {
+        "ID": 41,
+        "Permutation": "c1 c2 c3 c4 c5 c2 c4 c5 c1 c3",
+        "ASCII": 40
+    },
+    {
+        "ID": 42,
+        "Permutation": "c1 c2 c3 c4 c5 c2 c4 c5 c3 c1",
+        "ASCII": 41
+    },
+    {
+        "ID": 43,
+        "Permutation": "c1 c2 c3 c4 c5 c2 c5 c1 c3 c4",
+        "ASCII": 42
+    },
+    {
+        "ID": 44,
+        "Permutation": "c1 c2 c3 c4 c5 c2 c5 c1 c4 c3",
+        "ASCII": 43
+    },
+    {
+        "ID": 45,
+        "Permutation": "c1 c2 c3 c4 c5 c2 c5 c3 c1 c4",
+        "ASCII": 44
+    },
+    {
+        "ID": 46,
+        "Permutation": "c1 c2 c3 c4 c5 c2 c5 c3 c4 c1",
+        "ASCII": 45
+    },
+    {
+        "ID": 47,
+        "Permutation": "c1 c2 c3 c4 c5 c2 c5 c4 c1 c3",
+        "ASCII": 46
+    },
+    {
+        "ID": 48,
+        "Permutation": "c1 c2 c3 c4 c5 c2 c5 c4 c3 c1",
+        "ASCII": 47
+    },
+    {
+        "ID": 49,
+        "Permutation": "c1 c2 c3 c4 c5 c3 c1 c2 c4 c5",
+        "ASCII": 48
+    },
+    {
+        "ID": 50,
+        "Permutation": "c1 c2 c3 c4 c5 c3 c1 c2 c5 c4",
+        "ASCII": 49
+    },
+    {
+        "ID": 51,
+        "Permutation": "c1 c2 c3 c4 c5 c3 c1 c4 c2 c5",
+        "ASCII": 50
+    },
+    {
+        "ID": 52,
+        "Permutation": "c1 c2 c3 c4 c5 c3 c1 c4 c5 c2",
+        "ASCII": 51
+    },
+    {
+        "ID": 53,
+        "Permutation": "c1 c2 c3 c4 c5 c3 c1 c5 c2 c4",
+        "ASCII": 52
+    },
+    {
+        "ID": 54,
+        "Permutation": "c1 c2 c3 c4 c5 c3 c1 c5 c4 c2",
+        "ASCII": 53
+    },
+    {
+        "ID": 55,
+        "Permutation": "c1 c2 c3 c4 c5 c3 c2 c1 c4 c5",
+        "ASCII": 54
+    },
+    {
+        "ID": 56,
+        "Permutation": "c1 c2 c3 c4 c5 c3 c2 c1 c5 c4",
+        "ASCII": 55
+    },
+    {
+        "ID": 57,
+        "Permutation": "c1 c2 c3 c4 c5 c3 c2 c4 c1 c5",
+        "ASCII": 56
+    },
+    {
+        "ID": 58,
+        "Permutation": "c1 c2 c3 c4 c5 c3 c2 c4 c5 c1",
+        "ASCII": 57
+    },
+    {
+        "ID": 59,
+        "Permutation": "c1 c2 c3 c4 c5 c3 c2 c5 c1 c4",
+        "ASCII": 58
+    },
+    {
+        "ID": 60,
+        "Permutation": "c1 c2 c3 c4 c5 c3 c2 c5 c4 c1",
+        "ASCII": 59
+    },
+    {
+        "ID": 61,
+        "Permutation": "c1 c2 c3 c4 c5 c3 c4 c1 c2 c5",
+        "ASCII": 60
+    },
+    {
+        "ID": 62,
+        "Permutation": "c1 c2 c3 c4 c5 c3 c4 c1 c5 c2",
+        "ASCII": 61
+    },
+    {
+        "ID": 63,
+        "Permutation": "c1 c2 c3 c4 c5 c3 c4 c2 c1 c5",
+        "ASCII": 62
+    },
+    {
+        "ID": 64,
+        "Permutation": "c1 c2 c3 c4 c5 c3 c4 c2 c5 c1",
+        "ASCII": 63
+    },
+    {
+        "ID": 65,
+        "Permutation": "c1 c2 c3 c4 c5 c3 c4 c5 c1 c2",
+        "ASCII": 64
+    },
+    {
+        "ID": 66,
+        "Permutation": "c1 c2 c3 c4 c5 c3 c4 c5 c2 c1",
+        "ASCII": 65
+    },
+    {
+        "ID": 67,
+        "Permutation": "c1 c2 c3 c4 c5 c3 c5 c1 c2 c4",
+        "ASCII": 66
+    },
+    {
+        "ID": 68,
+        "Permutation": "c1 c2 c3 c4 c5 c3 c5 c1 c4 c2",
+        "ASCII": 67
+    },
+    {
+        "ID": 69,
+        "Permutation": "c1 c2 c3 c4 c5 c3 c5 c2 c1 c4",
+        "ASCII": 68
+    },
+    {
+        "ID": 70,
+        "Permutation": "c1 c2 c3 c4 c5 c3 c5 c2 c4 c1",
+        "ASCII": 69
+    },
+    {
+        "ID": 71,
+        "Permutation": "c1 c2 c3 c4 c5 c3 c5 c4 c1 c2",
+        "ASCII": 70
+    },
+    {
+        "ID": 72,
+        "Permutation": "c1 c2 c3 c4 c5 c3 c5 c4 c2 c1",
+        "ASCII": 71
+    },
+    {
+        "ID": 73,
+        "Permutation": "c1 c2 c3 c4 c5 c4 c1 c2 c3 c5",
+        "ASCII": 72
+    },
+    {
+        "ID": 74,
+        "Permutation": "c1 c2 c3 c4 c5 c4 c1 c2 c5 c3",
+        "ASCII": 73
+    },
+    {
+        "ID": 75,
+        "Permutation": "c1 c2 c3 c4 c5 c4 c1 c3 c2 c5",
+        "ASCII": 74
+    },
+    {
+        "ID": 76,
+        "Permutation": "c1 c2 c3 c4 c5 c4 c1 c3 c5 c2",
+        "ASCII": 75
+    },
+    {
+        "ID": 77,
+        "Permutation": "c1 c2 c3 c4 c5 c4 c1 c5 c2 c3",
+        "ASCII": 76
+    },
+    {
+        "ID": 78,
+        "Permutation": "c1 c2 c3 c4 c5 c4 c1 c5 c3 c2",
+        "ASCII": 77
+    },
+    {
+        "ID": 79,
+        "Permutation": "c1 c2 c3 c4 c5 c4 c2 c1 c3 c5",
+        "ASCII": 78
+    },
+    {
+        "ID": 80,
+        "Permutation": "c1 c2 c3 c4 c5 c4 c2 c1 c5 c3",
+        "ASCII": 79
+    },
+    {
+        "ID": 81,
+        "Permutation": "c1 c2 c3 c4 c5 c4 c2 c3 c1 c5",
+        "ASCII": 80
+    },
+    {
+        "ID": 82,
+        "Permutation": "c1 c2 c3 c4 c5 c4 c2 c3 c5 c1",
+        "ASCII": 81
+    },
+    {
+        "ID": 83,
+        "Permutation": "c1 c2 c3 c4 c5 c4 c2 c5 c1 c3",
+        "ASCII": 82
+    },
+    {
+        "ID": 84,
+        "Permutation": "c1 c2 c3 c4 c5 c4 c2 c5 c3 c1",
+        "ASCII": 83
+    },
+    {
+        "ID": 85,
+        "Permutation": "c1 c2 c3 c4 c5 c4 c3 c1 c2 c5",
+        "ASCII": 84
+    },
+    {
+        "ID": 86,
+        "Permutation": "c1 c2 c3 c4 c5 c4 c3 c1 c5 c2",
+        "ASCII": 85
+    },
+    {
+        "ID": 87,
+        "Permutation": "c1 c2 c3 c4 c5 c4 c3 c2 c1 c5",
+        "ASCII": 86
+    },
+    {
+        "ID": 88,
+        "Permutation": "c1 c2 c3 c4 c5 c4 c3 c2 c5 c1",
+        "ASCII": 87
+    },
+    {
+        "ID": 89,
+        "Permutation": "c1 c2 c3 c4 c5 c4 c3 c5 c1 c2",
+        "ASCII": 88
+    },
+    {
+        "ID": 90,
+        "Permutation": "c1 c2 c3 c4 c5 c4 c3 c5 c2 c1",
+        "ASCII": 89
+    },
+    {
+        "ID": 91,
+        "Permutation": "c1 c2 c3 c4 c5 c4 c5 c1 c2 c3",
+        "ASCII": 90
+    },
+    {
+        "ID": 92,
+        "Permutation": "c1 c2 c3 c4 c5 c4 c5 c1 c3 c2",
+        "ASCII": 91
+    },
+    {
+        "ID": 93,
+        "Permutation": "c1 c2 c3 c4 c5 c4 c5 c2 c1 c3",
+        "ASCII": 92
+    },
+    {
+        "ID": 94,
+        "Permutation": "c1 c2 c3 c4 c5 c4 c5 c2 c3 c1",
+        "ASCII": 93
+    },
+    {
+        "ID": 95,
+        "Permutation": "c1 c2 c3 c4 c5 c4 c5 c3 c1 c2",
+        "ASCII": 94
+    },
+    {
+        "ID": 96,
+        "Permutation": "c1 c2 c3 c4 c5 c4 c5 c3 c2 c1",
+        "ASCII": 95
+    },
+    {
+        "ID": 97,
+        "Permutation": "c1 c2 c3 c4 c5 c5 c1 c2 c3 c4",
+        "ASCII": 96
+    },
+    {
+        "ID": 98,
+        "Permutation": "c1 c2 c3 c4 c5 c5 c1 c2 c4 c3",
+        "ASCII": 97
+    },
+    {
+        "ID": 99,
+        "Permutation": "c1 c2 c3 c4 c5 c5 c1 c3 c2 c4",
+        "ASCII": 98
+    },
+    {
+        "ID": 100,
+        "Permutation": "c1 c2 c3 c4 c5 c5 c1 c3 c4 c2",
+        "ASCII": 99
+    },
+    {
+        "ID": 101,
+        "Permutation": "c1 c2 c3 c4 c5 c5 c1 c4 c2 c3",
+        "ASCII": 100
+    },
+    {
+        "ID": 102,
+        "Permutation": "c1 c2 c3 c4 c5 c5 c1 c4 c3 c2",
+        "ASCII": 101
+    },
+    {
+        "ID": 103,
+        "Permutation": "c1 c2 c3 c4 c5 c5 c2 c1 c3 c4",
+        "ASCII": 102
+    },
+    {
+        "ID": 104,
+        "Permutation": "c1 c2 c3 c4 c5 c5 c2 c1 c4 c3",
+        "ASCII": 103
+    },
+    {
+        "ID": 105,
+        "Permutation": "c1 c2 c3 c4 c5 c5 c2 c3 c1 c4",
+        "ASCII": 104
+    },
+    {
+        "ID": 106,
+        "Permutation": "c1 c2 c3 c4 c5 c5 c2 c3 c4 c1",
+        "ASCII": 105
+    },
+    {
+        "ID": 107,
+        "Permutation": "c1 c2 c3 c4 c5 c5 c2 c4 c1 c3",
+        "ASCII": 106
+    },
+    {
+        "ID": 108,
+        "Permutation": "c1 c2 c3 c4 c5 c5 c2 c4 c3 c1",
+        "ASCII": 107
+    },
+    {
+        "ID": 109,
+        "Permutation": "c1 c2 c3 c4 c5 c5 c3 c1 c2 c4",
+        "ASCII": 108
+    },
+    {
+        "ID": 110,
+        "Permutation": "c1 c2 c3 c4 c5 c5 c3 c1 c4 c2",
+        "ASCII": 109
+    },
+    {
+        "ID": 111,
+        "Permutation": "c1 c2 c3 c4 c5 c5 c3 c2 c1 c4",
+        "ASCII": 110
+    },
+    {
+        "ID": 112,
+        "Permutation": "c1 c2 c3 c4 c5 c5 c3 c2 c4 c1",
+        "ASCII": 111
+    },
+    {
+        "ID": 113,
+        "Permutation": "c1 c2 c3 c4 c5 c5 c3 c4 c1 c2",
+        "ASCII": 112
+    },
+    {
+        "ID": 114,
+        "Permutation": "c1 c2 c3 c4 c5 c5 c3 c4 c2 c1",
+        "ASCII": 113
+    },
+    {
+        "ID": 115,
+        "Permutation": "c1 c2 c3 c4 c5 c5 c4 c1 c2 c3",
+        "ASCII": 114
+    },
+    {
+        "ID": 116,
+        "Permutation": "c1 c2 c3 c4 c5 c5 c4 c1 c3 c2",
+        "ASCII": 115
+    },
+    {
+        "ID": 117,
+        "Permutation": "c1 c2 c3 c4 c5 c5 c4 c2 c1 c3",
+        "ASCII": 116
+    },
+    {
+        "ID": 118,
+        "Permutation": "c1 c2 c3 c4 c5 c5 c4 c2 c3 c1",
+        "ASCII": 117
+    },
+    {
+        "ID": 119,
+        "Permutation": "c1 c2 c3 c4 c5 c5 c4 c3 c1 c2",
+        "ASCII": 118
+    },
+    {
+        "ID": 120,
+        "Permutation": "c1 c2 c3 c4 c5 c5 c4 c3 c2 c1",
+        "ASCII": 119
+    },
+    {
+        "ID": 121,
+        "Permutation": "c1 c2 c3 c5 c4 c1 c2 c3 c4 c5",
+        "ASCII": 120
+    },
+    {
+        "ID": 122,
+        "Permutation": "c1 c2 c3 c5 c4 c1 c2 c3 c5 c4",
+        "ASCII": 121
+    },
+    {
+        "ID": 123,
+        "Permutation": "c1 c2 c3 c5 c4 c1 c2 c4 c3 c5",
+        "ASCII": 122
+    },
+    {
+        "ID": 124,
+        "Permutation": "c1 c2 c3 c5 c4 c1 c2 c4 c5 c3",
+        "ASCII": 123
+    },
+    {
+        "ID": 125,
+        "Permutation": "c1 c2 c3 c5 c4 c1 c2 c5 c3 c4",
+        "ASCII": 124
+    },
+    {
+        "ID": 126,
+        "Permutation": "c1 c2 c3 c5 c4 c1 c2 c5 c4 c3",
+        "ASCII": 125
+    },
+    {
+        "ID": 127,
+        "Permutation": "c1 c2 c3 c5 c4 c1 c3 c2 c4 c5",
+        "ASCII": 126
+    },
+    {
+        "ID": 128,
+        "Permutation": "c1 c2 c3 c5 c4 c1 c3 c2 c5 c4",
+        "ASCII": 127
+    },
+    {
+        "ID": 129,
+        "Permutation": "c1 c2 c3 c5 c4 c1 c3 c4 c2 c5",
+        "ASCII": 128
+    },
+    {
+        "ID": 130,
+        "Permutation": "c1 c2 c3 c5 c4 c1 c3 c4 c5 c2",
+        "ASCII": 129
+    },
+    {
+        "ID": 131,
+        "Permutation": "c1 c2 c3 c5 c4 c1 c3 c5 c2 c4",
+        "ASCII": 130
+    },
+    {
+        "ID": 132,
+        "Permutation": "c1 c2 c3 c5 c4 c1 c3 c5 c4 c2",
+        "ASCII": 131
+    },
+    {
+        "ID": 133,
+        "Permutation": "c1 c2 c3 c5 c4 c1 c4 c2 c3 c5",
+        "ASCII": 132
+    },
+    {
+        "ID": 134,
+        "Permutation": "c1 c2 c3 c5 c4 c1 c4 c2 c5 c3",
+        "ASCII": 133
+    },
+    {
+        "ID": 135,
+        "Permutation": "c1 c2 c3 c5 c4 c1 c4 c3 c2 c5",
+        "ASCII": 134
+    },
+    {
+        "ID": 136,
+        "Permutation": "c1 c2 c3 c5 c4 c1 c4 c3 c5 c2",
+        "ASCII": 135
+    },
+    {
+        "ID": 137,
+        "Permutation": "c1 c2 c3 c5 c4 c1 c4 c5 c2 c3",
+        "ASCII": 136
+    },
+    {
+        "ID": 138,
+        "Permutation": "c1 c2 c3 c5 c4 c1 c4 c5 c3 c2",
+        "ASCII": 137
+    },
+    {
+        "ID": 139,
+        "Permutation": "c1 c2 c3 c5 c4 c1 c5 c2 c3 c4",
+        "ASCII": 138
+    },
+    {
+        "ID": 140,
+        "Permutation": "c1 c2 c3 c5 c4 c1 c5 c2 c4 c3",
+        "ASCII": 139
+    },
+    {
+        "ID": 141,
+        "Permutation": "c1 c2 c3 c5 c4 c1 c5 c3 c2 c4",
+        "ASCII": 140
+    },
+    {
+        "ID": 142,
+        "Permutation": "c1 c2 c3 c5 c4 c1 c5 c3 c4 c2",
+        "ASCII": 141
+    },
+    {
+        "ID": 143,
+        "Permutation": "c1 c2 c3 c5 c4 c1 c5 c4 c2 c3",
+        "ASCII": 142
+    },
+    {
+        "ID": 144,
+        "Permutation": "c1 c2 c3 c5 c4 c1 c5 c4 c3 c2",
+        "ASCII": 143
+    },
+    {
+        "ID": 145,
+        "Permutation": "c1 c2 c3 c5 c4 c2 c1 c3 c4 c5",
+        "ASCII": 144
+    },
+    {
+        "ID": 146,
+        "Permutation": "c1 c2 c3 c5 c4 c2 c1 c3 c5 c4",
+        "ASCII": 145
+    },
+    {
+        "ID": 147,
+        "Permutation": "c1 c2 c3 c5 c4 c2 c1 c4 c3 c5",
+        "ASCII": 146
+    },
+    {
+        "ID": 148,
+        "Permutation": "c1 c2 c3 c5 c4 c2 c1 c4 c5 c3",
+        "ASCII": 147
+    },
+    {
+        "ID": 149,
+        "Permutation": "c1 c2 c3 c5 c4 c2 c1 c5 c3 c4",
+        "ASCII": 148
+    },
+    {
+        "ID": 150,
+        "Permutation": "c1 c2 c3 c5 c4 c2 c1 c5 c4 c3",
+        "ASCII": 149
+    },
+    {
+        "ID": 151,
+        "Permutation": "c1 c2 c3 c5 c4 c2 c3 c1 c4 c5",
+        "ASCII": 150
+    },
+    {
+        "ID": 152,
+        "Permutation": "c1 c2 c3 c5 c4 c2 c3 c1 c5 c4",
+        "ASCII": 151
+    },
+    {
+        "ID": 153,
+        "Permutation": "c1 c2 c3 c5 c4 c2 c3 c4 c1 c5",
+        "ASCII": 152
+    },
+    {
+        "ID": 154,
+        "Permutation": "c1 c2 c3 c5 c4 c2 c3 c4 c5 c1",
+        "ASCII": 153
+    },
+    {
+        "ID": 155,
+        "Permutation": "c1 c2 c3 c5 c4 c2 c3 c5 c1 c4",
+        "ASCII": 154
+    },
+    {
+        "ID": 156,
+        "Permutation": "c1 c2 c3 c5 c4 c2 c3 c5 c4 c1",
+        "ASCII": 155
+    },
+    {
+        "ID": 157,
+        "Permutation": "c1 c2 c3 c5 c4 c2 c4 c1 c3 c5",
+        "ASCII": 156
+    },
+    {
+        "ID": 158,
+        "Permutation": "c1 c2 c3 c5 c4 c2 c4 c1 c5 c3",
+        "ASCII": 157
+    },
+    {
+        "ID": 159,
+        "Permutation": "c1 c2 c3 c5 c4 c2 c4 c3 c1 c5",
+        "ASCII": 158
+    },
+    {
+        "ID": 160,
+        "Permutation": "c1 c2 c3 c5 c4 c2 c4 c3 c5 c1",
+        "ASCII": 159
+    },
+    {
+        "ID": 161,
+        "Permutation": "c1 c2 c3 c5 c4 c2 c4 c5 c1 c3",
+        "ASCII": 160
+    },
+    {
+        "ID": 162,
+        "Permutation": "c1 c2 c3 c5 c4 c2 c4 c5 c3 c1",
+        "ASCII": 161
+    },
+    {
+        "ID": 163,
+        "Permutation": "c1 c2 c3 c5 c4 c2 c5 c1 c3 c4",
+        "ASCII": 162
+    },
+    {
+        "ID": 164,
+        "Permutation": "c1 c2 c3 c5 c4 c2 c5 c1 c4 c3",
+        "ASCII": 163
+    },
+    {
+        "ID": 165,
+        "Permutation": "c1 c2 c3 c5 c4 c2 c5 c3 c1 c4",
+        "ASCII": 164
+    },
+    {
+        "ID": 166,
+        "Permutation": "c1 c2 c3 c5 c4 c2 c5 c3 c4 c1",
+        "ASCII": 165
+    },
+    {
+        "ID": 167,
+        "Permutation": "c1 c2 c3 c5 c4 c2 c5 c4 c1 c3",
+        "ASCII": 166
+    },
+    {
+        "ID": 168,
+        "Permutation": "c1 c2 c3 c5 c4 c2 c5 c4 c3 c1",
+        "ASCII": 167
+    },
+    {
+        "ID": 169,
+        "Permutation": "c1 c2 c3 c5 c4 c3 c1 c2 c4 c5",
+        "ASCII": 168
+    },
+    {
+        "ID": 170,
+        "Permutation": "c1 c2 c3 c5 c4 c3 c1 c2 c5 c4",
+        "ASCII": 169
+    },
+    {
+        "ID": 171,
+        "Permutation": "c1 c2 c3 c5 c4 c3 c1 c4 c2 c5",
+        "ASCII": 170
+    },
+    {
+        "ID": 172,
+        "Permutation": "c1 c2 c3 c5 c4 c3 c1 c4 c5 c2",
+        "ASCII": 171
+    },
+    {
+        "ID": 173,
+        "Permutation": "c1 c2 c3 c5 c4 c3 c1 c5 c2 c4",
+        "ASCII": 172
+    },
+    {
+        "ID": 174,
+        "Permutation": "c1 c2 c3 c5 c4 c3 c1 c5 c4 c2",
+        "ASCII": 173
+    },
+    {
+        "ID": 175,
+        "Permutation": "c1 c2 c3 c5 c4 c3 c2 c1 c4 c5",
+        "ASCII": 174
+    },
+    {
+        "ID": 176,
+        "Permutation": "c1 c2 c3 c5 c4 c3 c2 c1 c5 c4",
+        "ASCII": 175
+    },
+    {
+        "ID": 177,
+        "Permutation": "c1 c2 c3 c5 c4 c3 c2 c4 c1 c5",
+        "ASCII": 176
+    },
+    {
+        "ID": 178,
+        "Permutation": "c1 c2 c3 c5 c4 c3 c2 c4 c5 c1",
+        "ASCII": 177
+    },
+    {
+        "ID": 179,
+        "Permutation": "c1 c2 c3 c5 c4 c3 c2 c5 c1 c4",
+        "ASCII": 178
+    },
+    {
+        "ID": 180,
+        "Permutation": "c1 c2 c3 c5 c4 c3 c2 c5 c4 c1",
+        "ASCII": 179
+    },
+    {
+        "ID": 181,
+        "Permutation": "c1 c2 c3 c5 c4 c3 c4 c1 c2 c5",
+        "ASCII": 180
+    },
+    {
+        "ID": 182,
+        "Permutation": "c1 c2 c3 c5 c4 c3 c4 c1 c5 c2",
+        "ASCII": 181
+    },
+    {
+        "ID": 183,
+        "Permutation": "c1 c2 c3 c5 c4 c3 c4 c2 c1 c5",
+        "ASCII": 182
+    },
+    {
+        "ID": 184,
+        "Permutation": "c1 c2 c3 c5 c4 c3 c4 c2 c5 c1",
+        "ASCII": 183
+    },
+    {
+        "ID": 185,
+        "Permutation": "c1 c2 c3 c5 c4 c3 c4 c5 c1 c2",
+        "ASCII": 184
+    },
+    {
+        "ID": 186,
+        "Permutation": "c1 c2 c3 c5 c4 c3 c4 c5 c2 c1",
+        "ASCII": 185
+    },
+    {
+        "ID": 187,
+        "Permutation": "c1 c2 c3 c5 c4 c3 c5 c1 c2 c4",
+        "ASCII": 186
+    },
+    {
+        "ID": 188,
+        "Permutation": "c1 c2 c3 c5 c4 c3 c5 c1 c4 c2",
+        "ASCII": 187
+    },
+    {
+        "ID": 189,
+        "Permutation": "c1 c2 c3 c5 c4 c3 c5 c2 c1 c4",
+        "ASCII": 188
+    },
+    {
+        "ID": 190,
+        "Permutation": "c1 c2 c3 c5 c4 c3 c5 c2 c4 c1",
+        "ASCII": 189
+    },
+    {
+        "ID": 191,
+        "Permutation": "c1 c2 c3 c5 c4 c3 c5 c4 c1 c2",
+        "ASCII": 190
+    },
+    {
+        "ID": 192,
+        "Permutation": "c1 c2 c3 c5 c4 c3 c5 c4 c2 c1",
+        "ASCII": 191
+    },
+    {
+        "ID": 193,
+        "Permutation": "c1 c2 c3 c5 c4 c4 c1 c2 c3 c5",
+        "ASCII": 192
+    },
+    {
+        "ID": 194,
+        "Permutation": "c1 c2 c3 c5 c4 c4 c1 c2 c5 c3",
+        "ASCII": 193
+    },
+    {
+        "ID": 195,
+        "Permutation": "c1 c2 c3 c5 c4 c4 c1 c3 c2 c5",
+        "ASCII": 194
+    },
+    {
+        "ID": 196,
+        "Permutation": "c1 c2 c3 c5 c4 c4 c1 c3 c5 c2",
+        "ASCII": 195
+    },
+    {
+        "ID": 197,
+        "Permutation": "c1 c2 c3 c5 c4 c4 c1 c5 c2 c3",
+        "ASCII": 196
+    },
+    {
+        "ID": 198,
+        "Permutation": "c1 c2 c3 c5 c4 c4 c1 c5 c3 c2",
+        "ASCII": 197
+    },
+    {
+        "ID": 199,
+        "Permutation": "c1 c2 c3 c5 c4 c4 c2 c1 c3 c5",
+        "ASCII": 198
+    },
+    {
+        "ID": 200,
+        "Permutation": "c1 c2 c3 c5 c4 c4 c2 c1 c5 c3",
+        "ASCII": 199
+    },
+    {
+        "ID": 201,
+        "Permutation": "c1 c2 c3 c5 c4 c4 c2 c3 c1 c5",
+        "ASCII": 200
+    },
+    {
+        "ID": 202,
+        "Permutation": "c1 c2 c3 c5 c4 c4 c2 c3 c5 c1",
+        "ASCII": 201
+    },
+    {
+        "ID": 203,
+        "Permutation": "c1 c2 c3 c5 c4 c4 c2 c5 c1 c3",
+        "ASCII": 202
+    },
+    {
+        "ID": 204,
+        "Permutation": "c1 c2 c3 c5 c4 c4 c2 c5 c3 c1",
+        "ASCII": 203
+    },
+    {
+        "ID": 205,
+        "Permutation": "c1 c2 c3 c5 c4 c4 c3 c1 c2 c5",
+        "ASCII": 204
+    },
+    {
+        "ID": 206,
+        "Permutation": "c1 c2 c3 c5 c4 c4 c3 c1 c5 c2",
+        "ASCII": 205
+    },
+    {
+        "ID": 207,
+        "Permutation": "c1 c2 c3 c5 c4 c4 c3 c2 c1 c5",
+        "ASCII": 206
+    },
+    {
+        "ID": 208,
+        "Permutation": "c1 c2 c3 c5 c4 c4 c3 c2 c5 c1",
+        "ASCII": 207
+    },
+    {
+        "ID": 209,
+        "Permutation": "c1 c2 c3 c5 c4 c4 c3 c5 c1 c2",
+        "ASCII": 208
+    },
+    {
+        "ID": 210,
+        "Permutation": "c1 c2 c3 c5 c4 c4 c3 c5 c2 c1",
+        "ASCII": 209
+    },
+    {
+        "ID": 211,
+        "Permutation": "c1 c2 c3 c5 c4 c4 c5 c1 c2 c3",
+        "ASCII": 210
+    },
+    {
+        "ID": 212,
+        "Permutation": "c1 c2 c3 c5 c4 c4 c5 c1 c3 c2",
+        "ASCII": 211
+    },
+    {
+        "ID": 213,
+        "Permutation": "c1 c2 c3 c5 c4 c4 c5 c2 c1 c3",
+        "ASCII": 212
+    },
+    {
+        "ID": 214,
+        "Permutation": "c1 c2 c3 c5 c4 c4 c5 c2 c3 c1",
+        "ASCII": 213
+    },
+    {
+        "ID": 215,
+        "Permutation": "c1 c2 c3 c5 c4 c4 c5 c3 c1 c2",
+        "ASCII": 214
+    },
+    {
+        "ID": 216,
+        "Permutation": "c1 c2 c3 c5 c4 c4 c5 c3 c2 c1",
+        "ASCII": 215
+    },
+    {
+        "ID": 217,
+        "Permutation": "c1 c2 c3 c5 c4 c5 c1 c2 c3 c4",
+        "ASCII": 216
+    },
+    {
+        "ID": 218,
+        "Permutation": "c1 c2 c3 c5 c4 c5 c1 c2 c4 c3",
+        "ASCII": 217
+    },
+    {
+        "ID": 219,
+        "Permutation": "c1 c2 c3 c5 c4 c5 c1 c3 c2 c4",
+        "ASCII": 218
+    },
+    {
+        "ID": 220,
+        "Permutation": "c1 c2 c3 c5 c4 c5 c1 c3 c4 c2",
+        "ASCII": 219
+    },
+    {
+        "ID": 221,
+        "Permutation": "c1 c2 c3 c5 c4 c5 c1 c4 c2 c3",
+        "ASCII": 220
+    },
+    {
+        "ID": 222,
+        "Permutation": "c1 c2 c3 c5 c4 c5 c1 c4 c3 c2",
+        "ASCII": 221
+    },
+    {
+        "ID": 223,
+        "Permutation": "c1 c2 c3 c5 c4 c5 c2 c1 c3 c4",
+        "ASCII": 222
+    },
+    {
+        "ID": 224,
+        "Permutation": "c1 c2 c3 c5 c4 c5 c2 c1 c4 c3",
+        "ASCII": 223
+    },
+    {
+        "ID": 225,
+        "Permutation": "c1 c2 c3 c5 c4 c5 c2 c3 c1 c4",
+        "ASCII": 224
+    },
+    {
+        "ID": 226,
+        "Permutation": "c1 c2 c3 c5 c4 c5 c2 c3 c4 c1",
+        "ASCII": 225
+    },
+    {
+        "ID": 227,
+        "Permutation": "c1 c2 c3 c5 c4 c5 c2 c4 c1 c3",
+        "ASCII": 226
+    },
+    {
+        "ID": 228,
+        "Permutation": "c1 c2 c3 c5 c4 c5 c2 c4 c3 c1",
+        "ASCII": 227
+    },
+    {
+        "ID": 229,
+        "Permutation": "c1 c2 c3 c5 c4 c5 c3 c1 c2 c4",
+        "ASCII": 228
+    },
+    {
+        "ID": 230,
+        "Permutation": "c1 c2 c3 c5 c4 c5 c3 c1 c4 c2",
+        "ASCII": 229
+    },
+    {
+        "ID": 231,
+        "Permutation": "c1 c2 c3 c5 c4 c5 c3 c2 c1 c4",
+        "ASCII": 230
+    },
+    {
+        "ID": 232,
+        "Permutation": "c1 c2 c3 c5 c4 c5 c3 c2 c4 c1",
+        "ASCII": 231
+    },
+    {
+        "ID": 233,
+        "Permutation": "c1 c2 c3 c5 c4 c5 c3 c4 c1 c2",
+        "ASCII": 232
+    },
+    {
+        "ID": 234,
+        "Permutation": "c1 c2 c3 c5 c4 c5 c3 c4 c2 c1",
+        "ASCII": 233
+    },
+    {
+        "ID": 235,
+        "Permutation": "c1 c2 c3 c5 c4 c5 c4 c1 c2 c3",
+        "ASCII": 234
+    },
+    {
+        "ID": 236,
+        "Permutation": "c1 c2 c3 c5 c4 c5 c4 c1 c3 c2",
+        "ASCII": 235
+    },
+    {
+        "ID": 237,
+        "Permutation": "c1 c2 c3 c5 c4 c5 c4 c2 c1 c3",
+        "ASCII": 236
+    },
+    {
+        "ID": 238,
+        "Permutation": "c1 c2 c3 c5 c4 c5 c4 c2 c3 c1",
+        "ASCII": 237
+    },
+    {
+        "ID": 239,
+        "Permutation": "c1 c2 c3 c5 c4 c5 c4 c3 c1 c2",
+        "ASCII": 238
+    },
+    {
+        "ID": 240,
+        "Permutation": "c1 c2 c3 c5 c4 c5 c4 c3 c2 c1",
+        "ASCII": 239
+    },
+    {
+        "ID": 241,
+        "Permutation": "c1 c2 c4 c3 c5 c1 c2 c3 c4 c5",
+        "ASCII": 240
+    },
+    {
+        "ID": 242,
+        "Permutation": "c1 c2 c4 c3 c5 c1 c2 c3 c5 c4",
+        "ASCII": 241
+    },
+    {
+        "ID": 243,
+        "Permutation": "c1 c2 c4 c3 c5 c1 c2 c4 c3 c5",
+        "ASCII": 242
+    },
+    {
+        "ID": 244,
+        "Permutation": "c1 c2 c4 c3 c5 c1 c2 c4 c5 c3",
+        "ASCII": 243
+    },
+    {
+        "ID": 245,
+        "Permutation": "c1 c2 c4 c3 c5 c1 c2 c5 c3 c4",
+        "ASCII": 244
+    },
+    {
+        "ID": 246,
+        "Permutation": "c1 c2 c4 c3 c5 c1 c2 c5 c4 c3",
+        "ASCII": 245
+    },
+    {
+        "ID": 247,
+        "Permutation": "c1 c2 c4 c3 c5 c1 c3 c2 c4 c5",
+        "ASCII": 246
+    },
+    {
+        "ID": 248,
+        "Permutation": "c1 c2 c4 c3 c5 c1 c3 c2 c5 c4",
+        "ASCII": 247
+    },
+    {
+        "ID": 249,
+        "Permutation": "c1 c2 c4 c3 c5 c1 c3 c4 c2 c5",
+        "ASCII": 248
+    },
+    {
+        "ID": 250,
+        "Permutation": "c1 c2 c4 c3 c5 c1 c3 c4 c5 c2",
+        "ASCII": 249
+    },
+    {
+        "ID": 251,
+        "Permutation": "c1 c2 c4 c3 c5 c1 c3 c5 c2 c4",
+        "ASCII": 250
+    },
+    {
+        "ID": 252,
+        "Permutation": "c1 c2 c4 c3 c5 c1 c3 c5 c4 c2",
+        "ASCII": 251
+    },
+    {
+        "ID": 253,
+        "Permutation": "c1 c2 c4 c3 c5 c1 c4 c2 c3 c5",
+        "ASCII": 252
+    },
+    {
+        "ID": 254,
+        "Permutation": "c1 c2 c4 c3 c5 c1 c4 c2 c5 c3",
+        "ASCII": 253
+    },
+    {
+        "ID": 255,
+        "Permutation": "c1 c2 c4 c3 c5 c1 c4 c3 c2 c5",
+        "ASCII": 254
+    },
+    {
+        "ID": 256,
+        "Permutation": "c1 c2 c4 c3 c5 c1 c4 c3 c5 c2",
+        "ASCII": 255
+    },
+    {
+        "ID": 257,
+        "Permutation": "c1 c2 c4 c3 c5 c1 c4 c5 c2 c3",
+        "ASCII": 256
+    },
+    {
+        "ID": 258,
+        "Permutation": "c1 c2 c4 c3 c5 c1 c4 c5 c3 c2",
+        "ASCII": 256
+    }
+]

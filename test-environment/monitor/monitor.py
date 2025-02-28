@@ -11,7 +11,7 @@ load_layer("tls")
 PCAP_FILE = "/tmp/scapy_live_capture.pcap"
 
 # Load the permutations JSON file
-with open("permutations_monitor.json", "r") as json_file:
+with open("permutations_5x5.json", "r") as json_file:
     permutations_data = json.load(json_file)
 
 # Complete Cipher Suites Mapping for TLS 1.2 and TLS 1.3 based on IANA TLS parameters

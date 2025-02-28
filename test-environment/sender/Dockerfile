@@ -19,7 +19,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Copy application files
-COPY permutations_sender.json sender-wolfssl.py requirements.txt .
+COPY permutations_5x5.json sender-wolfssl.py requirements.txt .
 
 # Clone wolfssl-py
 RUN git clone --recurse-submodules https://github.com/mapro0103/wolfssl-py-aesccm.git /app/wolfssl-py

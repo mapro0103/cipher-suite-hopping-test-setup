@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 # Parameters
 n_values = range(5, 9)  # n (Number of Cipher Suites)
-k_values = range(2, 11)  # k (Number of TLS Connections)
+k_values = range(2, 9)  # k (Number of TLS Connections)
 
 # Matrix for ASCII-chars per connection
 ascii_matrix = np.zeros((len(n_values), len(k_values)))
