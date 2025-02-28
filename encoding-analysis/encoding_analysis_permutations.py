@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 # Parameter
 n_values = range(5, 11)  # n (Number of Cipher Suites)
-k_values = range(1, 6)  # k (Number of TLS Connections)
+k_values = range(1, 11)  # k (Number of TLS Connections)
 
 # Matrix for ASCII-chars per connection
 ascii_matrix = np.zeros((len(n_values), len(k_values)))
@@ -31,7 +31,7 @@ for i, n in enumerate(n_values):
 
 ax.set_xlabel("TLS Connections (k)")
 ax.set_ylabel("Maximum Number of 8-Bit ASCII Values")
-ax.set_title("Analysis of Encoded 8-Bit ASCII Values - Only Permutations")
+ax.set_title("Analysis of Encoded 8-Bit ASCII Values - Permutations")
 ax.legend(title="Cipher Suites (n)")
 ax.grid(True)
 ax.set_xticks(k_values)

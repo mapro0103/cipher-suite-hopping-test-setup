@@ -1,0 +1,378 @@
+[
+    {
+        "ID": 1,
+        "Mapping": "A"
+    },
+    {
+        "ID": 2,
+        "Mapping": "B"
+    },
+    {
+        "ID": 3,
+        "Mapping": "C"
+    },
+    {
+        "ID": 4,
+        "Mapping": "D"
+    },
+    {
+        "ID": 5,
+        "Mapping": "E"
+    },
+    {
+        "ID": 6,
+        "Mapping": "F"
+    },
+    {
+        "ID": 7,
+        "Mapping": "G"
+    },
+    {
+        "ID": 8,
+        "Mapping": "H"
+    },
+    {
+        "ID": 9,
+        "Mapping": "I"
+    },
+    {
+        "ID": 10,
+        "Mapping": "J"
+    },
+    {
+        "ID": 11,
+        "Mapping": "K"
+    },
+    {
+        "ID": 12,
+        "Mapping": "L"
+    },
+    {
+        "ID": 13,
+        "Mapping": "M"
+    },
+    {
+        "ID": 14,
+        "Mapping": "N"
+    },
+    {
+        "ID": 15,
+        "Mapping": "O"
+    },
+    {
+        "ID": 16,
+        "Mapping": "P"
+    },
+    {
+        "ID": 17,
+        "Mapping": "Q"
+    },
+    {
+        "ID": 18,
+        "Mapping": "R"
+    },
+    {
+        "ID": 19,
+        "Mapping": "S"
+    },
+    {
+        "ID": 20,
+        "Mapping": "T"
+    },
+    {
+        "ID": 21,
+        "Mapping": "U"
+    },
+    {
+        "ID": 22,
+        "Mapping": "V"
+    },
+    {
+        "ID": 23,
+        "Mapping": "W"
+    },
+    {
+        "ID": 24,
+        "Mapping": "X"
+    },
+    {
+        "ID": 25,
+        "Mapping": "Y"
+    },
+    {
+        "ID": 26,
+        "Mapping": "Z"
+    },
+    {
+        "ID": 27,
+        "Mapping": "a"
+    },
+    {
+        "ID": 28,
+        "Mapping": "b"
+    },
+    {
+        "ID": 29,
+        "Mapping": "c"
+    },
+    {
+        "ID": 30,
+        "Mapping": "d"
+    },
+    {
+        "ID": 31,
+        "Mapping": "e"
+    },
+    {
+        "ID": 32,
+        "Mapping": "f"
+    },
+    {
+        "ID": 33,
+        "Mapping": "g"
+    },
+    {
+        "ID": 34,
+        "Mapping": "h"
+    },
+    {
+        "ID": 35,
+        "Mapping": "i"
+    },
+    {
+        "ID": 36,
+        "Mapping": "j"
+    },
+    {
+        "ID": 37,
+        "Mapping": "k"
+    },
+    {
+        "ID": 38,
+        "Mapping": "l"
+    },
+    {
+        "ID": 39,
+        "Mapping": "m"
+    },
+    {
+        "ID": 40,
+        "Mapping": "n"
+    },
+    {
+        "ID": 41,
+        "Mapping": "o"
+    },
+    {
+        "ID": 42,
+        "Mapping": "p"
+    },
+    {
+        "ID": 43,
+        "Mapping": "q"
+    },
+    {
+        "ID": 44,
+        "Mapping": "r"
+    },
+    {
+        "ID": 45,
+        "Mapping": "s"
+    },
+    {
+        "ID": 46,
+        "Mapping": "t"
+    },
+    {
+        "ID": 47,
+        "Mapping": "u"
+    },
+    {
+        "ID": 48,
+        "Mapping": "v"
+    },
+    {
+        "ID": 49,
+        "Mapping": "w"
+    },
+    {
+        "ID": 50,
+        "Mapping": "x"
+    },
+    {
+        "ID": 51,
+        "Mapping": "y"
+    },
+    {
+        "ID": 52,
+        "Mapping": "z"
+    },
+    {
+        "ID": 53,
+        "Mapping": "0"
+    },
+    {
+        "ID": 54,
+        "Mapping": "1"
+    },
+    {
+        "ID": 55,
+        "Mapping": "2"
+    },
+    {
+        "ID": 56,
+        "Mapping": "3"
+    },
+    {
+        "ID": 57,
+        "Mapping": "4"
+    },
+    {
+        "ID": 58,
+        "Mapping": "5"
+    },
+    {
+        "ID": 59,
+        "Mapping": "6"
+    },
+    {
+        "ID": 60,
+        "Mapping": "7"
+    },
+    {
+        "ID": 61,
+        "Mapping": "8"
+    },
+    {
+        "ID": 62,
+        "Mapping": "9"
+    },
+    {
+        "ID": 63,
+        "Mapping": "!"
+    },
+    {
+        "ID": 64,
+        "Mapping": "\""
+    },
+    {
+        "ID": 65,
+        "Mapping": "#"
+    },
+    {
+        "ID": 66,
+        "Mapping": "$"
+    },
+    {
+        "ID": 67,
+        "Mapping": "%"
+    },
+    {
+        "ID": 68,
+        "Mapping": "&"
+    },
+    {
+        "ID": 69,
+        "Mapping": "'"
+    },
+    {
+        "ID": 70,
+        "Mapping": "("
+    },
+    {
+        "ID": 71,
+        "Mapping": ")"
+    },
+    {
+        "ID": 72,
+        "Mapping": "*"
+    },
+    {
+        "ID": 73,
+        "Mapping": "+"
+    },
+    {
+        "ID": 74,
+        "Mapping": ","
+    },
+    {
+        "ID": 75,
+        "Mapping": "-"
+    },
+    {
+        "ID": 76,
+        "Mapping": "."
+    },
+    {
+        "ID": 77,
+        "Mapping": "/"
+    },
+    {
+        "ID": 78,
+        "Mapping": ":"
+    },
+    {
+        "ID": 79,
+        "Mapping": ";"
+    },
+    {
+        "ID": 80,
+        "Mapping": "<"
+    },
+    {
+        "ID": 81,
+        "Mapping": "="
+    },
+    {
+        "ID": 82,
+        "Mapping": ">"
+    },
+    {
+        "ID": 83,
+        "Mapping": "?"
+    },
+    {
+        "ID": 84,
+        "Mapping": "@"
+    },
+    {
+        "ID": 85,
+        "Mapping": "["
+    },
+    {
+        "ID": 86,
+        "Mapping": "\\"
+    },
+    {
+        "ID": 87,
+        "Mapping": "]"
+    },
+    {
+        "ID": 88,
+        "Mapping": "^"
+    },
+    {
+        "ID": 89,
+        "Mapping": "_"
+    },
+    {
+        "ID": 90,
+        "Mapping": "`"
+    },
+    {
+        "ID": 91,
+        "Mapping": "{"
+    },
+    {
+        "ID": 92,
+        "Mapping": "|"
+    },
+    {
+        "ID": 93,
+        "Mapping": "}"
+    },
+    {
+        "ID": 94,
+        "Mapping": "~"
+    }
+]
