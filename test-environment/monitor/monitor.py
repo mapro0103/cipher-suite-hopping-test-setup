@@ -1,4 +1,3 @@
-import scapy
 from scapy.all import sniff, load_layer, wrpcap
 from scapy.layers.tls.handshake import TLSClientHello
 import json
@@ -68,28 +67,22 @@ def packet_callback(packet):
     Callback function to process packets in real-time.
     It prints all captured packets and extracts cipher suites if they are part of a TLS ClientHello message.
     """
-    if packet.haslayer("IP") and packet.haslayer("TCP"):
-        ip_src = packet["IP"].src  # Source IP address
-        ip_dst = packet["IP"].dst  # Destination IP address
-        src_port = packet["TCP"].sport  # Source port
-        dst_port = packet["TCP"].dport  # Destination port
+    ip_src = packet["IP"].src  # Source IP address
+    ip_dst = packet["IP"].dst  # Destination IP address
 
-        # Save packet immediately to PCAP file
-        wrpcap(PCAP_FILE, [packet], append=True)  # Append each packet as it arrives
+    # Save packet immediately to PCAP file
+    wrpcap(PCAP_FILE, [packet], append=True)  # Append each packet as it arrives
 
-        # Check if this is HTTPS traffic (Port 443)
-        if dst_port == 443 or src_port == 443:
-            if packet.haslayer(TLSClientHello):
-                handshake = packet[TLSClientHello]
-                print(f"[+] TLS ClientHello detected from {ip_src} -> {ip_dst}")
+    # Process TLS ClientHello
+    if packet.haslayer(TLSClientHello):
+        handshake = packet[TLSClientHello]
+        print(f"TLS ClientHello detected from {ip_src} -> {ip_dst}")
 
-                # Check each attribute of the handshake
-                if hasattr(handshake, 'ciphers'):
-                    cipher_suites = handshake.ciphers
-                    print(f"    Supported Cipher Suites: {', '.join([get_cipher_suite_name(cipher) for cipher in cipher_suites])}")
-        
-                # Extract cipher suites if it's a ClientHello
-                extract_cipher_suites(packet)
+        if hasattr(handshake, 'ciphers'):
+            cipher_suites = handshake.ciphers
+            print(f"Supported Cipher Suites: {', '.join([get_cipher_suite_name(cipher) for cipher in cipher_suites])}")
+    
+        extract_cipher_suites(packet)
 
 # Global storage for captured sequences
 captured_sequences = []
@@ -109,7 +102,7 @@ def check_timeout():
 
             ascii_chars = []
 
-            # Immer 2er-Paare aus captured_sequences nehmen
+            # Pairs of two from captured_sequences
             for i in range(0, len(captured_sequences) - 1, 2):
                 combined_sequence = " ".join(captured_sequences[i:i+2])
                 ascii_value = next((entry["ASCII"] for entry in permutations_data if entry["Permutation"] == combined_sequence), None)
@@ -117,7 +110,7 @@ def check_timeout():
                 if ascii_value is not None:
                     ascii_chars.append(chr(ascii_value))
 
-            # Ausgabe des vollständigen ASCII-Strings, falls Zeichen gefunden wurden
+            # Flush ASCII chars if match
             if ascii_chars:
                 print(f"ASCII Output: {''.join(ascii_chars)}")
             else:

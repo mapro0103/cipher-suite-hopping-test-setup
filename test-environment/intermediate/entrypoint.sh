@@ -1,12 +1,5 @@
 #!/bin/bash
 
-# Display the configured IP addresses
-# These environment variables must be set before running the script
-echo "Sender IP: ${IP_SENDER}"
-echo "Receiver IP: ${IP_RECEIVER}"
-echo "Intermediate IP: ${IP_INTERMEDIATE}"
-echo "Monitor IP: ${IP_MONITOR}"
-
 # # Clear any existing iptables rules
 # # This ensures that previous rules do not interfere with the new setup
 # # -F: Flush all rules from the specified table (default is filter)

@@ -9,6 +9,8 @@ services:
       - PYTHONUNBUFFERED=1
     env_file:
       - .env
+    volumes:
+      - ./sender_keys:/tmp
     cap_add:
       - NET_ADMIN
     stdin_open: true
@@ -41,7 +43,6 @@ services:
     networks:
       test_net:
         ipv4_address: ${IP_INTERMEDIATE}
-    #network_mode: "container:sender"
     depends_on:
       - sender
       - receiver

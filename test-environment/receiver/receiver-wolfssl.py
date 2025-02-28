@@ -11,18 +11,16 @@ class SimpleRequestHandler(BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header("Content-type", "text/plain")
         self.end_headers()
-        response_message = f"Receiver is running with {self.protocol_version}!".encode()
+        response_message = f"Receiver is running!".encode()
         self.wfile.write(response_message)
 
 def run_http_server():
-    print("Starting HTTP server...")
     http_server_address = ('0.0.0.0', 80)
     httpd = HTTPServer(http_server_address, SimpleRequestHandler)
     print("HTTP server is running on port 80...")
     httpd.serve_forever()
 
 def run_https_server():
-    print("Starting HTTPS server...")
     bind_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM, 0)
     bind_socket.bind(("", 443))
     print("HTTPS server is running on port 443...")
@@ -49,11 +47,6 @@ def run_https_server():
             new_socket, from_addr = bind_socket.accept()
             secure_socket = context.wrap_socket(new_socket)
             print("Connection received from", from_addr)
-            
-            # # Terminate connection after 1 sec
-            # time.sleep(1)
-            # secure_socket.close()
-            # print(f"Connection to {from_addr} terminated after 1s.")
         except KeyboardInterrupt:
             print("Shutting down HTTPS server...")
             break

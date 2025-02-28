@@ -13,46 +13,20 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     iproute2 \
     iptables \
     autoconf \
-    automake \
     libtool \
+    automake \
     build-essential \
-    python3-dev \
-    libffi-dev \
-    pkg-config \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Copy application files
-COPY permutations_sender.json sender-openssl.py sender-wolfssl.py requirements.txt .
+COPY permutations_sender.json sender-wolfssl.py requirements.txt .
 
 # Clone wolfssl-py
 RUN git clone --recurse-submodules https://github.com/mapro0103/wolfssl-py-aesccm.git /app/wolfssl-py
 
-# # Modify _build_ffi.py to include --enable-aesccm
-# RUN sed -i '/flags.append("--enable-dtls13")/a\    flags.append("--enable-aesccm")' /app/wolfssl-py/wolfssl/_build_ffi.py
-
-# # Build wolfSSL with AESCCM enabled before installing wolfssl-py
-# WORKDIR /app/wolfssl-py/lib/wolfssl
-# RUN autoreconf -i && \
-#     ./configure \
-#       --enable-all \
-#       --enable-aesccm \
-#       --enable-aesgcm \
-#       --enable-tls13 \
-#       --enable-dtls \
-#       --enable-opensslextra \
-#       --enable-debug \
-#       --enable-certgen \
-#       --enable-certreq \
-#       --enable-crl \
-#       --enable-ocsp \
-#       --enable-session-ticket \
-#       --enable-sni && \
-#     make -j$(nproc) && \
-#     make install
-
 # Install wolfssl-py using setup.py
 WORKDIR /app/wolfssl-py
-RUN pip install .
+RUN pip3 install .
 
 # Set working directory for the application
 WORKDIR /app
