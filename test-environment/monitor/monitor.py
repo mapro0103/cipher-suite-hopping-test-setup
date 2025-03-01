@@ -90,15 +90,15 @@ last_packet_time = time.time()
 
 def check_timeout():
     """
-    Checks if 30 seconds have passed since the last captured packet.
+    Checks if 10 seconds have passed since the last captured packet.
     If so, prints the full ASCII sequence from stored sequences.
     """
     global captured_sequences, last_packet_time
     while True:
         time.sleep(5)
-        if time.time() - last_packet_time > 30 and captured_sequences:
+        if time.time() - last_packet_time > 10 and captured_sequences:
             print("\nTimeout reached. Full stored sequence:")
-            print(f"Mapping: {captured_sequences}")
+            #print(f"Mapping: {captured_sequences}")
 
             ascii_chars = []
 
@@ -132,8 +132,7 @@ def extract_cipher_suites(packet):
         if hasattr(client_hello, 'ciphers'):
             cipher_suites = client_hello.ciphers
             mapped_symbols = [CIPHER_MAPPING[cipher] for cipher in cipher_suites if cipher in CIPHER_MAPPING]
-            captured_sequences.append(" ".join(mapped_symbols))  # Convert list to string
-
+            captured_sequences.append(" ".join(mapped_symbols))
             
             if len(captured_sequences) % 2 == 0:
                 combined_sequence = " ".join(captured_sequences[-2:])
