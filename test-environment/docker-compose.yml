@@ -10,7 +10,7 @@ services:
     env_file:
       - .env
     volumes:
-      - ./sender_keys:/tmp
+      - ./sender_data:/tmp
     cap_add:
       - NET_ADMIN
     stdin_open: true
@@ -68,7 +68,7 @@ services:
     env_file:
       - .env
     volumes:
-      - ./monitor_pcap_data:/tmp
+      - ./monitor_data:/tmp
     sysctls:
       - net.ipv4.ip_forward=0
     

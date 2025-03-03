@@ -7,7 +7,7 @@ from cryptography.hazmat.primitives import serialization
 
 # Global Configuration
 SERVER_IP = "192.168.0.20"
-PERMUTATIONS_FILE = "permutations_5x5.json"
+PERMUTATIONS_FILE = "permutations_scenario1.json"
 PERMUTATIONS = {}
 
 # Mapping of cipher suites to symbolic representation
@@ -73,7 +73,7 @@ def create_tls_connection(ciphers):
         context.set_ciphers(ciphers)
         tls_connection = context.wrap_socket(bind_socket)
         tls_connection.connect((SERVER_IP, 443))
-        print(f"TLS connection established to {SERVER_IP} with ciphers: {ciphers}")
+        print(f"TLS connection established to {SERVER_IP}")
         return tls_connection
     except Exception as e:
         print(f"Error establishing TLS connection: {e}")

@@ -1,149 +1,161 @@
 from scapy.all import sniff, load_layer, wrpcap
+from scapy.layers.inet import IP
 from scapy.layers.tls.handshake import TLSClientHello
+from scapy.layers.tls.record import TLS
 import json
 import threading
 import time
+import datetime
 
 # Load the TLS layer in Scapy
 load_layer("tls")
 
+# Global counter for iteration
+iteration_counter = 0
+
 # File to save packets
 PCAP_FILE = "/tmp/scapy_live_capture.pcap"
+TIMESTAMP = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+REPORT_FILE = f"/tmp/tls_report_{TIMESTAMP}.txt"
 
 # Load the permutations JSON file
 with open("permutations_5x5.json", "r") as json_file:
     permutations_data = json.load(json_file)
 
-# Complete Cipher Suites Mapping for TLS 1.2 and TLS 1.3 based on IANA TLS parameters
-# https://www.iana.org/assignments/tls-parameters/tls-parameters.xhtml#tls-parameters-4
-
+# Cipher Suite Mapping
 CIPHER_SUITES = {
-    # TLS 1.2 Cipher Suites
-    0x0000: "TLS_NULL_WITH_NULL_NULL",
-    0x0001: "TLS_RSA_WITH_NULL_MD5",
-    0x0002: "TLS_RSA_WITH_NULL_SHA",
-    0x003B: "TLS_RSA_WITH_NULL_SHA256",
-    0x0004: "TLS_RSA_WITH_RC4_128_MD5",
-    0x0005: "TLS_RSA_WITH_RC4_128_SHA",
-    0x000A: "TLS_RSA_WITH_3DES_EDE_CBC_SHA",
-    0x002F: "TLS_RSA_WITH_AES_128_CBC_SHA",
-    0x0035: "TLS_RSA_WITH_AES_256_CBC_SHA",
-    0x003C: "TLS_RSA_WITH_AES_128_CBC_SHA256",
-    0x003D: "TLS_RSA_WITH_AES_256_CBC_SHA256",
-    0xC02F: "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256",
-    0xC030: "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384",
-    #TLS 1.3 Cipher Suites
     0x1301: "TLS_AES_128_GCM_SHA256",
     0x1302: "TLS_AES_256_GCM_SHA384",
     0x1303: "TLS_CHACHA20_POLY1305_SHA256",
     0x1304: "TLS_AES_128_CCM_SHA256",
-    0x1305: "TLS_AES_128_CCM_8_SHA256",
-    0x00ff: "TLS_EMPTY_RENEGOTIATION_INFO_SCSV"
+    0x1305: "TLS_AES_128_CCM_8_SHA256"
 }
 
-# Dictionary to map TLS version numbers to human-readable names
-TLS_VERSIONS = {
-    0x301: "TLS 1.0",
-    0x302: "TLS 1.1",
-    0x303: "TLS 1.2",
-    0x304: "TLS 1.3"
-}
-
-# Mapping of cipher suites to symbolic representation
 CIPHER_MAPPING = {
-    0x1301: 'c1', # TLS_AES_128_GCM_SHA256
-    0x1302: 'c2', # TLS_AES_256_GCM_SHA384
-    0x1303: 'c3', # TLS_CHACHA20_POLY1305_SHA256
-    0x1304: 'c4', # TLS_AES_128_CCM_SHA256
-    0x1305: 'c5'  # TLS_AES_128_CCM_8_SHA256
+    0x1301: 'c1',
+    0x1302: 'c2',
+    0x1303: 'c3',
+    0x1304: 'c4',
+    0x1305: 'c5'
 }
 
-# Function to map cipher suite ID to human-readable name
-def get_cipher_suite_name(cipher_id):
-    return CIPHER_SUITES.get(cipher_id, f"Unknown Cipher Suite: {cipher_id}")
+# Global storage for captured sequences
+captured_sequences = []
+packet_start_times = []
+packet_end_times = []
+packet_types = []
+last_packet_time = time.time()
+
+# Rework to separate signal from packet
+def check_timeout():
+    """
+    Monitors packet capture activity. If no new packet is captured within 3 seconds,
+    a report is generated and sequences are processed.
+    """
+    global captured_sequences, packet_start_times, packet_end_times, packet_types, last_packet_time
+    while True:
+        time.sleep(5)
+        if time.time() - last_packet_time > 3 and captured_sequences:
+            generate_report()
+            captured_sequences = []  # Reset after timeout
+            packet_start_times = []
+            packet_end_times = []
+            packet_types = []
+
+def extract_cipher_suites(packet):
+    """
+    Extracts cipher suites from a TLS ClientHello packet and maps them to symbolic representations.
+    """
+    global captured_sequences, packet_start_times, packet_end_times, packet_types, last_packet_time
+    start_time = time.time()
+    last_packet_time = start_time
+    
+    if packet.haslayer(TLS):
+        tls_layer = packet[TLS]
+        packet_type = tls_layer.msg[0].__class__.__name__ if tls_layer.msg else "Unknown"
+        
+        if packet.haslayer(TLSClientHello):
+            client_hello = packet[TLSClientHello]
+            if hasattr(client_hello, 'ciphers'):
+                cipher_suites = client_hello.ciphers
+                mapped_symbols = [CIPHER_MAPPING[cipher] for cipher in cipher_suites if cipher in CIPHER_MAPPING]
+                captured_sequences.append(" ".join(mapped_symbols))
+                packet_start_times.append(start_time)
+                packet_end_times.append(time.time())
+                packet_types.append(packet_type)
+
+def generate_report():
+    """
+    Generates a text report containing all captured packets, their timestamps, cipher suites, 
+    and decoded ASCII message. Also includes packet numbering, total bits, total bytes (converted), 
+    and total transmission time.
+    """
+    
+    # Compute covert message before writing the report
+    covert_message = ""
+    for i in range(0, len(captured_sequences) - 1, 2):
+        combined_sequence = " ".join(captured_sequences[i:i+2])
+        ascii_value = next((entry["ASCII"] for entry in permutations_data if entry["Permutation"].strip() == combined_sequence.strip()), None)
+        decoded_char = chr(ascii_value) if ascii_value is not None else "?"
+        covert_message += decoded_char
+
+    # Compute total transmitted bits (4 bits per packet)
+    total_bits_transferred = len(packet_types) * 4  
+
+    # Convert bits to bytes
+    total_bytes_transferred = total_bits_transferred / 8  
+
+    # Compute total transmission time (first to last packet)
+    total_packets = len(packet_types)
+    total_time = (packet_end_times[-1] - packet_start_times[0]) if total_packets > 1 else 0
+    raw_bandwidth_bits = total_bits_transferred / total_time if total_time > 0 else 0
+    raw_bandwidth_bytes = total_bytes_transferred / total_time if total_time > 0 else 0
+
+    with open(REPORT_FILE, "w") as report:
+        report.write("TLS Covert Channel Transmission Report\n")
+        report.write("====================================\n\n")
+        report.write(f"Report Timestamp: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+        report.write(f"Total ASCII Data Transferred: {total_bits_transferred} bits ({total_bytes_transferred:.2f} bytes)\n")
+        report.write(f"Total Transmission Time: {total_time:.2f} seconds\n")
+        report.write(f"Raw Bandwidth: {raw_bandwidth_bits:.2f} bits/second ({raw_bandwidth_bytes:.2f} bytes/second)\n")
+        report.write(f"Number of TLS connections: {len(captured_sequences)} \n")
+
+        
+        # Write covert message  before captured packets
+        report.write("\nCovert Information:\n")
+        report.write(covert_message.strip() + "\n\n")
+        
+        report.write("Captured Packets:\n")
+
+        # Numbering packet pairs
+        pair_number = 1
+        for i in range(0, len(captured_sequences) - 1, 2):
+            report.write(f"\nPacket Pair {pair_number}:\n")
+            report.write(f"Cipher Sequence: {captured_sequences[i]} | {captured_sequences[i+1]}\n")
+            report.write(f"Packet Type 1: {packet_types[i]}\n")
+            report.write(f"Packet 1 Start Time: {packet_start_times[i]:.4f}, End Time: {packet_end_times[i]:.4f}\n")
+            report.write(f"Packet Type 2: {packet_types[i+1]}\n")
+            report.write(f"Packet 2 Start Time: {packet_start_times[i+1]:.4f}, End Time: {packet_end_times[i+1]:.4f}\n")
+            report.write(f"Decoded ASCII Character: {covert_message[pair_number-1]}\n")
+            report.write("-----------------------------\n")
+            
+            pair_number += 1
+
+    print(f"Timeout reached. Report saved to {REPORT_FILE}")
 
 def packet_callback(packet):
     """
     Callback function to process packets in real-time.
-    It prints all captured packets and extracts cipher suites if they are part of a TLS ClientHello message.
     """
-    ip_src = packet["IP"].src  # Source IP address
-    ip_dst = packet["IP"].dst  # Destination IP address
-
-    # Save packet immediately to PCAP file
-    wrpcap(PCAP_FILE, [packet], append=True)  # Append each packet as it arrives
-
-    # Process TLS ClientHello
     if packet.haslayer(TLSClientHello):
-        handshake = packet[TLSClientHello]
-        print(f"TLS ClientHello detected from {ip_src} -> {ip_dst}")
-
-        if hasattr(handshake, 'ciphers'):
-            cipher_suites = handshake.ciphers
-            print(f"Supported Cipher Suites: {', '.join([get_cipher_suite_name(cipher) for cipher in cipher_suites])}")
-    
+        wrpcap(PCAP_FILE, [packet], append=True)  # Append each packet
         extract_cipher_suites(packet)
 
-# Global storage for captured sequences
-captured_sequences = []
-last_packet_time = time.time()
-
-def check_timeout():
-    """
-    Checks if 10 seconds have passed since the last captured packet.
-    If so, prints the full ASCII sequence from stored sequences.
-    """
-    global captured_sequences, last_packet_time
-    while True:
-        time.sleep(5)
-        if time.time() - last_packet_time > 10 and captured_sequences:
-            print("\nTimeout reached. Full stored sequence:")
-            #print(f"Mapping: {captured_sequences}")
-
-            ascii_chars = []
-
-            # Pairs of two from captured_sequences
-            for i in range(0, len(captured_sequences) - 1, 2):
-                combined_sequence = " ".join(captured_sequences[i:i+2])
-                ascii_value = next((entry["ASCII"] for entry in permutations_data if entry["Permutation"] == combined_sequence), None)
-
-                if ascii_value is not None:
-                    ascii_chars.append(chr(ascii_value))
-
-            # Flush ASCII chars if match
-            if ascii_chars:
-                print(f"ASCII Output: {''.join(ascii_chars)}")
-            else:
-                print("No valid ASCII characters found.")
-
-            # Reset storage
-            captured_sequences = []
-
-def extract_cipher_suites(packet):
-    """
-    Extracts the cipher suites from a TLS ClientHello packet and stores the mapped symbols.
-    Prints the latest pair every 2nd message.
-    """
-    global captured_sequences, last_packet_time
-    last_packet_time = time.time()
-    
-    if packet.haslayer(TLSClientHello):
-        client_hello = packet[TLSClientHello]
-        if hasattr(client_hello, 'ciphers'):
-            cipher_suites = client_hello.ciphers
-            mapped_symbols = [CIPHER_MAPPING[cipher] for cipher in cipher_suites if cipher in CIPHER_MAPPING]
-            captured_sequences.append(" ".join(mapped_symbols))
-            
-            if len(captured_sequences) % 2 == 0:
-                combined_sequence = " ".join(captured_sequences[-2:])
-                ascii_value = next((entry["ASCII"] for entry in permutations_data if entry["Permutation"] == combined_sequence), None)
-                if ascii_value is not None:
-                    print(f"Mapping: {captured_sequences[-2:]}")
-                    print(f"ASCII Character: {chr(ascii_value)}")
-                else:
-                    print(f"Mapping: {captured_sequences[-2:]}")
-                    print("ASCII Character: Not found")
-
+        if packet.haslayer(IP):
+            src_ip = packet[IP].src
+            dest_ip = packet[IP].dst
+            print(f"TLSClientHello monitored: {src_ip} → {dest_ip}")
+        
 def start_sniffing():
     """
     Starts sniffing network traffic and processes TLS packets.

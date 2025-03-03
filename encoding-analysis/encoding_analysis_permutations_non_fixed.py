@@ -4,16 +4,16 @@ import matplotlib.pyplot as plt
 
 # Parameters
 n_values = range(5, 9)  # n (Number of Cipher Suites)
-k_values = range(2, 9)  # k (Number of TLS Connections)
+c_values = range(2, 6)  # c (Number of TLS Connections)
 
 # Matrix for ASCII-chars per connection
-ascii_matrix = np.zeros((len(n_values), len(k_values)))
+ascii_matrix = np.zeros((len(n_values), len(c_values)))
 
 # Calc of possible ASCII-chars per combination (sum of all smaller factorials)
 for i, n in enumerate(n_values):
-    total_factorial_sum = sum(math.factorial(r) for r in range(1, n + 1))  # Sum of factorials
-    for j, k in enumerate(k_values):
-        total_combinations = (total_factorial_sum) ** k  # (Sum of factorials)^k
+    total_permutation_sum = sum(math.factorial(n) // math.factorial(n - c) for c in range(1, n + 1))  # Sum of permutations
+    for j, c in enumerate(c_values):
+        total_combinations = (total_permutation_sum) ** c  # (Sum of factorials)^c
         bit_capacity = math.log2(total_combinations)
         ascii_chars = bit_capacity / 8  # ASCII-chars (8-bit per char)
         ascii_matrix[i, j] = ascii_chars
@@ -22,19 +22,19 @@ for i, n in enumerate(n_values):
 fig, ax = plt.subplots(figsize=(10, 10))
 
 for i, n in enumerate(n_values):
-    ax.plot(k_values, ascii_matrix[i, :], marker="o", label=f"{n} Cipher Suites (Sum 1! to {n}!)")
+    ax.plot(c_values, ascii_matrix[i, :], marker="o", label=f"{n} Cipher Suites")
 
     # Annotate each data point with the y-value
-    for j, k in enumerate(k_values):
-        ax.text(k, ascii_matrix[i, j], f"{ascii_matrix[i, j]:.2f}", 
+    for j, c in enumerate(c_values):
+        ax.text(c, ascii_matrix[i, j], f"{ascii_matrix[i, j]:.2f}", 
                 ha='center', va='bottom', fontsize=9)
 
-ax.set_xlabel("TLS Connections (k)")
+ax.set_xlabel("TLS Connections (c)")
 ax.set_ylabel("Maximum Number of 8-Bit ASCII Values")
-ax.set_title("Analysis of Encoded 8-Bit ASCII Values - Permutations with Sum of Factorials (n)")
+ax.set_title("Analysis of Encoded 8-Bit ASCII Values - Cumulative Permutations")
 ax.legend(title="Cipher Suites (n)")
 ax.grid(True)
-ax.set_xticks(k_values)
+ax.set_xticks(c_values)
 
 # Set y-axis ticks dynamically based on max value
 y_ticks = np.arange(0, np.max(ascii_matrix) + 1, 1)

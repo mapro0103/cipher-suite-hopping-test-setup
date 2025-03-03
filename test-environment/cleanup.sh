@@ -1,9 +1,9 @@
 #!/bin/bash
 
-echo "Cleaning up sender_keys and monitor_pcap_data..."
-rm -rf ./sender_keys/* ./monitor_pcap_data/*
+echo "Cleaning up sender and monitor data..."
+rm -rf ./sender_data/* ./monitor_data/*
 
 echo "Ensuring folders still exist..."
-mkdir -p ./sender_keys ./monitor_pcap_data
+mkdir -p ./sender_data ./monitor_data
 
 echo "Folders have been emptied!"
