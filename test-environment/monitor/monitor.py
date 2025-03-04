@@ -15,12 +15,15 @@ iteration_counter = 0
 
 # File to save packets
 PCAP_FILE = "/tmp/scapy_live_capture.pcap"
-TIMESTAMP = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-REPORT_FILE = f"/tmp/tls_report_{TIMESTAMP}.txt"
 
 # Load the permutations JSON file
-with open("permutations_5x5.json", "r") as json_file:
-    permutations_data = json.load(json_file)
+try:
+    with open("permutations.json", "r") as json_file:
+        permutations_data = json.load(json_file)
+    print(f"Loaded {len(permutations_data)} permutation entries")
+except Exception as e:
+    print(f"Error loading permutations file: {e}")
+    permutations_data = []
 
 # Cipher Suite Mapping
 CIPHER_SUITES = {
@@ -79,10 +82,45 @@ def extract_cipher_suites(packet):
             if hasattr(client_hello, 'ciphers'):
                 cipher_suites = client_hello.ciphers
                 mapped_symbols = [CIPHER_MAPPING[cipher] for cipher in cipher_suites if cipher in CIPHER_MAPPING]
-                captured_sequences.append(" ".join(mapped_symbols))
-                packet_start_times.append(start_time)
-                packet_end_times.append(time.time())
-                packet_types.append(packet_type)
+                
+                # Only append non-empty cipher sequences
+                if mapped_symbols:
+                    captured_sequences.append(mapped_symbols)
+                    packet_start_times.append(start_time)
+                    packet_end_times.append(time.time())
+                    packet_types.append(packet_type)
+                else:
+                    print("Warning: Empty cipher sequence detected and skipped")
+
+def find_matching_ascii_pair(first_list, second_list):
+    """
+    Find both ASCII values that match the given cipher suite lists.
+    Returns a tuple of (first_ascii_value, second_ascii_value) or (None, None) if no match is found.
+    
+    The permutations are in the format:
+    {
+        "ID": 1,
+        "Permutation": [
+            ["c1"],
+            ["c1"]
+        ],
+        "ASCII": [0, 0]
+    }
+    """
+    for entry in permutations_data:
+        if "Permutation" in entry and "ASCII" in entry and len(entry["Permutation"]) == 2:
+            perm_first_list = entry["Permutation"][0]
+            perm_second_list = entry["Permutation"][1]
+            
+            # Compare the lists directly
+            if perm_first_list == first_list and perm_second_list == second_list:
+                # Return both ASCII values as a tuple
+                if entry["ASCII"] and len(entry["ASCII"]) >= 2:
+                    return (entry["ASCII"][0], entry["ASCII"][1])
+                elif entry["ASCII"] and len(entry["ASCII"]) == 1:
+                    return (entry["ASCII"][0], None)
+    
+    return (None, None)
 
 def generate_report():
     """
@@ -90,17 +128,43 @@ def generate_report():
     and decoded ASCII message. Also includes packet numbering, total bits, total bytes (converted), 
     and total transmission time.
     """
-    
-    # Compute covert message before writing the report
-    covert_message = ""
-    for i in range(0, len(captured_sequences) - 1, 2):
-        combined_sequence = " ".join(captured_sequences[i:i+2])
-        ascii_value = next((entry["ASCII"] for entry in permutations_data if entry["Permutation"].strip() == combined_sequence.strip()), None)
-        decoded_char = chr(ascii_value) if ascii_value is not None else "?"
-        covert_message += decoded_char
 
-    # Compute total transmitted bits (4 bits per packet)
-    total_bits_transferred = len(packet_types) * 4  
+    TIMESTAMP = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+    REPORT_FILE = f"/tmp/tls_report_{TIMESTAMP}.txt"
+    
+    # Compute the sequential covert message using both ASCII values from each permutation
+    covert_message = ""
+    decoded_chars = []
+    
+    # Process pairs of packets
+    for i in range(0, len(captured_sequences) - 1, 2):
+        if i + 1 < len(captured_sequences):
+            first_list = captured_sequences[i]
+            second_list = captured_sequences[i+1]
+            
+            # Get both ASCII values for this permutation
+            ascii_value1, ascii_value2 = find_matching_ascii_pair(first_list, second_list)
+            
+            # Process and add first ASCII value to the message
+            if ascii_value1 is not None:
+                char1 = chr(ascii_value1)
+                covert_message += char1
+                decoded_chars.append((char1, "First"))
+            else:
+                print(f"  No matching first ASCII value found")
+                decoded_chars.append(("?", "First"))
+            
+            # Process and add second ASCII value to the message
+            if ascii_value2 is not None:
+                char2 = chr(ascii_value2)
+                covert_message += char2
+                decoded_chars.append((char2, "Second"))
+            else:
+                print(f"  No matching second ASCII value found")
+                decoded_chars.append(("?", "Second"))
+    
+    # Compute total transmitted bits (8 bits per packet pair - 2 ASCII chars)
+    total_bits_transferred = (len(packet_types) // 2) * 16  
 
     # Convert bits to bytes
     total_bytes_transferred = total_bits_transferred / 8  
@@ -120,26 +184,39 @@ def generate_report():
         report.write(f"Raw Bandwidth: {raw_bandwidth_bits:.2f} bits/second ({raw_bandwidth_bytes:.2f} bytes/second)\n")
         report.write(f"Number of TLS connections: {len(captured_sequences)} \n")
 
-        
-        # Write covert message  before captured packets
-        report.write("\nCovert Information:\n")
+        # Write covert message (sequential combination of both ASCII values)
+        report.write("\nCovert Information (Sequential ASCII Values):\n")
         report.write(covert_message.strip() + "\n\n")
         
         report.write("Captured Packets:\n")
 
         # Numbering packet pairs
         pair_number = 1
+        char_index = 0
         for i in range(0, len(captured_sequences) - 1, 2):
-            report.write(f"\nPacket Pair {pair_number}:\n")
-            report.write(f"Cipher Sequence: {captured_sequences[i]} | {captured_sequences[i+1]}\n")
-            report.write(f"Packet Type 1: {packet_types[i]}\n")
-            report.write(f"Packet 1 Start Time: {packet_start_times[i]:.4f}, End Time: {packet_end_times[i]:.4f}\n")
-            report.write(f"Packet Type 2: {packet_types[i+1]}\n")
-            report.write(f"Packet 2 Start Time: {packet_start_times[i+1]:.4f}, End Time: {packet_end_times[i+1]:.4f}\n")
-            report.write(f"Decoded ASCII Character: {covert_message[pair_number-1]}\n")
-            report.write("-----------------------------\n")
-            
-            pair_number += 1
+            if i + 1 < len(captured_sequences):
+                report.write(f"\nPacket Pair {pair_number}:\n")
+                report.write(f"Cipher Sequence 1: {', '.join(captured_sequences[i])}\n")
+                report.write(f"Cipher Sequence 2: {', '.join(captured_sequences[i+1])}\n")
+                report.write(f"Packet Type 1: {packet_types[i]}\n")
+                report.write(f"Packet 1 Start Time: {packet_start_times[i]:.4f}, End Time: {packet_end_times[i]:.4f}\n")
+                report.write(f"Packet Type 2: {packet_types[i+1]}\n")
+                report.write(f"Packet 2 Start Time: {packet_start_times[i+1]:.4f}, End Time: {packet_end_times[i+1]:.4f}\n")
+                
+                # Add both decoded characters for this pair
+                if char_index < len(decoded_chars):
+                    first_char, first_type = decoded_chars[char_index]
+                    report.write(f"Decoded {first_type} ASCII Character: {first_char}\n")
+                    char_index += 1
+                
+                if char_index < len(decoded_chars):
+                    second_char, second_type = decoded_chars[char_index]
+                    report.write(f"Decoded {second_type} ASCII Character: {second_char}\n")
+                    char_index += 1
+                
+                report.write("-----------------------------\n")
+                
+                pair_number += 1
 
     print(f"Timeout reached. Report saved to {REPORT_FILE}")
 
