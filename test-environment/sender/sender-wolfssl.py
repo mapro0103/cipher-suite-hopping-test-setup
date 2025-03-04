@@ -23,6 +23,13 @@ CIPHER_MAPPING = {
     "c5": "TLS13-AES128-CCM-8-SHA256"
 }
 
+# Special signaling values
+SIGNAL_START = "256,256"
+SIGNAL_END = "257,257"
+SIGNAL_PASSWORD = "258,258"
+SIGNAL_RSA = "259,259"
+SIGNAL_ECC = "260,260"
+
 def load_permutations():
     """Loads the permutations JSON file into global dictionary."""
     global ASCII_PAIRS
@@ -111,6 +118,48 @@ def tls_connection_for_ascii_pair(ascii_char1, ascii_char2):
     
     return False
 
+def send_signal(signal_type):
+    """
+    Sends a control signal based on the provided type.
+    """
+    cipher_string_1, cipher_string_2 = None, None
+    
+    if signal_type in ASCII_PAIRS:
+        permutation_entry = ASCII_PAIRS[signal_type]
+        
+        if len(permutation_entry) != 2:
+            print(f"ERROR: Signal {signal_type} permutation doesn't have 2 lists!")
+            return False
+            
+        first_half = permutation_entry[0]
+        second_half = permutation_entry[1]
+        
+        cipher_list_1 = [CIPHER_MAPPING.get(c, f"UNKNOWN({c})") for c in first_half]
+        cipher_list_2 = [CIPHER_MAPPING.get(c, f"UNKNOWN({c})") for c in second_half]
+        
+        cipher_string_1 = ":".join(cipher_list_1)
+        cipher_string_2 = ":".join(cipher_list_2)
+    else:
+        print(f"No permutation found for signal {signal_type}.")
+        return False
+
+    if cipher_string_1:
+        tls_conn_1 = create_tls_connection(cipher_string_1)
+        if tls_conn_1:
+            tls_conn_1.close()
+        else:
+            return False
+
+    if cipher_string_2:
+        tls_conn_2 = create_tls_connection(cipher_string_2)
+        if tls_conn_2:
+            tls_conn_2.close()
+            return True
+        else:
+            return False
+    
+    return False
+
 def send_key_over_tls_pairs(ascii_key):
     """
     Iterates through the key's ASCII characters in pairs and transmits them using the covert channel.
@@ -181,7 +230,15 @@ def generate_and_transmit(data_type, count):
             password = generate_random_password()
             data_list.append(password)
             print(f"Transmitting password {i}/{count}")
+            
+            # Send start signal
+            send_signal(SIGNAL_START)
+            # Send password type signal
+            send_signal(SIGNAL_PASSWORD)
+            # Send the password data
             send_key_over_tls_pairs(password)
+            # Send end signal
+            send_signal(SIGNAL_END)
     
     elif data_type.lower() == "rsa":
         print(f"Generating and transmitting {count} RSA keys...")
@@ -195,7 +252,15 @@ def generate_and_transmit(data_type, count):
             ascii_key = key_pem.decode("ascii")
             data_list.append(ascii_key)
             print(f"Transmitting RSA key {i}/{count}")
+            
+            # Send start signal
+            send_signal(SIGNAL_START)
+            # Send RSA type signal
+            send_signal(SIGNAL_RSA)
+            # Send the RSA key data
             send_key_over_tls_pairs(ascii_key)
+            # Send end signal
+            send_signal(SIGNAL_END)
     
     elif data_type.lower() == "ecc":
         print(f"Generating and transmitting {count} ECC keys...")
@@ -209,7 +274,15 @@ def generate_and_transmit(data_type, count):
             ascii_key = key_pem.decode("ascii")
             data_list.append(ascii_key)
             print(f"Transmitting ECC key {i}/{count}")
+            
+            # Send start signal
+            send_signal(SIGNAL_START)
+            # Send ECC type signal
+            send_signal(SIGNAL_ECC)
+            # Send the ECC key data
             send_key_over_tls_pairs(ascii_key)
+            # Send end signal
+            send_signal(SIGNAL_END)
     
     else:
         print(f"Invalid data type: {data_type}")
