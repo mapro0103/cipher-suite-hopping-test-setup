@@ -1,0 +1,53 @@
+{
+  "timestamp": "2025-03-04 18:42:59",
+  "data_type": "rsa",
+  "num_transmissions": 2,
+  "total_bits": 51904,
+  "total_bytes": 6488.0,
+  "total_transmission_time": 178.57459354400635,
+  "total_connections": 3244,
+  "avg_bandwidth_bits": 290.65724843556336,
+  "avg_bandwidth_bytes": 36.33215605444542,
+  "transmission_times": [
+    90.72118711471558,
+    87.85340642929077
+  ],
+  "transmission_sizes": [
+    25952,
+    25952
+  ],
+  "data_rates": [
+    286.06327612516895,
+    295.4011808396706
+  ],
+  "connections_per_transmission": [
+    1622,
+    1622
+  ],
+  "stats": {
+    "time": {
+      "mean": 89.28729677200317,
+      "std": 1.4338903427124023,
+      "min": 87.85340642929077,
+      "max": 90.72118711471558
+    },
+    "size": {
+      "mean": 25952.0,
+      "std": 0.0,
+      "min": 25952.0,
+      "max": 25952.0
+    },
+    "rate": {
+      "mean": 290.73222848241977,
+      "std": 4.6689523572508165,
+      "min": 286.06327612516895,
+      "max": 295.4011808396706
+    },
+    "connections": {
+      "mean": 1622.0,
+      "std": 0.0,
+      "min": 1622.0,
+      "max": 1622.0
+    }
+  }
+}

@@ -239,6 +239,20 @@ def process_captured_packet_pair():
                 current_transmission.append((ascii_value1, ascii_value2))
                 current_transmission_packets.append((idx1, idx2))
 
+def export_metrics(data_type, metrics):
+    """Export metrics to a JSON file for later analysis."""
+    timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+    metrics_file = f"/tmp/metrics_{data_type}_{timestamp}.json"
+    
+    try:
+        with open(metrics_file, "w") as f:
+            json.dump(metrics, f, indent=2)
+        print(f"Metrics for {data_type} saved to {metrics_file}")
+    except Exception as e:
+        print(f"Error exporting metrics for {data_type}: {e}")
+    
+    return metrics_file
+
 def generate_report(data_type):
     """
     Generates a text report for a specific data type, containing all captured packets,
@@ -444,7 +458,51 @@ def generate_report(data_type):
                 
                 report.write("\n")
             
-            # No need for total statistics here as we moved them to the top
+            # Export metrics for visualization
+            metrics = {
+                "timestamp": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                "data_type": data_type,
+                "num_transmissions": num_transmissions,
+                "total_bits": total_bits,
+                "total_bytes": total_bytes,
+                "total_transmission_time": total_transmission_time,
+                "total_connections": total_connections,
+                "avg_bandwidth_bits": avg_bandwidth_bits if total_transmission_time > 0 else 0,
+                "avg_bandwidth_bytes": avg_bandwidth_bytes if total_transmission_time > 0 else 0,
+                "transmission_times": transmission_times,
+                "transmission_sizes": transmission_sizes,
+                "data_rates": data_rates,
+                "connections_per_transmission": connections_per_transmission,
+                "stats": {
+                    "time": {
+                        "mean": float(mean_time),
+                        "std": float(std_time),
+                        "min": float(min_time),
+                        "max": float(max_time)
+                    },
+                    "size": {
+                        "mean": float(mean_size),
+                        "std": float(std_size),
+                        "min": float(min_size),
+                        "max": float(max_size)
+                    },
+                    "rate": {
+                        "mean": float(mean_rate),
+                        "std": float(std_rate),
+                        "min": float(min_rate),
+                        "max": float(max_rate)
+                    },
+                    "connections": {
+                        "mean": float(mean_connections),
+                        "std": float(std_connections),
+                        "min": float(min_connections),
+                        "max": float(max_connections)
+                    }
+                }
+            }
+            
+            # Export metrics to a file
+            export_metrics(data_type, metrics)
         
         print(f"Report for {data_type} data saved to {REPORT_FILE}")
         # Verify the file was created

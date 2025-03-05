@@ -129,3 +129,38 @@ generate_permutations_file(
 
 - The maximum number of entries is limited by either the number of possible permutations or the ASCII limit plus any extra entries specified.
 - The total number of possible permutation groups depends on the number of elements, whether cumulative mode is enabled, and the group count.
+
+## Encoding Analysis
+
+The repository includes two Python scripts for analyzing the encoding capacity of permutations:
+
+### Standard Permutations Analysis
+
+`encoding-analysis-permutations.py` analyzes the maximum number of 8-bit ASCII values that can be encoded using permutations with fixed length:
+
+```bash
+python encoding-analysis-permutations.py
+```
+
+This script:
+- Calculates the encoding capacity for different combinations of cipher suites (n) and TLS connections (c)
+- Uses the formula (n!)^c to calculate total possible combinations
+- Converts bit capacity to equivalent ASCII characters
+- Generates a visualization showing how many ASCII characters can be encoded with different parameters
+- Outputs the results as an SVG file named `encoding_analysis_permutations.svg`
+
+### Cumulative Permutations Analysis
+
+`encoding-analysis-permutations-cumulative.py` analyzes encoding capacity when using all subset permutations:
+
+```bash
+python encoding-analysis-permutations-cumulative.py
+```
+
+This script:
+- Calculates encoding capacity using the sum of all permutations of different lengths
+- Uses the formula (sum of permutations)^c for total possible combinations
+- Visualizes how many ASCII characters can be encoded with cumulative permutations
+- Outputs the results as an SVG file named `encoding_analysis_permutations_cumulative.svg`
+
+Both analyses help determine optimal parameters for maximizing encoding capacity while maintaining practical implementation constraints.
