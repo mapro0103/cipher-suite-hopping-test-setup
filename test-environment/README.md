@@ -6,6 +6,44 @@ This project implements a covert channel using TLS cipher suite permutations to 
 
 The covert channel works by encoding data into specific permutations of TLS cipher suites during the handshake process. By controlling which cipher suites are offered in each ClientHello message, the sender can encode ASCII characters that can be decoded by an observer monitoring the network traffic.
 
+## Docker Environment Setup
+
+The entire test environment is set up using Docker Compose, creating an isolated network for testing the covert channel. This ensures consistent behavior across different systems and simplifies deployment.
+
+### Docker Components
+
+The environment consists of four containers:
+
+1. **Sender**: Contains the client that initiates TLS connections with encoded data
+2. **Receiver**: Runs the TLS server that accepts connections from the sender
+3. **Intermediate**: Acts as a network intermediary/router between sender and receiver
+4. **Monitor**: Passively observes network traffic to decode the covert channel
+
+### Network Configuration
+
+The Docker environment creates an isolated internal network with the following IP assignments:
+- Sender: 192.168.0.10
+- Receiver: 192.168.0.20
+- Intermediate: 192.168.0.30
+- Monitor: 192.168.0.40
+
+### Deployment
+
+To deploy the test environment:
+
+```bash
+# Start all containers
+docker-compose up -d
+
+# To see logs
+docker-compose logs -f
+
+# To stop the environment
+docker-compose down
+```
+
+**Note:** The receiver and monitor containers are automatically started by Docker Compose. Only the `sender-wolfssl.py` script needs to be controlled manually by the user from within the sender container.
+
 ## Components
 
 ### Sender (`sender-wolfssl.py`)
@@ -58,6 +96,8 @@ The monitor passively observes network traffic to decode the covert channel:
 - Decodes the covert message by matching cipher suite permutations to ASCII values
 - Generates detailed reports of captured transmissions
 - Calculates statistics on bandwidth, transmission time, and data rates
+- Creates detailed reports of all transmissions in `/tmp/tls_report_*` files
+- Exports statistical metrics as JSON files to `/tmp/metrics_*` for later analysis
 
 #### Usage
 
@@ -111,26 +151,40 @@ This ensures that old data is removed between test runs.
    ./keygen.sh
    ```
 
-2. Start the receiver:
+2. Start the Docker environment:
    ```bash
-   python receiver-wolfssl.py
+   docker-compose up -d
    ```
 
-3. In a separate terminal, start the monitor:
+3. Use the attach script to interact with the sender container:
    ```bash
-   python monitor.py
+   ./attach.sh sender
    ```
 
-4. In another terminal, use the sender to transmit data:
+4. From within the sender container, use sender-wolfssl.py to transmit data:
    ```bash
    python sender-wolfssl.py --data password --n 1
    ```
 
-5. Check the monitor output for decoded messages and reports
+5. Check the monitor container logs for decoded messages:
+   ```bash
+   docker-compose logs -f monitor
+   ```
+
+6. Access the monitor's generated reports and statistics:
+   ```bash
+   # View the contents of the reports directory
+   docker exec monitor ls -la /tmp
+   
+   # Copy reports to your local machine
+   docker cp monitor:/tmp/tls_report_* ./
+   docker cp monitor:/tmp/metrics_* ./
+   ```
 
 ## Requirements
 
-- Python 3.6 or higher
+- Docker and Docker Compose
+- Python 3.6 or higher (for local development)
 - wolfSSL Python bindings
 - Scapy (for the monitor)
 - cryptography library
@@ -138,8 +192,9 @@ This ensures that old data is removed between test runs.
 
 ## Configuration
 
-- The default server IP is set to `192.168.0.20` in the sender script, which may need to be modified to match your setup
+- The default server IP is set to `192.168.0.20` in the sender script, which matches the Docker environment configuration
 - The permutations file (`permutations.json`) must be present and generated using the permutations generator
+- Environment variables are configured in the `.env` file
 
 ## Important Legal Disclaimer
 
@@ -171,6 +226,8 @@ This covert channel is designed for educational and research purposes. Keep in m
 - `attach.sh`: Attaches to Docker containers for debugging
 - `cleanup.sh`: Removes old data files
 - `permutations.json`: Contains the mapping between ASCII values and cipher suite permutations
+- `docker-compose.yml`: Defines the Docker environment setup
+- `.env`: Contains environment variables for the Docker setup
 
 ## Permutations File
 
