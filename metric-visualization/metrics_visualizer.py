@@ -222,7 +222,7 @@ def plot_bandwidth_comparison(metrics_by_type, output_dir="."):
     
     # Save the figure
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    output_file = f"{output_dir}/bandwidth_comparison_{timestamp}.png"
+    output_file = f"{output_dir}/bandwidth_comparison.svg."
     plt.savefig(output_file, dpi=300, bbox_inches='tight')
     print(f"Bandwidth comparison chart saved to {output_file}")
     plt.close()
@@ -260,7 +260,7 @@ def plot_bandwidth_boxplot(metrics_by_type, output_dir="."):
     
     # Save the figure
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    output_file = f"{output_dir}/bandwidth_boxplot_{timestamp}.png"
+    output_file = f"{output_dir}/bandwidth_boxplot.svg"
     plt.savefig(output_file, dpi=300, bbox_inches='tight')
     print(f"Bandwidth boxplot saved to {output_file}")
     plt.close()
@@ -300,7 +300,7 @@ def plot_covert_overt_ratio(metrics_by_type, output_dir="."):
     
     # Save the figure
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    output_file = f"{output_dir}/covert_overt_ratio_{timestamp}.png"
+    output_file = f"{output_dir}/covert_overt_ratio.svg"
     plt.savefig(output_file, dpi=300, bbox_inches='tight')
     print(f"Covert to overt ratio chart saved to {output_file}")
     plt.close()
@@ -353,7 +353,7 @@ def check_transmission_errors(metrics_by_type, original_data_by_type, output_dir
                 diff_count = sum(1 for a, b in zip(orig, recv) if a != b)
                 diff_count += abs(len(orig) - len(recv))
                 error_rate = (diff_count / max(len(orig), len(recv))) * 100
-                error_report.append(f"  - Error rate: {error_rate:.2f}% ({diff_count} characters different)")
+                error_report.append(f"  - Error rate: {error_rate:.2f}% ({diff_count} characters different)\n  - Original message:\n{orig}\n  - Received message:\n{recv}")
         
         # Calculate and add success percentage
         if total_compared > 0:
@@ -362,7 +362,7 @@ def check_transmission_errors(metrics_by_type, original_data_by_type, output_dir
     
     # Write the error report to a file
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    output_file = f"{output_dir}/transmission_errors_{timestamp}.txt"
+    output_file = f"{output_dir}/transmission_errors.txt"
     with open(output_file, 'w') as f:
         f.write('\n'.join(error_report))
     
