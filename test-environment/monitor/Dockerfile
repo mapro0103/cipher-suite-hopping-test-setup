@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libpcap-dev \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-COPY permutations.json monitor.py requirements.txt .
+COPY permutations.json monitor.py report_generator.py requirements.txt .
 RUN pip install -r requirements.txt
 
 COPY entrypoint.sh /entrypoint.sh

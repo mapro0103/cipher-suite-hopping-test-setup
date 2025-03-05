@@ -17,7 +17,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-COPY receiver-wolfssl.py requirements.txt .
+COPY receiver_wolfssl.py requirements.txt .
 
 RUN git clone --recurse-submodules https://github.com/mapro0103/wolfssl-py-aesccm.git /app/wolfssl-py
 
