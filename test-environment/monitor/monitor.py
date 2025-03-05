@@ -55,6 +55,7 @@ captured_sequences = []
 packet_start_times = []
 packet_end_times = []
 packet_types = []
+packet_lengths = []  # Added to track raw packet lengths
 last_packet_time = time.time()
 
 # Data collection structures
@@ -103,6 +104,7 @@ def check_timeout():
             packet_start_times = []
             packet_end_times = []
             packet_types = []
+            packet_lengths = []  # Reset packet lengths
             data_collections = {
                 "password": [],
                 "rsa": [],
@@ -116,13 +118,16 @@ def extract_cipher_suites(packet):
     """
     Extracts cipher suites from a TLS ClientHello packet and maps them to symbolic representations.
     """
-    global captured_sequences, packet_start_times, packet_end_times, packet_types, last_packet_time
+    global captured_sequences, packet_start_times, packet_end_times, packet_types, packet_lengths, last_packet_time
     start_time = time.time()
     last_packet_time = start_time
     
     if packet.haslayer(TLS):
         tls_layer = packet[TLS]
         packet_type = tls_layer.msg[0].__class__.__name__ if tls_layer.msg else "Unknown"
+        
+        # Store packet length for overt channel measurement
+        packet_length = len(bytes(packet))
         
         if packet.haslayer(TLSClientHello):
             client_hello = packet[TLSClientHello]
@@ -136,6 +141,7 @@ def extract_cipher_suites(packet):
                     packet_start_times.append(start_time)
                     packet_end_times.append(time.time())
                     packet_types.append(packet_type)
+                    packet_lengths.append(packet_length)  # Store packet length
                     
                     # After capturing a complete packet, process it with pairs
                     process_captured_packet_pair()
@@ -281,12 +287,14 @@ def generate_report(data_type):
             total_pairs = 0
             total_chars = 0
             total_connections = 0
+            total_overt_bits = 0  # Add overt bits tracking
             
             # For statistical analysis
             data_rates = []
             transmission_times = []
             transmission_sizes = []
             connections_per_transmission = []
+            overt_message_sizes = []  # Add overt message size tracking
             
             # First pass to calculate aggregate statistics
             for transmission in data_collections[data_type]:
@@ -322,6 +330,15 @@ def generate_report(data_type):
                 if transmission_time > 0:
                     data_rate = trans_total_bits / transmission_time
                     data_rates.append(data_rate)
+                
+                # Calculate overt message size for this transmission
+                overt_bits = 0
+                for idx1, idx2 in packets:
+                    overt_bits += packet_lengths[idx1] * 8  # Convert bytes to bits
+                    overt_bits += packet_lengths[idx2] * 8
+                
+                total_overt_bits += overt_bits
+                overt_message_sizes.append(overt_bits)
             
             # Calculate statistical values
             import numpy as np
@@ -350,13 +367,21 @@ def generate_report(data_type):
             min_connections = np.min(connections_per_transmission) if connections_per_transmission else 0
             max_connections = np.max(connections_per_transmission) if connections_per_transmission else 0
             
+            # For overt message sizes
+            mean_overt_size = np.mean(overt_message_sizes) if overt_message_sizes else 0
+            std_overt_size = np.std(overt_message_sizes) if overt_message_sizes else 0
+            min_overt_size = np.min(overt_message_sizes) if overt_message_sizes else 0
+            max_overt_size = np.max(overt_message_sizes) if overt_message_sizes else 0
+            
             # Write the aggregate statistics at the top
             total_bytes = total_bits / 8
+            total_overt_bytes = total_overt_bits / 8
             report.write("Aggregated Statistics:\n")
             report.write(f"Total ASCII Data Transferred: {total_bits} bits ({total_bytes:.2f} bytes)\n")
             report.write(f"Total Character Pairs: {total_pairs} ({total_chars} characters)\n")
             report.write(f"Total Transmission Time: {total_transmission_time:.2f} seconds\n")
             report.write(f"Total TLS Connections: {total_connections}\n")
+            report.write(f"Total Overt Message Size: {total_overt_bits} bits ({total_overt_bytes:.2f} bytes)\n")
             
             if total_transmission_time > 0:
                 avg_bandwidth_bits = total_bits / total_transmission_time
@@ -403,6 +428,17 @@ def generate_report(data_type):
             report.write(f"{format_stat('Minimum', min_connections)}\n")
             report.write(f"{format_stat('Maximum', max_connections)}\n\n")
             
+            # Overt Message Sizes
+            report.write("Overt Message Sizes (bits):\n")
+            report.write(f"{format_stat('Mean', mean_overt_size)}\n")
+            report.write(f"{format_stat('Mean (bytes)', mean_overt_size/8)}\n")
+            report.write(f"{format_stat('Std Deviation', std_overt_size)}\n")
+            report.write(f"{format_stat('Minimum', min_overt_size)}\n")
+            report.write(f"{format_stat('Maximum', max_overt_size)}\n\n")
+            
+            # Store transmission details for the metrics JSON
+            transmission_details = []
+            
             # Process each transmission
             for trans_idx, transmission in enumerate(data_collections[data_type], 1):
                 data = transmission["data"]
@@ -423,6 +459,14 @@ def generate_report(data_type):
                 trans_total_bits = total_chars * 8
                 trans_total_bytes = trans_total_bits / 8
                 
+                # Calculate overt message size for this transmission
+                overt_bits = 0
+                for idx1, idx2 in packets:
+                    overt_bits += packet_lengths[idx1] * 8  # Convert bytes to bits
+                    overt_bits += packet_lengths[idx2] * 8
+                
+                overt_bytes = overt_bits / 8
+                
                 bandwidth_bits = trans_total_bits / transmission_time if transmission_time > 0 else 0
                 bandwidth_bytes = trans_total_bytes / transmission_time if transmission_time > 0 else 0
                 
@@ -430,7 +474,8 @@ def generate_report(data_type):
                 report.write(f"  Start Time: {datetime.datetime.fromtimestamp(start_time).strftime('%Y-%m-%d %H:%M:%S.%f')}\n")
                 report.write(f"  End Time: {datetime.datetime.fromtimestamp(end_time).strftime('%Y-%m-%d %H:%M:%S.%f')}\n")
                 report.write(f"  Duration: {transmission_time:.4f} seconds\n")
-                report.write(f"  Data: {trans_total_bits} bits ({trans_total_bytes:.2f} bytes)\n")
+                report.write(f"  Covert Data: {trans_total_bits} bits ({trans_total_bytes:.2f} bytes)\n")
+                report.write(f"  Overt Data: {overt_bits} bits ({overt_bytes:.2f} bytes)\n")
                 report.write(f"  Bandwidth: {bandwidth_bits:.2f} bits/second ({bandwidth_bytes:.2f} bytes/second)\n\n")
                 
                 # Decode and display the message
@@ -439,6 +484,22 @@ def generate_report(data_type):
                     covert_message += chr(ascii1) + chr(ascii2)
                 
                 report.write(f"  Decoded Message:\n{covert_message}\n\n")
+                
+                # Store transmission details for metrics
+                transmission_details.append({
+                    "id": trans_idx,
+                    "start_time": start_time,
+                    "end_time": end_time,
+                    "duration": transmission_time,
+                    "covert_bits": trans_total_bits,
+                    "covert_bytes": trans_total_bytes,
+                    "overt_bits": overt_bits,
+                    "overt_bytes": overt_bytes,
+                    "bandwidth_bits": bandwidth_bits,
+                    "bandwidth_bytes": bandwidth_bytes,
+                    "connections": len(packets),
+                    "covert_message": covert_message
+                })
                 
                 # Detailed packet information only if --details flag is set
                 if show_details:
@@ -450,8 +511,10 @@ def generate_report(data_type):
                         report.write(f"      Cipher Sequence 1: {', '.join(captured_sequences[idx1])}\n")
                         report.write(f"      Cipher Sequence 2: {', '.join(captured_sequences[idx2])}\n")
                         report.write(f"      Packet Type 1: {packet_types[idx1]}\n")
+                        report.write(f"      Packet 1 Size: {packet_lengths[idx1]} bytes ({packet_lengths[idx1]*8} bits)\n")
                         report.write(f"      Packet 1 Start Time: {packet_start_times[idx1]:.4f}, End Time: {packet_end_times[idx1]:.4f}\n")
                         report.write(f"      Packet Type 2: {packet_types[idx2]}\n")
+                        report.write(f"      Packet 2 Size: {packet_lengths[idx2]} bytes ({packet_lengths[idx2]*8} bits)\n")
                         report.write(f"      Packet 2 Start Time: {packet_start_times[idx2]:.4f}, End Time: {packet_end_times[idx2]:.4f}\n")
                         report.write(f"      Decoded ASCII Characters: '{chr(ascii1)}' ({ascii1}), '{chr(ascii2)}' ({ascii2})\n")
                         report.write("      -----------------------------\n")
@@ -465,14 +528,18 @@ def generate_report(data_type):
                 "num_transmissions": num_transmissions,
                 "total_bits": total_bits,
                 "total_bytes": total_bytes,
+                "total_overt_bits": total_overt_bits,
+                "total_overt_bytes": total_overt_bytes,
                 "total_transmission_time": total_transmission_time,
                 "total_connections": total_connections,
                 "avg_bandwidth_bits": avg_bandwidth_bits if total_transmission_time > 0 else 0,
                 "avg_bandwidth_bytes": avg_bandwidth_bytes if total_transmission_time > 0 else 0,
                 "transmission_times": transmission_times,
                 "transmission_sizes": transmission_sizes,
+                "overt_message_sizes": overt_message_sizes,
                 "data_rates": data_rates,
                 "connections_per_transmission": connections_per_transmission,
+                "transmissions": transmission_details,
                 "stats": {
                     "time": {
                         "mean": float(mean_time),
@@ -497,6 +564,12 @@ def generate_report(data_type):
                         "std": float(std_connections),
                         "min": float(min_connections),
                         "max": float(max_connections)
+                    },
+                    "overt_size": {
+                        "mean": float(mean_overt_size),
+                        "std": float(std_overt_size),
+                        "min": float(min_overt_size),
+                        "max": float(max_overt_size)
                     }
                 }
             }

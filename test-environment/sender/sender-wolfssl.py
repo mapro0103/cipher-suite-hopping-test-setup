@@ -207,15 +207,23 @@ def generate_random_password(length=20):
     return ''.join(password)
 
 def save_data_to_file(data_type, data_list):
-    """Saves the generated data to a file with timestamp in the /tmp directory."""
+    """Saves the generated data to a JSON file with timestamp."""
     timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-    filename = f"/tmp/{data_type}_{timestamp}.txt"
+    filename = f"/tmp/{data_type}_{timestamp}.json"
     
+    # Create JSON structure
+    json_data = []
+    for i, data in enumerate(data_list, 1):
+        json_data.append({
+            "timestamp": datetime.datetime.now().isoformat(),
+            "data_type": data_type,
+            "num_transmissions": i,
+            "covert_message": data
+        })
+    
+    # Write to JSON file
     with open(filename, "w") as file:
-        for i, data in enumerate(data_list, 1):
-            file.write(f"--- {data_type} {i} ---\n")
-            file.write(data)
-            file.write("\n\n")
+        json.dump(json_data, file, indent=2)
     
     print(f"Saved {len(data_list)} {data_type} entries to {filename}")
     return filename
