@@ -1,4 +1,4 @@
-# TLS Cipher Suite Hopping Covert Channel Metrics Visualizer
+# Metrics Visualizer
 
 A Python tool for analyzing and visualizing performance metrics from the TLS cipher suite hopping covert channel.
 
