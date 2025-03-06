@@ -46,7 +46,7 @@ def run_https_server():
             secure_socket = None
             new_socket, from_addr = bind_socket.accept()
             secure_socket = context.wrap_socket(new_socket)
-            print("Connection received from", from_addr)
+            # print("Connection received from", from_addr)
         except KeyboardInterrupt:
             print("Shutting down HTTPS server...")
             break
