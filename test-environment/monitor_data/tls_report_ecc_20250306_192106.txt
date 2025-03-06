@@ -1,0 +1,902 @@
+TLS Covert Channel Transmission Report - ECC
+====================================
+
+Report Timestamp: 2025-03-06 19:21:06
+Data Type: ECC
+Number of Transmissions: 50
+
+Aggregated Statistics:
+Total ASCII Data Transferred: 91200 bits (11400.00 bytes)
+Total Character Pairs: 5700 (11400 characters)
+Total Transmission Time: 249.62 seconds
+Total TLS Connections: 5700
+Total Overt Message Size: 24197584 bits (3024698.00 bytes)
+Average Bandwidth: 365.36 bits/second (45.67 bytes/second)
+
+Statistical Analysis:
+Number of Transmissions: 50
+
+Transmission Times (seconds):
+Mean                : 4.99
+Std Deviation       : 0.19
+Minimum             : 4.72
+Maximum             : 5.45
+
+Transmission Sizes (bits):
+Mean                : 1824.00
+Mean (bytes)        : 228.00
+Std Deviation       : 0.00
+Minimum             : 1824.00
+Maximum             : 1824.00
+
+Data Transfer Rates (bits/second):
+Mean                : 365.88
+Mean (bytes/sec)    : 45.73
+Std Deviation       : 13.58
+Minimum             : 334.64
+Maximum             : 386.84
+
+TLS Connections per Transmission:
+Total               : 5700.00
+Mean                : 114.00
+Std Deviation       : 0.00
+Minimum             : 114.00
+Maximum             : 114.00
+
+Overt Message Sizes (bits):
+Mean                : 483951.68
+Mean (bytes)        : 60493.96
+Std Deviation       : 142.73
+Minimum             : 483616.00
+Maximum             : 484320.00
+
+Transmission #1:
+  Start Time: 2025-03-06 19:12:20.908134
+  End Time: 2025-03-06 19:12:25.882301
+  Duration: 4.9742 seconds
+  Covert Data: 1824 bits (228.00 bytes)
+  Overt Data: 484048 bits (60506.00 bytes)
+  Bandwidth: 366.69 bits/second (45.84 bytes/second)
+
+  Decoded Message:
+-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEIKBUK7/dIAe1W/+uQfAPvP3ZTFKXbEtRtG/ktxyo1kyNoAoGCCqGSM49
+AwEHoUQDQgAEp+f+DIYMMpYcB7DCWnomM6i83SwYNs4Hnl3NBkrovDG23zVOyj1d
+Xd6I6fIZ0DMZz3du2CvaAW74lbl3FGJFCg==
+-----END EC PRIVATE KEY-----
+ 
+
+
+Transmission #2:
+  Start Time: 2025-03-06 19:12:26.031665
+  End Time: 2025-03-06 19:12:31.026143
+  Duration: 4.9945 seconds
+  Covert Data: 1824 bits (228.00 bytes)
+  Overt Data: 483904 bits (60488.00 bytes)
+  Bandwidth: 365.20 bits/second (45.65 bytes/second)
+
+  Decoded Message:
+-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEICa+YNUsIi92Hza3wLEdyUSrg7Xic+Ycpcro520iclB+oAoGCCqGSM49
+AwEHoUQDQgAE8euSo8vCWuutcYOtSFc46rE3KX3XS8oeU8VaQOqV9QT8kgIxyVe8
+bc/xRzMDAWUJ/nLEhfeC49EfuZksG7FQ/Q==
+-----END EC PRIVATE KEY-----
+ 
+
+
+Transmission #3:
+  Start Time: 2025-03-06 19:12:31.180008
+  End Time: 2025-03-06 19:12:36.589993
+  Duration: 5.4100 seconds
+  Covert Data: 1824 bits (228.00 bytes)
+  Overt Data: 484000 bits (60500.00 bytes)
+  Bandwidth: 337.15 bits/second (42.14 bytes/second)
+
+  Decoded Message:
+-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEIIX7EiyBDFL48Ljoruud9T/iY7RiLKP6rrcI5pcyeKvroAoGCCqGSM49
+AwEHoUQDQgAEXAn0EEhk1SJEOJkTAElllvUrFaFPnI5g6bpv1Ocw41PuHqnWgaHG
+ZyWax/ZOEmomxXUKviNlpbi+Dcf7wuSbUA==
+-----END EC PRIVATE KEY-----
+ 
+
+
+Transmission #4:
+  Start Time: 2025-03-06 19:12:36.752050
+  End Time: 2025-03-06 19:12:41.702264
+  Duration: 4.9502 seconds
+  Covert Data: 1824 bits (228.00 bytes)
+  Overt Data: 483792 bits (60474.00 bytes)
+  Bandwidth: 368.47 bits/second (46.06 bytes/second)
+
+  Decoded Message:
+-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEIAhewAbWoLL7Ozh2Hxl3YoyW6RLwUY8Yr1y65wFuqsOFoAoGCCqGSM49
+AwEHoUQDQgAE5eT6iltH1gBarY8yCIWDVJM5K5AhhR4i26+XUlx70xVJqQfmyuaI
+4By7knVcvICm2PLLgLkRM9IH0dMMOu2Xrg==
+-----END EC PRIVATE KEY-----
+ 
+
+
+Transmission #5:
+  Start Time: 2025-03-06 19:12:41.860362
+  End Time: 2025-03-06 19:12:46.720656
+  Duration: 4.8603 seconds
+  Covert Data: 1824 bits (228.00 bytes)
+  Overt Data: 483904 bits (60488.00 bytes)
+  Bandwidth: 375.29 bits/second (46.91 bytes/second)
+
+  Decoded Message:
+-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEIITdBsFYmAmkSjjGzmKPi6++PkhAmyHF8hYZ0tHnNJPWoAoGCCqGSM49
+AwEHoUQDQgAE0Azjs+dvHTw2h3uvNarvRixQ/SGZzZ0nKGa0P6fhJ1RtBczcgSbX
+K+MY0+FqUHe9DheNNpKlhKp0mcOwlEednQ==
+-----END EC PRIVATE KEY-----
+ 
+
+
+Transmission #6:
+  Start Time: 2025-03-06 19:12:46.879903
+  End Time: 2025-03-06 19:12:51.764754
+  Duration: 4.8849 seconds
+  Covert Data: 1824 bits (228.00 bytes)
+  Overt Data: 484320 bits (60540.00 bytes)
+  Bandwidth: 373.40 bits/second (46.67 bytes/second)
+
+  Decoded Message:
+-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEIPPZLtvKbYGgbSstjoeosMWFxwD0wBU8pUdQ+XVbV3BToAoGCCqGSM49
+AwEHoUQDQgAEljaYR8YmKxHMsVN0xqc5Kr8KssQj0fFJeiM+4uRa69FsnzhcI0jE
+EqRZYrOv08sVXumBns9cqX3WclCq8N1sQA==
+-----END EC PRIVATE KEY-----
+ 
+
+
+Transmission #7:
+  Start Time: 2025-03-06 19:12:51.914955
+  End Time: 2025-03-06 19:12:57.071150
+  Duration: 5.1562 seconds
+  Covert Data: 1824 bits (228.00 bytes)
+  Overt Data: 483760 bits (60470.00 bytes)
+  Bandwidth: 353.75 bits/second (44.22 bytes/second)
+
+  Decoded Message:
+-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEIL8HjuOcgvEhlqHMErUKnW8TeKPLw8HqC6rkV07dKHfNoAoGCCqGSM49
+AwEHoUQDQgAE0+pZWOwmDqe9/rSaMbzQIfABobhHiFhbAnAT9EcJngIXPz0K2ZO0
+P8yJ2pWCQPRLRUihGRVr7lsSlw5Wn7KBGA==
+-----END EC PRIVATE KEY-----
+ 
+
+
+Transmission #8:
+  Start Time: 2025-03-06 19:12:57.254539
+  End Time: 2025-03-06 19:13:02.104429
+  Duration: 4.8499 seconds
+  Covert Data: 1824 bits (228.00 bytes)
+  Overt Data: 484000 bits (60500.00 bytes)
+  Bandwidth: 376.09 bits/second (47.01 bytes/second)
+
+  Decoded Message:
+-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEIHvx0pyL+ze58BycgdtWCChqVuNVW5BgDprg/UjoVkeqoAoGCCqGSM49
+AwEHoUQDQgAEFHGO4xHGSrgDEuBA2tSWl9+SOlAbi7MjplXngH3mYYG5Sq3YCSwy
+X+d71YpWAKy75Kz0rxroNX/Wh6pvpxPR2w==
+-----END EC PRIVATE KEY-----
+ 
+
+
+Transmission #9:
+  Start Time: 2025-03-06 19:13:02.252274
+  End Time: 2025-03-06 19:13:07.119034
+  Duration: 4.8668 seconds
+  Covert Data: 1824 bits (228.00 bytes)
+  Overt Data: 483888 bits (60486.00 bytes)
+  Bandwidth: 374.79 bits/second (46.85 bytes/second)
+
+  Decoded Message:
+-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEIElgqxMTLXp55F65Cf9Btf5SGEdQIcGcFwbBJ8e7W8m3oAoGCCqGSM49
+AwEHoUQDQgAEezxJgsCGCdvfcfPrcQy9aBGzbivHxR6CJeyalPx9wnnW9wx80CbX
+O/7IEQ9SY8jAX1wQLqiju+OZqyhy8E5elQ==
+-----END EC PRIVATE KEY-----
+ 
+
+
+Transmission #10:
+  Start Time: 2025-03-06 19:13:07.274155
+  End Time: 2025-03-06 19:13:12.272428
+  Duration: 4.9983 seconds
+  Covert Data: 1824 bits (228.00 bytes)
+  Overt Data: 483616 bits (60452.00 bytes)
+  Bandwidth: 364.93 bits/second (45.62 bytes/second)
+
+  Decoded Message:
+-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEIJ1nttiXEbzriBEHeD6RLT8rE0WMOvyVC8E6sv7NvkaioAoGCCqGSM49
+AwEHoUQDQgAE+NTa5ikrEtl4uEUg2m/v001GAXt8fNmL2c4/U/HZAqgItJbvX/in
+TTRjzGGWqQ3N0TQ4AXiGex5JVldvgNFFbQ==
+-----END EC PRIVATE KEY-----
+ 
+
+
+Transmission #11:
+  Start Time: 2025-03-06 19:13:12.421701
+  End Time: 2025-03-06 19:13:17.605965
+  Duration: 5.1843 seconds
+  Covert Data: 1824 bits (228.00 bytes)
+  Overt Data: 484096 bits (60512.00 bytes)
+  Bandwidth: 351.83 bits/second (43.98 bytes/second)
+
+  Decoded Message:
+-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEIFst5/Kb/OvVWzROtpuPRRKDI2yBQSQNxJ5dbf+WSqn2oAoGCCqGSM49
+AwEHoUQDQgAEz8OxEyDDa4CReLgq3YYcPMzGBpY+EYh7Aj064jQprPZy4DgZsnGr
+ZCGT7zJYQswL6KceMwR+oX6O2ILX1HsWYQ==
+-----END EC PRIVATE KEY-----
+ 
+
+
+Transmission #12:
+  Start Time: 2025-03-06 19:13:17.752702
+  End Time: 2025-03-06 19:13:22.792593
+  Duration: 5.0399 seconds
+  Covert Data: 1824 bits (228.00 bytes)
+  Overt Data: 483984 bits (60498.00 bytes)
+  Bandwidth: 361.91 bits/second (45.24 bytes/second)
+
+  Decoded Message:
+-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEILzvIIOFFcforO/f8+T3/UZL457XX9MIKaVaUqsvuqZFoAoGCCqGSM49
+AwEHoUQDQgAEcOHi+7uciubX1/aEvKH5jzEWMNRZ1VluDp4eRN+83JeQcgLFOrrI
+f57/TLI9Km1zSAl+brlGmxdhm5ebW70vhg==
+-----END EC PRIVATE KEY-----
+ 
+
+
+Transmission #13:
+  Start Time: 2025-03-06 19:13:22.939286
+  End Time: 2025-03-06 19:13:27.787084
+  Duration: 4.8478 seconds
+  Covert Data: 1824 bits (228.00 bytes)
+  Overt Data: 484000 bits (60500.00 bytes)
+  Bandwidth: 376.25 bits/second (47.03 bytes/second)
+
+  Decoded Message:
+-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEID/5p3IdnnL7UGDc28invs+z+zoadpslt6tOy62DEHrOoAoGCCqGSM49
+AwEHoUQDQgAE7n+1+Ad6OqzMHRsgtQpc8p1ubjg2KwyYsunUNXBJBuxQhX7n7ZVm
+DESSN8w3E9tmiHYNsE5Zdl39Ogz7qgs8yA==
+-----END EC PRIVATE KEY-----
+ 
+
+
+Transmission #14:
+  Start Time: 2025-03-06 19:13:27.940881
+  End Time: 2025-03-06 19:13:33.043322
+  Duration: 5.1024 seconds
+  Covert Data: 1824 bits (228.00 bytes)
+  Overt Data: 483840 bits (60480.00 bytes)
+  Bandwidth: 357.48 bits/second (44.68 bytes/second)
+
+  Decoded Message:
+-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEIPPYfTuO11UHVaox1yt9G/hIOVNRA3Ap5kyfJtPi0fqkoAoGCCqGSM49
+AwEHoUQDQgAE4rhJxpAPxkornQ0cikpTf/jbavSTr0Cm+wtf3FxguLnTCpEukr8u
+LWoKmo8+yTzEGKK9gBi/GJvbSwSgxTuG/w==
+-----END EC PRIVATE KEY-----
+ 
+
+
+Transmission #15:
+  Start Time: 2025-03-06 19:13:33.208076
+  End Time: 2025-03-06 19:13:38.172407
+  Duration: 4.9643 seconds
+  Covert Data: 1824 bits (228.00 bytes)
+  Overt Data: 484096 bits (60512.00 bytes)
+  Bandwidth: 367.42 bits/second (45.93 bytes/second)
+
+  Decoded Message:
+-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEIAO8hERGcd3XHiIOrMdED/grdKqmTA2EQSHPmXDOgZZroAoGCCqGSM49
+AwEHoUQDQgAEuXHWl6ZjMz7mKfrcLoa7ztv1c1dyMHoFrpxAnMKTfpaBZ43h8iAO
+TCuDcJH8v7JJeTIN1F1sQAGJYrxImkQ/zA==
+-----END EC PRIVATE KEY-----
+ 
+
+
+Transmission #16:
+  Start Time: 2025-03-06 19:13:38.327163
+  End Time: 2025-03-06 19:13:43.209857
+  Duration: 4.8827 seconds
+  Covert Data: 1824 bits (228.00 bytes)
+  Overt Data: 484032 bits (60504.00 bytes)
+  Bandwidth: 373.56 bits/second (46.70 bytes/second)
+
+  Decoded Message:
+-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEIEELOLVFub2AHjz7gfE+AI6tvRQzdG7j/JwDwtRpsroToAoGCCqGSM49
+AwEHoUQDQgAETkX1oT7JHUsZNsYdsv3Ofzn761JIJMNa/dyBrulu37idI4WwYYGC
+M5J8Fnw2YPnPXAE1M6E/qZJvhK6pM46+2w==
+-----END EC PRIVATE KEY-----
+ 
+
+
+Transmission #17:
+  Start Time: 2025-03-06 19:13:43.360067
+  End Time: 2025-03-06 19:13:48.269719
+  Duration: 4.9097 seconds
+  Covert Data: 1824 bits (228.00 bytes)
+  Overt Data: 483744 bits (60468.00 bytes)
+  Bandwidth: 371.51 bits/second (46.44 bytes/second)
+
+  Decoded Message:
+-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEIFMJRwfm/z2BXCBuH6uN47uUMJVBZlc+WJSuv34/M0osoAoGCCqGSM49
+AwEHoUQDQgAE5CNntdIXCebhwsxoP7xoTpy2rjDzZCV0LYPTVv8hzTYmEJZu5IjU
+x1ruUhbKPDuXjTcN4BAVghQzXp9mqY+tVg==
+-----END EC PRIVATE KEY-----
+ 
+
+
+Transmission #18:
+  Start Time: 2025-03-06 19:13:48.419039
+  End Time: 2025-03-06 19:13:53.496787
+  Duration: 5.0777 seconds
+  Covert Data: 1824 bits (228.00 bytes)
+  Overt Data: 483936 bits (60492.00 bytes)
+  Bandwidth: 359.21 bits/second (44.90 bytes/second)
+
+  Decoded Message:
+-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEIH1NT4Ga/0C9MhcaNMS7M6Hn9pxvFfdHh8MvLN3Z8QqvoAoGCCqGSM49
+AwEHoUQDQgAEiseigtx5p9IcgEEoypkO/LkLUm6BeyCKIhdixRQ/eJfPwYTiQ/WF
+TEoRMIAhTywwPYHIHbjxsSCmPcTflPhqug==
+-----END EC PRIVATE KEY-----
+ 
+
+
+Transmission #19:
+  Start Time: 2025-03-06 19:13:53.671660
+  End Time: 2025-03-06 19:13:59.122251
+  Duration: 5.4506 seconds
+  Covert Data: 1824 bits (228.00 bytes)
+  Overt Data: 484080 bits (60510.00 bytes)
+  Bandwidth: 334.64 bits/second (41.83 bytes/second)
+
+  Decoded Message:
+-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEIH7Ikt9Zw/6Lt+zuFUHjaZ7Hyoo7vy0NMO2jb2VQ7aIYoAoGCCqGSM49
+AwEHoUQDQgAEPZPrF6fqJHlLOXPRWEGfMPuPvw4Mr++urOv64gHNsFwLpNJ+D3O6
+3C8ye5OVbnNFiFy3H0Ozdq5jEFNnN1Uibg==
+-----END EC PRIVATE KEY-----
+ 
+
+
+Transmission #20:
+  Start Time: 2025-03-06 19:13:59.299852
+  End Time: 2025-03-06 19:14:04.221949
+  Duration: 4.9221 seconds
+  Covert Data: 1824 bits (228.00 bytes)
+  Overt Data: 483888 bits (60486.00 bytes)
+  Bandwidth: 370.57 bits/second (46.32 bytes/second)
+
+  Decoded Message:
+-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEIN4YFo0ST9RG5UiE9fPrHfCpl7WpY+OlkbDw9tU8L1PmoAoGCCqGSM49
+AwEHoUQDQgAEKYGKRUDSJRUZBXZGd9Z2Jlykq1A5N210I9DNzYLXRYmTFiCIR5rX
+m8ya33z10PAEzbRai1fCAoxueqY44MF/hw==
+-----END EC PRIVATE KEY-----
+ 
+
+
+Transmission #21:
+  Start Time: 2025-03-06 19:14:04.374835
+  End Time: 2025-03-06 19:14:09.121841
+  Duration: 4.7470 seconds
+  Covert Data: 1824 bits (228.00 bytes)
+  Overt Data: 484032 bits (60504.00 bytes)
+  Bandwidth: 384.24 bits/second (48.03 bytes/second)
+
+  Decoded Message:
+-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEIJNDrFRQaBUL9MXr/ZcyAUWmWAuINNsAUHSEtjhY66PcoAoGCCqGSM49
+AwEHoUQDQgAEsJSPctHw/OVvzz6QI5D/Pg2IhM0zxLlELC61K2pjgOBZYeeDcGJj
+o2Qn/koAwBp3gTkYOnF0sT+dkaLDijYvLA==
+-----END EC PRIVATE KEY-----
+ 
+
+
+Transmission #22:
+  Start Time: 2025-03-06 19:14:09.273279
+  End Time: 2025-03-06 19:14:14.467785
+  Duration: 5.1945 seconds
+  Covert Data: 1824 bits (228.00 bytes)
+  Overt Data: 484016 bits (60502.00 bytes)
+  Bandwidth: 351.14 bits/second (43.89 bytes/second)
+
+  Decoded Message:
+-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEIMyVA5ktVankF5Ahq3Bd2a+U/VLrurzgGbCBW2He19leoAoGCCqGSM49
+AwEHoUQDQgAEzBJw1r/HZAjF+JIsyxmb0vXGS0lrzGjfTsHf1XTQkNKWDR2GRksE
+SvubDuO1FerlT5bk6RaklPLd+YI4xIFAvw==
+-----END EC PRIVATE KEY-----
+ 
+
+
+Transmission #23:
+  Start Time: 2025-03-06 19:14:14.616427
+  End Time: 2025-03-06 19:14:19.481222
+  Duration: 4.8648 seconds
+  Covert Data: 1824 bits (228.00 bytes)
+  Overt Data: 483952 bits (60494.00 bytes)
+  Bandwidth: 374.94 bits/second (46.87 bytes/second)
+
+  Decoded Message:
+-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEILFGo4axRRx9i4wd+vOlteTKy81bQpmrH/Naw3dVup/coAoGCCqGSM49
+AwEHoUQDQgAEJv2iMbf9P1d440vRiGEmAvhaB8AzoHdmlW3LHAhbUIKaAXICoE2D
+c4tWOEZ4cLH0d4h1W7JFQ67Oj7/ftIjkxA==
+-----END EC PRIVATE KEY-----
+ 
+
+
+Transmission #24:
+  Start Time: 2025-03-06 19:14:19.631491
+  End Time: 2025-03-06 19:14:24.589330
+  Duration: 4.9578 seconds
+  Covert Data: 1824 bits (228.00 bytes)
+  Overt Data: 483760 bits (60470.00 bytes)
+  Bandwidth: 367.90 bits/second (45.99 bytes/second)
+
+  Decoded Message:
+-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEILr4Vmhh6WYl/GTjbHx6+tRdjTosfBwvCO+R2YlnnqProAoGCCqGSM49
+AwEHoUQDQgAEyIMj7Hna2aTyd8yo5VWC4Gv9kvhJ3lt9yP3VOQL0EdUwdy+PMHYd
+z7qjh/0WQT3Uf5bctL0T/DkxCPxb6XJC0w==
+-----END EC PRIVATE KEY-----
+ 
+
+
+Transmission #25:
+  Start Time: 2025-03-06 19:14:24.745328
+  End Time: 2025-03-06 19:14:29.582180
+  Duration: 4.8369 seconds
+  Covert Data: 1824 bits (228.00 bytes)
+  Overt Data: 484320 bits (60540.00 bytes)
+  Bandwidth: 377.10 bits/second (47.14 bytes/second)
+
+  Decoded Message:
+-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEIBQOPJ6QVpVMHAkzUv5ZcddM4eS8oRBmFjqClyIf1BnBoAoGCCqGSM49
+AwEHoUQDQgAE7xGhyL4oUt4V47Dp7WnewI9017JjJfheBogpHDUylTpP1vZGRcbl
+vKm2FZ6B44x1SdTe6C6IefGxrkppP5jN6g==
+-----END EC PRIVATE KEY-----
+ 
+
+
+Transmission #26:
+  Start Time: 2025-03-06 19:14:29.734648
+  End Time: 2025-03-06 19:14:35.023702
+  Duration: 5.2891 seconds
+  Covert Data: 1824 bits (228.00 bytes)
+  Overt Data: 484000 bits (60500.00 bytes)
+  Bandwidth: 344.86 bits/second (43.11 bytes/second)
+
+  Decoded Message:
+-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEIElSGH1JOCYSkvHuGZ9qFogGciCyrjRqx0kuCX0L40XZoAoGCCqGSM49
+AwEHoUQDQgAEAmukHvSx0JjwDP5Mq7E4Q/jCfn1igUvJ//46PSQE33ZRSjSV4UOD
+3oHMA9+pd03IzXAQm0Br8UNECpF6yfmfHg==
+-----END EC PRIVATE KEY-----
+ 
+
+
+Transmission #27:
+  Start Time: 2025-03-06 19:14:35.190279
+  End Time: 2025-03-06 19:14:39.905410
+  Duration: 4.7151 seconds
+  Covert Data: 1824 bits (228.00 bytes)
+  Overt Data: 483616 bits (60452.00 bytes)
+  Bandwidth: 386.84 bits/second (48.35 bytes/second)
+
+  Decoded Message:
+-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEIMcGD+fTX0An6S03U2mWHC2bFbdngToNxsFUsojrQJa2oAoGCCqGSM49
+AwEHoUQDQgAEi7KCO0wOkxZOHPvPnWol+/OW2S+2RcThJgYTaLKUmT5vimDCc+UY
+Gq7YQmnJxDjJrmObNikKZa9yJuIpRIs/xg==
+-----END EC PRIVATE KEY-----
+ 
+
+
+Transmission #28:
+  Start Time: 2025-03-06 19:14:40.090595
+  End Time: 2025-03-06 19:14:44.874213
+  Duration: 4.7836 seconds
+  Covert Data: 1824 bits (228.00 bytes)
+  Overt Data: 483936 bits (60492.00 bytes)
+  Bandwidth: 381.30 bits/second (47.66 bytes/second)
+
+  Decoded Message:
+-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEIAtvsiLPbksrTNh/OLmX3cd0QkcvklcnxaxonJ8t99fQoAoGCCqGSM49
+AwEHoUQDQgAEE5k4dwNcStTmOlekiE313l+XPyBujSYL3OFs6msJ6TbNDfQjqrao
+CRCHJaAZoiSoEEfQqUa1AHt6Fn5LB3Doxg==
+-----END EC PRIVATE KEY-----
+ 
+
+
+Transmission #29:
+  Start Time: 2025-03-06 19:14:45.021824
+  End Time: 2025-03-06 19:14:50.352152
+  Duration: 5.3303 seconds
+  Covert Data: 1824 bits (228.00 bytes)
+  Overt Data: 484144 bits (60518.00 bytes)
+  Bandwidth: 342.19 bits/second (42.77 bytes/second)
+
+  Decoded Message:
+-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEIDqIkClZnWr5fZQFy3gznmjBIdQSViWN1gRAW+HvjwcxoAoGCCqGSM49
+AwEHoUQDQgAEeLM/rug46ZgfjizPZ0Mr36vhPoWi1hx9p6xf41lH/Co5QAuL8AD2
+DWHSNikIcCAxuy3KUKFtM24S4DV4qdjbdQ==
+-----END EC PRIVATE KEY-----
+ 
+
+
+Transmission #30:
+  Start Time: 2025-03-06 19:14:50.500255
+  End Time: 2025-03-06 19:14:55.347041
+  Duration: 4.8468 seconds
+  Covert Data: 1824 bits (228.00 bytes)
+  Overt Data: 483968 bits (60496.00 bytes)
+  Bandwidth: 376.33 bits/second (47.04 bytes/second)
+
+  Decoded Message:
+-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEIH5gTYi7vhi1Wn0734HqtXQdLbUUVldmWgyRIzcX+Pz9oAoGCCqGSM49
+AwEHoUQDQgAE6fbNxtbYGEb9ZhYb8J3Y/DpughOluwXoL5i4ICg4yywvHrILF0+C
+0UQUZM01CWihC9CDe77ptFR6+sLpf6Dj/g==
+-----END EC PRIVATE KEY-----
+ 
+
+
+Transmission #31:
+  Start Time: 2025-03-06 19:14:55.500547
+  End Time: 2025-03-06 19:15:00.537314
+  Duration: 5.0368 seconds
+  Covert Data: 1824 bits (228.00 bytes)
+  Overt Data: 484064 bits (60508.00 bytes)
+  Bandwidth: 362.14 bits/second (45.27 bytes/second)
+
+  Decoded Message:
+-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEIALlT47ZaqcSQMZkShloTWE0a28ltidnlHElDBAh7POvoAoGCCqGSM49
+AwEHoUQDQgAEAYJKOk6A0dy3jPH5cxISwyewjTO1iv5rEvMR4PFoqS69ONWw2805
+TIrw4exE/8QF+1xZV7yxRV4oPRdXzJsqTQ==
+-----END EC PRIVATE KEY-----
+ 
+
+
+Transmission #32:
+  Start Time: 2025-03-06 19:15:00.703089
+  End Time: 2025-03-06 19:15:05.554928
+  Duration: 4.8518 seconds
+  Covert Data: 1824 bits (228.00 bytes)
+  Overt Data: 483920 bits (60490.00 bytes)
+  Bandwidth: 375.94 bits/second (46.99 bytes/second)
+
+  Decoded Message:
+-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEIGhkz0zoGBW2ay+gSEaRjpIsAKwgbiKLNKNBVVfEr6D0oAoGCCqGSM49
+AwEHoUQDQgAETN4hap0aI6cn9WDxTaoyPvWdUCYJc7OZtOchvNq+XZjY4CkwozyJ
+TeBbfk4EoJzJsHVnAjN6KigMrP7ImeEQFA==
+-----END EC PRIVATE KEY-----
+ 
+
+
+Transmission #33:
+  Start Time: 2025-03-06 19:15:05.710059
+  End Time: 2025-03-06 19:15:10.581355
+  Duration: 4.8713 seconds
+  Covert Data: 1824 bits (228.00 bytes)
+  Overt Data: 484048 bits (60506.00 bytes)
+  Bandwidth: 374.44 bits/second (46.80 bytes/second)
+
+  Decoded Message:
+-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEIAd7hu8r2ivj9pa3pwlvZ97k1lGybudVdCfDbxco+D2GoAoGCCqGSM49
+AwEHoUQDQgAEAv6bk1B8BQVHrIvrK0+LTEtUjMHJurTjqZt9eVeF8qgXfIiTPicB
+ft3uDAsDdTwc6lDJIIealoOMNWata/Q/6A==
+-----END EC PRIVATE KEY-----
+ 
+
+
+Transmission #34:
+  Start Time: 2025-03-06 19:15:10.734161
+  End Time: 2025-03-06 19:15:15.631491
+  Duration: 4.8973 seconds
+  Covert Data: 1824 bits (228.00 bytes)
+  Overt Data: 483952 bits (60494.00 bytes)
+  Bandwidth: 372.45 bits/second (46.56 bytes/second)
+
+  Decoded Message:
+-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEIF93+hv9ZaPmIh1Mm+tNGNjM/bLyTLcd9fi9j2BHKa2eoAoGCCqGSM49
+AwEHoUQDQgAEvJfuT8WrV0/itPKueweUS6bkO5W3KyOX0VjwNHE4rrzEVWVoPaLP
+Vh6NAltcNirzVmu5FlqMeNtwnFwAMoWk9Q==
+-----END EC PRIVATE KEY-----
+ 
+
+
+Transmission #35:
+  Start Time: 2025-03-06 19:15:15.784388
+  End Time: 2025-03-06 19:15:20.656543
+  Duration: 4.8722 seconds
+  Covert Data: 1824 bits (228.00 bytes)
+  Overt Data: 483952 bits (60494.00 bytes)
+  Bandwidth: 374.37 bits/second (46.80 bytes/second)
+
+  Decoded Message:
+-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEIMcDd9UVmRODlNawxXRasBslE9raXfjGdD4g0KFo7MUvoAoGCCqGSM49
+AwEHoUQDQgAE1u44HYnFgQiEIux6i3bO5mH59mOOkEqGvO5amZ49w5TBumMh5s+N
+jLVQ9pQ8na3aEo3VGOTiWS5Jt1AV7/SJEg==
+-----END EC PRIVATE KEY-----
+ 
+
+
+Transmission #36:
+  Start Time: 2025-03-06 19:15:20.824325
+  End Time: 2025-03-06 19:15:25.836349
+  Duration: 5.0120 seconds
+  Covert Data: 1824 bits (228.00 bytes)
+  Overt Data: 484048 bits (60506.00 bytes)
+  Bandwidth: 363.92 bits/second (45.49 bytes/second)
+
+  Decoded Message:
+-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEIKI5RD91ZTyGicvBF8hzRmcjynCiVUt95rBCPl5kQFy0oAoGCCqGSM49
+AwEHoUQDQgAExgnw6mOMwNk/sZdrAEXORAdutxf7P0bipezP8OpjRGE6RKbtzMRT
+FYO2I1keYbR4FetZQWO422A5XazeeWr2+A==
+-----END EC PRIVATE KEY-----
+ 
+
+
+Transmission #37:
+  Start Time: 2025-03-06 19:15:25.990807
+  End Time: 2025-03-06 19:15:30.882958
+  Duration: 4.8922 seconds
+  Covert Data: 1824 bits (228.00 bytes)
+  Overt Data: 483920 bits (60490.00 bytes)
+  Bandwidth: 372.84 bits/second (46.61 bytes/second)
+
+  Decoded Message:
+-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEIAvcGRjvV8J0y0s1GzdKURNcYySKCpoaBtRzKyneRTT1oAoGCCqGSM49
+AwEHoUQDQgAEkO0KnVRzqhGqRVBHynR8H+4nL/13dnFT54AI3h1jT5D39096UKCU
+tSHG7pvFTJVeGN4Agnn3X8ZnjBAbXTiArA==
+-----END EC PRIVATE KEY-----
+ 
+
+
+Transmission #38:
+  Start Time: 2025-03-06 19:15:31.032637
+  End Time: 2025-03-06 19:15:36.312101
+  Duration: 5.2795 seconds
+  Covert Data: 1824 bits (228.00 bytes)
+  Overt Data: 483856 bits (60482.00 bytes)
+  Bandwidth: 345.49 bits/second (43.19 bytes/second)
+
+  Decoded Message:
+-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEIFNbLiIHN3dUNthPnJTzNLaYW4PLooQmoa5k2OsF/MfpoAoGCCqGSM49
+AwEHoUQDQgAE6npSp5dxXw4LA54xEbbFaqg8rBAXLs/1kj4cUyORzErCsQMQsG3a
+NlSVZZlws9Wy3bLPCPjgTbt+s9TWOPBl8g==
+-----END EC PRIVATE KEY-----
+ 
+
+
+Transmission #39:
+  Start Time: 2025-03-06 19:15:36.491926
+  End Time: 2025-03-06 19:15:41.933115
+  Duration: 5.4412 seconds
+  Covert Data: 1824 bits (228.00 bytes)
+  Overt Data: 484016 bits (60502.00 bytes)
+  Bandwidth: 335.22 bits/second (41.90 bytes/second)
+
+  Decoded Message:
+-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEIDFCPfmRMlQIzr2BYnpKln+fw9Kczls4LF3DSZR5x2/PoAoGCCqGSM49
+AwEHoUQDQgAEPqx7nwLjvhkLouZ+iUXAZoAuJ8cQB6BwhjCk1AjeMbXCiUEx/TiY
+KV5qZ7hpT2OVNjnA/nQxwWVHSeoTGnfu8g==
+-----END EC PRIVATE KEY-----
+ 
+
+
+Transmission #40:
+  Start Time: 2025-03-06 19:15:42.093480
+  End Time: 2025-03-06 19:15:46.900964
+  Duration: 4.8075 seconds
+  Covert Data: 1824 bits (228.00 bytes)
+  Overt Data: 483792 bits (60474.00 bytes)
+  Bandwidth: 379.41 bits/second (47.43 bytes/second)
+
+  Decoded Message:
+-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEIOKH18Eb8VU2tbEOSk46bL9plCNL6bqYUapjpXXxgefFoAoGCCqGSM49
+AwEHoUQDQgAEg3ICPmc+lokWTi9orxMjInRqvhjZ0lqOegH5gSd1Gnz/FoPJnYPu
+UimqCT66/SQ+6TPBnNTPUwzPx589r4mKZw==
+-----END EC PRIVATE KEY-----
+ 
+
+
+Transmission #41:
+  Start Time: 2025-03-06 19:15:47.051315
+  End Time: 2025-03-06 19:15:51.931993
+  Duration: 4.8807 seconds
+  Covert Data: 1824 bits (228.00 bytes)
+  Overt Data: 483824 bits (60478.00 bytes)
+  Bandwidth: 373.72 bits/second (46.71 bytes/second)
+
+  Decoded Message:
+-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEIEb744ntbGeFzcWzcL6ugAHExpkA9EkKQEbUXT/AcbMPoAoGCCqGSM49
+AwEHoUQDQgAEv2lLWq6OOaMXcfiHV6ddcnLfDkwNs02h7FNXX6OobvSvClQXtipz
+mKz5Mgg4OXqldwJ0zc6KIZXKTLNVEJ9QPQ==
+-----END EC PRIVATE KEY-----
+ 
+
+
+Transmission #42:
+  Start Time: 2025-03-06 19:15:52.083499
+  End Time: 2025-03-06 19:15:56.925566
+  Duration: 4.8421 seconds
+  Covert Data: 1824 bits (228.00 bytes)
+  Overt Data: 484000 bits (60500.00 bytes)
+  Bandwidth: 376.70 bits/second (47.09 bytes/second)
+
+  Decoded Message:
+-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEIEtlnGGAUtjXifwyJBn1RLUq635CRLq1P9p0Y2MaJUdMoAoGCCqGSM49
+AwEHoUQDQgAEnhsZqpxSkAUK/Nw9LptKoLM1VrDWFqXp7vnkTl5FMgdiHXL7+EVT
+FOTwr+xLPeZTY82i6Ugi3kbrjouMp5bgwA==
+-----END EC PRIVATE KEY-----
+ 
+
+
+Transmission #43:
+  Start Time: 2025-03-06 19:15:57.075281
+  End Time: 2025-03-06 19:16:02.084278
+  Duration: 5.0090 seconds
+  Covert Data: 1824 bits (228.00 bytes)
+  Overt Data: 483840 bits (60480.00 bytes)
+  Bandwidth: 364.14 bits/second (45.52 bytes/second)
+
+  Decoded Message:
+-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEILNuFqbNy2GILhy0oNq/CPXVpC2ESMZlmPZoyTv6AnkNoAoGCCqGSM49
+AwEHoUQDQgAEMOO7630pCgxqMMusPPLF75qUsKlN/72nBTwClH7ojSlbwFvNfhlr
+ijs3/YHQllCpRs3r37PT9wyFdrkRl3yv8g==
+-----END EC PRIVATE KEY-----
+ 
+
+
+Transmission #44:
+  Start Time: 2025-03-06 19:16:02.231236
+  End Time: 2025-03-06 19:16:07.147186
+  Duration: 4.9160 seconds
+  Covert Data: 1824 bits (228.00 bytes)
+  Overt Data: 484032 bits (60504.00 bytes)
+  Bandwidth: 371.04 bits/second (46.38 bytes/second)
+
+  Decoded Message:
+-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEIJQ9CGRhtf+AQgInj4TT/1wiW+7NUwgRU6PRA8ssahSRoAoGCCqGSM49
+AwEHoUQDQgAEwnwhALgUdDlN1XJi79+YQzxY07C/V+dGvk7NdqeEjqC4Eo6mZ7Ig
+sA5CnVCmT6nzMPVLunpQeQrqZMAwFw9ULg==
+-----END EC PRIVATE KEY-----
+ 
+
+
+Transmission #45:
+  Start Time: 2025-03-06 19:16:07.299943
+  End Time: 2025-03-06 19:16:12.064388
+  Duration: 4.7644 seconds
+  Covert Data: 1824 bits (228.00 bytes)
+  Overt Data: 483856 bits (60482.00 bytes)
+  Bandwidth: 382.84 bits/second (47.85 bytes/second)
+
+  Decoded Message:
+-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEIF6ykAsCI3A3tAWOKKycetkgb/gaDL9NeHkpjQ1nFsoUoAoGCCqGSM49
+AwEHoUQDQgAEkgZnodrBUzKEYOd7bGdK+FGibRrjgRswZksdLk5s53BTlrIsAKk+
+6BaH9gcJ8+f5vID0Sj5G7qVsr4Yq07SN4A==
+-----END EC PRIVATE KEY-----
+ 
+
+
+Transmission #46:
+  Start Time: 2025-03-06 19:16:12.231977
+  End Time: 2025-03-06 19:16:17.334615
+  Duration: 5.1026 seconds
+  Covert Data: 1824 bits (228.00 bytes)
+  Overt Data: 483824 bits (60478.00 bytes)
+  Bandwidth: 357.46 bits/second (44.68 bytes/second)
+
+  Decoded Message:
+-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEIO9ezfK0nQDGcagWKhSCi9c8Sh6E2ZeJCaUcSVCxeStVoAoGCCqGSM49
+AwEHoUQDQgAE0YKp43CoYAo7EtgIU4daFQdYVyroSwqq0URAjCJstIUVuGKxn30v
+8SKN+S4S023nLq4NLz4p6lx3AfCjTHisZw==
+-----END EC PRIVATE KEY-----
+ 
+
+
+Transmission #47:
+  Start Time: 2025-03-06 19:16:17.503149
+  End Time: 2025-03-06 19:16:22.451679
+  Duration: 4.9485 seconds
+  Covert Data: 1824 bits (228.00 bytes)
+  Overt Data: 483968 bits (60496.00 bytes)
+  Bandwidth: 368.59 bits/second (46.07 bytes/second)
+
+  Decoded Message:
+-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEID+Wdm/XBo46QfLwL4ZVKK8sARbRal/aE7c2zYYxCIdQoAoGCCqGSM49
+AwEHoUQDQgAEOorNPTLeE1vY8lxIQBhCxq6+w1renA/ZtnBHae0nTHe8g3XeLJUK
+cJMFjY0nHCPRGz4dhp8kZVAH28bU+Trnnw==
+-----END EC PRIVATE KEY-----
+ 
+
+
+Transmission #48:
+  Start Time: 2025-03-06 19:16:22.601827
+  End Time: 2025-03-06 19:16:27.985599
+  Duration: 5.3838 seconds
+  Covert Data: 1824 bits (228.00 bytes)
+  Overt Data: 483840 bits (60480.00 bytes)
+  Bandwidth: 338.80 bits/second (42.35 bytes/second)
+
+  Decoded Message:
+-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEIPcgWv23ILRTXyioTtYq+ygKCMQ/YiGxPhxZQTkSBtr9oAoGCCqGSM49
+AwEHoUQDQgAE0gpV4VJeKBZnk30C2ieU+xqsjD1Ur7lwkb1cgyq2Xv8wKpO0pjPd
+3v+FO6FSSc+0ljb1asCH19tZ2EzngFNBkA==
+-----END EC PRIVATE KEY-----
+ 
+
+
+Transmission #49:
+  Start Time: 2025-03-06 19:16:28.132192
+  End Time: 2025-03-06 19:16:32.855073
+  Duration: 4.7229 seconds
+  Covert Data: 1824 bits (228.00 bytes)
+  Overt Data: 484224 bits (60528.00 bytes)
+  Bandwidth: 386.20 bits/second (48.28 bytes/second)
+
+  Decoded Message:
+-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEIDmPwrfmFgIel9YxX/adFdiJ1YClB3R7nCoOImK0wTiLoAoGCCqGSM49
+AwEHoUQDQgAEWDU5/SPYIFKqC8JUjDWuZe0MmFUlJ6YvfAeIWFbl4Ls1gDJbrKRD
+osdgrf2XrgYaE8nNLV1SaK3eR1SDWvnuEw==
+-----END EC PRIVATE KEY-----
+ 
+
+
+Transmission #50:
+  Start Time: 2025-03-06 19:16:33.002489
+  End Time: 2025-03-06 19:16:38.197266
+  Duration: 5.1948 seconds
+  Covert Data: 1824 bits (228.00 bytes)
+  Overt Data: 483936 bits (60492.00 bytes)
+  Bandwidth: 351.12 bits/second (43.89 bytes/second)
+
+  Decoded Message:
+-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEILCEgCrLvVN0YMtORF0xpxZMds9unGwe324Wev/YH0ONoAoGCCqGSM49
+AwEHoUQDQgAE22+u3Wds1XC1ahtTJLtGmL4FOI+/Ro89gXYdDPGaGqmi+XzC5tmz
+7F0SaNw2tbcshigXiQLSau/+nTf8CZxUXg==
+-----END EC PRIVATE KEY-----
+ 
+
+
