@@ -1,4 +1,4 @@
-from scapy.all import sniff, load_layer, wrpcap
+from scapy.all import sniff, load_layer, wrpcap, rdpcap
 from scapy.layers.inet import IP
 from scapy.layers.tls.handshake import TLSClientHello
 from scapy.layers.tls.record import TLS
@@ -6,6 +6,7 @@ import gc
 import json
 import threading
 import time
+import os
 
 from report_generator import generate_report
 
@@ -49,14 +50,13 @@ SIGNAL_ECC = "260,260"
 # Global storage for captured sequences
 captured_sequences = []
 packet_start_times = []
-packet_end_times = []
 packet_types = []
 packet_lengths = []  # Added to track raw packet lengths
 last_packet_time = time.time()
-
-packet_sequence_numbers = {}  # Dict for packets to sequence numbers assignment
-next_sequence_number = 0 
-processed_sequences = set()
+analysis_in_progress = False
+# packet_sequence_numbers = {}  # Dict for packets to sequence numbers assignment
+# next_sequence_number = 0 
+# processed_sequences = set()
 
 # Data collection structures
 current_data_type = None
@@ -77,7 +77,6 @@ def load_permutations():
     try:
         with open("permutations.json", "r") as json_file:
             permutations_data = json.load(json_file)
-        print(f"Loaded {len(permutations_data)} permutation entries")
         
         # Create lookup dictionary for efficient search
         for entry in permutations_data:
@@ -99,90 +98,68 @@ def load_permutations():
         permutations_data = []
         permutation_lookup = {}
 
-def check_timeout():
+def analyze_pcap():
     """
-    Monitors packet capture activity. If no new packet is captured within 3 seconds,
-    a report is generated and sequences are processed.
-    Improved to handle partial transmissions better.
+    Analyze the PCAP file after timeout instead of analyzing packets on the fly.
     """
-    global captured_sequences, packet_start_times, packet_end_times, packet_lengths, packet_types, last_packet_time
+    global captured_sequences, packet_start_times, packet_lengths, packet_types, show_details
     global current_data_type, current_transmission, data_collections, current_transmission_packets
-    global show_details
     
-    while True:
-        time.sleep(3)  # Check every 3 seconds
+    try:
+        # Reset all data collections for clean analysis
+        captured_sequences = []
+        packet_start_times = []
+        packet_types = []
+        packet_lengths = []
         
-        current_time = time.time()
-        if current_time - last_packet_time > 3 and captured_sequences:
-            print(f"Timeout detected. Last packet was {current_time - last_packet_time:.2f} seconds ago.")
-            
-            # Only finish processing if we have an active transmission
-            if current_data_type and current_transmission:
-                # Make a deep copy of the data
-                data_collections[current_data_type].append({
-                    "data": list(current_transmission),
-                    "packets": list(current_transmission_packets)
-                })
-                current_transmission = []
-                current_transmission_packets = []
-                current_data_type = None
-            
-            # Generate reports for each data type with data
-            for data_type in ["password", "rsa", "ecc"]:
-                if data_collections[data_type]:
-                    print(f"Found {len(data_collections[data_type])} {data_type} transmissions to report.")
-                    # Rufen Sie die ausgelagerte Funktion mit allen erforderlichen Argumenten auf
-                    generate_report(data_type, data_collections, packet_start_times, packet_end_times, 
-                                   packet_types, packet_lengths, captured_sequences, show_details)
-            
-            # Reset all data only after generating the reports
-            captured_sequences = []
-            packet_start_times = []
-            packet_end_times = []
-            packet_types = []
-            packet_lengths = []  # Reset packet lengths
-            data_collections = {
-                "password": [],
-                "rsa": [],
-                "ecc": []
-            }
-            current_data_type = None
-            current_transmission = []
-            current_transmission_packets = []
-
-def extract_cipher_suites(packet):
-    """
-    Extracts cipher suites from a TLS ClientHello packet and maps them to symbolic representations.
-    """
-    global captured_sequences, packet_start_times, packet_end_times, packet_types, packet_lengths, last_packet_time
-    start_time = time.time()
-    last_packet_time = start_time
-    
-    if packet.haslayer(TLS):
-        tls_layer = packet[TLS]
-        packet_type = tls_layer.msg[0].__class__.__name__ if tls_layer.msg else "Unknown"
+        # Load packets from PCAP file
+        packets = rdpcap(PCAP_FILE)
+        print(f"Loaded {len(packets)} packets from PCAP file for analysis")
         
-        # Store packet length for overt channel measurement
-        packet_length = len(bytes(packet))
-        
-        if packet.haslayer(TLSClientHello):
-            client_hello = packet[TLSClientHello]
-            if hasattr(client_hello, 'ciphers'):
-                cipher_suites = client_hello.ciphers
-                mapped_symbols = [CIPHER_MAPPING[cipher] for cipher in cipher_suites if cipher in CIPHER_MAPPING]
+        # First pass: extract all TLSClientHello packets and their cipher suites
+        for packet in packets:
+            if packet.haslayer(TLS):
+                tls_layer = packet[TLS]
+                packet_type = tls_layer.msg[0].__class__.__name__ if tls_layer.msg else "Unknown"
                 
-                # Only append non-empty cipher sequences
-                if mapped_symbols:
-                    captured_sequences.append(mapped_symbols)
-                    packet_start_times.append(start_time)
-                    packet_end_times.append(time.time())
-                    packet_types.append(packet_type)
-                    packet_lengths.append(packet_length)  # Store packet length
-                    
-                    # After capturing a complete packet, process it with pairs
-                    process_captured_packet_pair()
-                else:
-                    print("Warning: Empty cipher sequence detected and skipped")
+                # Store packet length for overt channel measurement
+                packet_length = len(bytes(packet))
+                packet_timestamp = float(packet.time)
+                
+                if packet.haslayer(TLSClientHello):
+                    client_hello = packet[TLSClientHello]
+                    if hasattr(client_hello, 'ciphers'):
+                        cipher_suites = client_hello.ciphers
+                        mapped_symbols = [CIPHER_MAPPING[cipher] for cipher in cipher_suites if cipher in CIPHER_MAPPING]
+                        
+                        # Only append non-empty cipher sequences
+                        if mapped_symbols:
+                            captured_sequences.append(mapped_symbols)
+                            packet_start_times.append(packet_timestamp)
+                            packet_types.append(packet_type)
+                            packet_lengths.append(packet_length)  # Store packet length
+                        else:
+                            print("Warning: Empty cipher sequence detected and skipped")
+        
+        # Second pass: process all packets in pairs
+        process_all_packet_pairs()
+        
+        # Generate reports for each data type with data
+        for data_type in ["password", "rsa", "ecc"]:
+            if data_collections[data_type]:
+                print(f"Found {len(data_collections[data_type])} {data_type} transmissions to report.")
+                # Call the report generation function with all required arguments
+                generate_report(data_type, data_collections, packet_start_times, 
+                               packet_types, packet_lengths, captured_sequences, show_details)
+        
+        # Reset data collections after report generation
+        reset_data_collections()
+        
+        # Reset PCAP file for next capture session
+        open(PCAP_FILE, 'wb').close()
+        
+    except Exception as e:
+        print(f"Error analyzing PCAP file: {e}")
 
 def find_matching_ascii_pair(first_list, second_list):
     """
@@ -220,23 +197,32 @@ def get_signal_type(first_list, second_list):
     
     return None  # Regular data packet
 
-def process_captured_packet_pair():
+def process_all_packet_pairs():
     """
-    Process captured sequences in pairs to detect signals and data.
-    Fixed version with correct indexing.
+    Process all captured sequences in pairs to detect signals and data.
+    This processes all the data from the PCAP file at once.
     """
     global captured_sequences, current_data_type, current_transmission, current_transmission_packets
     global data_collections
+    
+    # Reset data collections before processing
+    current_data_type = None
+    current_transmission = []
+    current_transmission_packets = []
+    data_collections = {
+        "password": [],
+        "rsa": [],
+        "ecc": []
+    }
     
     # We need at least 2 packets for a pair
     if len(captured_sequences) < 2:
         return
     
-    # Process the latest complete pair
-    packet_count = len(captured_sequences)
-    if packet_count % 2 == 0:  # We have an even number of packets, can process the last pair
-        idx1 = packet_count - 2
-        idx2 = packet_count - 1
+    # Process all pairs in sequence
+    for i in range(0, len(captured_sequences) - 1, 2):
+        idx1 = i
+        idx2 = i + 1
         
         first_list = captured_sequences[idx1]
         second_list = captured_sequences[idx2]
@@ -272,16 +258,56 @@ def process_captured_packet_pair():
             if ascii_value1 is not None and ascii_value2 is not None:
                 # Add to current transmission
                 current_transmission.append((ascii_value1, ascii_value2))
-                # Store actual packet indices instead of relative ones
+                # Store actual packet indices
                 current_transmission_packets.append((idx1, idx2))
+
+def reset_data_collections():
+    """
+    Reset all data collections after analysis.
+    """
+    global captured_sequences, packet_start_times, packet_types, packet_lengths
+    global current_data_type, current_transmission, data_collections, current_transmission_packets
+    
+    captured_sequences = []
+    packet_start_times = []
+    packet_types = []
+    packet_lengths = []
+    data_collections = {
+        "password": [],
+        "rsa": [],
+        "ecc": []
+    }
+    current_data_type = None
+    current_transmission = []
+    current_transmission_packets = []
+
+def check_timeout():
+    global last_packet_time
+    global analysis_in_progress
+    
+    while True:
+        time.sleep(3)  # Check every 3 seconds
+        current_time = time.time()
+        if current_time - last_packet_time > 3 and not analysis_in_progress:
+            if os.path.exists(PCAP_FILE) and os.path.getsize(PCAP_FILE) > 0:
+                analysis_in_progress = True
+                print(f"Analyzing PCAP file....")
+                analyze_pcap()
+                print(f"Analysis finished!")
+                analysis_in_progress = False
+                # Update last packet time to avoid repeated processing
+                last_packet_time = current_time
 
 def packet_callback(packet):
     """
     Callback function to process packets in real-time.
+    Only saves packets to PCAP file without analyzing them.
     """
+    global last_packet_time
+    
     if packet.haslayer(TLSClientHello):
         wrpcap(PCAP_FILE, [packet], append=True)  # Append each packet
-        extract_cipher_suites(packet)
+        last_packet_time = time.time()
 
         if packet.haslayer(IP):
             src_ip = packet[IP].src
@@ -290,9 +316,13 @@ def packet_callback(packet):
         
 def start_sniffing():
     """
-    Starts sniffing network traffic and processes TLS packets.
+    Starts sniffing network traffic and saves TLS packets to PCAP file.
     """
     print("Starting sniffing on network interface...")
+    
+    # Ensure PCAP file is empty at start
+    open(PCAP_FILE, 'wb').close()
+    
     timeout_thread = threading.Thread(target=check_timeout, daemon=True)
     timeout_thread.start()
     sniff(filter="tcp port 443", prn=packet_callback, store=False)

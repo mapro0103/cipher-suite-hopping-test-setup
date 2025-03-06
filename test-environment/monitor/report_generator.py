@@ -17,7 +17,7 @@ def export_metrics(data_type, metrics):
     
     return metrics_file
 
-def generate_report(data_type, data_collections, packet_start_times, packet_end_times, 
+def generate_report(data_type, data_collections, packet_start_times,
                    packet_types, packet_lengths, captured_sequences, show_details=False):
     """
     Generates a text report for a specific data type, containing all captured packets,
@@ -70,7 +70,7 @@ def generate_report(data_type, data_collections, packet_start_times, packet_end_
                 last_packet_idx = packets[-1][1]
                 
                 start_time = packet_start_times[first_packet_idx]
-                end_time = packet_end_times[last_packet_idx]
+                end_time = packet_start_times[last_packet_idx]
                 transmission_time = end_time - start_time
                 total_transmission_time += transmission_time
                 transmission_times.append(transmission_time)
@@ -207,7 +207,7 @@ def generate_report(data_type, data_collections, packet_start_times, packet_end_
                 last_packet_idx = packets[-1][1]
                 
                 start_time = packet_start_times[first_packet_idx]
-                end_time = packet_end_times[last_packet_idx]
+                end_time = packet_start_times[last_packet_idx]
                 transmission_time = end_time - start_time
                 
                 total_chars = len(data) * 2  # Each pair has 2 ASCII chars
@@ -267,10 +267,10 @@ def generate_report(data_type, data_collections, packet_start_times, packet_end_
                         report.write(f"      Cipher Sequence 2: {', '.join(captured_sequences[idx2])}\n")
                         report.write(f"      Packet Type 1: {packet_types[idx1]}\n")
                         report.write(f"      Packet 1 Size: {packet_lengths[idx1]} bytes ({packet_lengths[idx1]*8} bits)\n")
-                        report.write(f"      Packet 1 Start Time: {packet_start_times[idx1]:.4f}, End Time: {packet_end_times[idx1]:.4f}\n")
+                        report.write(f"      Packet 1 Start Time: {packet_start_times[idx1]:.4f}\n")
                         report.write(f"      Packet Type 2: {packet_types[idx2]}\n")
                         report.write(f"      Packet 2 Size: {packet_lengths[idx2]} bytes ({packet_lengths[idx2]*8} bits)\n")
-                        report.write(f"      Packet 2 Start Time: {packet_start_times[idx2]:.4f}, End Time: {packet_end_times[idx2]:.4f}\n")
+                        report.write(f"      Packet 2 Start Time: {packet_start_times[idx2]:.4f}\n")
                         report.write(f"      Decoded ASCII Characters: '{chr(ascii1)}' ({ascii1}), '{chr(ascii2)}' ({ascii2})\n")
                         report.write("      -----------------------------\n")
                 
