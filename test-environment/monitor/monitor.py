@@ -6,7 +6,6 @@ import json
 import threading
 import time
 
-# Import ausgelagerte Funktionen aus dem report_generator Modul
 from report_generator import generate_report
 
 # Load the TLS layer in Scapy
@@ -18,14 +17,9 @@ iteration_counter = 0
 # File to save packets
 PCAP_FILE = "/tmp/scapy_live_capture.pcap"
 
-# Load the permutations JSON file
-try:
-    with open("permutations.json", "r") as json_file:
-        permutations_data = json.load(json_file)
-    print(f"Loaded {len(permutations_data)} permutation entries")
-except Exception as e:
-    print(f"Error loading permutations file: {e}")
-    permutations_data = []
+# Global variables for storing permutation data
+permutations_data = []
+permutation_lookup = {}  # New lookup dictionary for efficient searches. Without it leads to an overflow while decoding
 
 # Cipher Suite Mapping
 CIPHER_SUITES = {
@@ -59,6 +53,10 @@ packet_types = []
 packet_lengths = []  # Added to track raw packet lengths
 last_packet_time = time.time()
 
+packet_sequence_numbers = {}  # Dict for packets to sequence numbers assignment
+next_sequence_number = 0 
+processed_sequences = set()
+
 # Data collection structures
 current_data_type = None
 current_transmission = []
@@ -68,6 +66,35 @@ data_collections = {
     "ecc": []
 }
 current_transmission_packets = []
+
+def load_permutations():
+    """
+    Loads the permutations from JSON file and creates an efficient lookup dictionary.
+    """
+    global permutations_data, permutation_lookup
+    
+    try:
+        with open("permutations.json", "r") as json_file:
+            permutations_data = json.load(json_file)
+        print(f"Loaded {len(permutations_data)} permutation entries")
+        
+        # Create lookup dictionary for efficient search
+        for entry in permutations_data:
+            if "Permutation" in entry and "ASCII" in entry and len(entry["Permutation"]) == 2:
+                # Convert lists to tuples as dictionary keys (immutable)
+                key = (tuple(entry["Permutation"][0]), tuple(entry["Permutation"][1]))
+                
+                # Store ASCII values
+                if entry["ASCII"] and len(entry["ASCII"]) >= 2:
+                    permutation_lookup[key] = (entry["ASCII"][0], entry["ASCII"][1])
+                elif entry["ASCII"] and len(entry["ASCII"]) == 1:
+                    permutation_lookup[key] = (entry["ASCII"][0], None)
+        
+        print(f"Created lookup dictionary with {len(permutation_lookup)} entries")
+    except Exception as e:
+        print(f"Error loading permutations file: {e}")
+        permutations_data = []
+        permutation_lookup = {}
 
 def check_timeout():
     """
@@ -101,7 +128,7 @@ def check_timeout():
             for data_type in ["password", "rsa", "ecc"]:
                 if data_collections[data_type]:
                     print(f"Found {len(data_collections[data_type])} {data_type} transmissions to report.")
-                    # Rufen Sie die ausgelagerte Funktion mit allen erforderlichen Argumenten auf
+                    # Call report generation
                     generate_report(data_type, data_collections, packet_start_times, packet_end_times, 
                                    packet_types, packet_lengths, captured_sequences, show_details)
             
@@ -119,12 +146,15 @@ def check_timeout():
             current_data_type = None
             current_transmission = []
             current_transmission_packets = []
+            processed_sequences = set()  # Reset processed sequences
 
 def extract_cipher_suites(packet):
     """
     Extracts cipher suites from a TLS ClientHello packet and maps them to symbolic representations.
     """
     global captured_sequences, packet_start_times, packet_end_times, packet_types, packet_lengths, last_packet_time
+    global next_sequence_number
+    
     start_time = time.time()
     last_packet_time = start_time
     
@@ -143,36 +173,32 @@ def extract_cipher_suites(packet):
                 
                 # Only append non-empty cipher sequences
                 if mapped_symbols:
+                    # Sequenznummer zuweisen
+                    seq_num = next_sequence_number
+                    next_sequence_number += 1
+                    
                     captured_sequences.append(mapped_symbols)
+                    packet_sequence_numbers[len(captured_sequences) - 1] = seq_num
                     packet_start_times.append(start_time)
                     packet_end_times.append(time.time())
                     packet_types.append(packet_type)
                     packet_lengths.append(packet_length)  # Store packet length
                     
-                    # After capturing a complete packet, process it with pairs
-                    process_captured_packet_pair()
+                    # Try to process all pairs
+                    process_all_available_pairs()
                 else:
                     print("Warning: Empty cipher sequence detected and skipped")
 
 def find_matching_ascii_pair(first_list, second_list):
     """
-    Find both ASCII values that match the given cipher suite lists.
+    Find both ASCII values that match the given cipher suite lists using the lookup dictionary.
     Returns a tuple of (first_ascii_value, second_ascii_value) or (None, None) if no match is found.
     """
-    for entry in permutations_data:
-        if "Permutation" in entry and "ASCII" in entry and len(entry["Permutation"]) == 2:
-            perm_first_list = entry["Permutation"][0]
-            perm_second_list = entry["Permutation"][1]
-            
-            # Compare the lists directly
-            if perm_first_list == first_list and perm_second_list == second_list:
-                # Return both ASCII values as a tuple
-                if entry["ASCII"] and len(entry["ASCII"]) >= 2:
-                    return (entry["ASCII"][0], entry["ASCII"][1])
-                elif entry["ASCII"] and len(entry["ASCII"]) == 1:
-                    return (entry["ASCII"][0], None)
+    # Convert lists to tuples for dictionary key lookup
+    key = (tuple(first_list), tuple(second_list))
     
-    return (None, None)
+    # Direct dictionary lookup (O(1) operation instead of O(n))
+    return permutation_lookup.get(key, (None, None))
 
 def get_signal_type(first_list, second_list):
     """
@@ -199,60 +225,84 @@ def get_signal_type(first_list, second_list):
     
     return None  # Regular data packet
 
-def process_captured_packet_pair():
+def process_all_available_pairs():
     """
-    Process captured sequences in pairs to detect signals and data.
-    Fixed version with correct indexing.
+    Verarbeitet alle verfügbaren, noch nicht verarbeiteten Paare in der richtigen Reihenfolge.
+    """
+    global captured_sequences, processed_sequences, packet_sequence_numbers
+    
+    # Identify not processed packets
+    unprocessed_indices = [i for i in range(len(captured_sequences)) 
+                         if i not in processed_sequences]
+    
+    # Sort for sequence numbers
+    unprocessed_indices.sort(key=lambda i: packet_sequence_numbers.get(i, float('inf')))
+    
+    # Process pairs if min 2
+    while len(unprocessed_indices) >= 2:
+        idx1 = unprocessed_indices[0]
+        idx2 = unprocessed_indices[1]
+        
+        # Ensure order of sequence numbers
+        if abs(packet_sequence_numbers.get(idx1, 0) - packet_sequence_numbers.get(idx2, 0)) > 1:
+            # Wait for packet
+            if len(unprocessed_indices) > 2:
+                # Try next pair
+                unprocessed_indices = unprocessed_indices[1:]
+                continue
+            else:
+                # No more pairs available
+                break
+        
+        # Process pair
+        process_single_pair(idx1, idx2)
+        
+        # Mark as processed
+        processed_sequences.add(idx1)
+        processed_sequences.add(idx2)
+        
+        # Remove from unprocessed list
+        unprocessed_indices = unprocessed_indices[2:]
+
+def process_single_pair(idx1, idx2):
+    """
+    Verarbeitet ein einzelnes Paar von Paketen.
     """
     global captured_sequences, current_data_type, current_transmission, current_transmission_packets
     global data_collections
     
-    # We need at least 2 packets for a pair
-    if len(captured_sequences) < 2:
-        return
+    first_list = captured_sequences[idx1]
+    second_list = captured_sequences[idx2]
     
-    # Process the latest complete pair
-    packet_count = len(captured_sequences)
-    if packet_count % 2 == 0:  # We have an even number of packets, can process the last pair
-        idx1 = packet_count - 2
-        idx2 = packet_count - 1
+    signal_type = get_signal_type(first_list, second_list)
+    
+    if signal_type == "START":
+        # Start new transmission
+        current_transmission = []
+        current_transmission_packets = []
+    elif signal_type == "END" and current_data_type:
+        # End of current transmission
+        if current_transmission:
+            # Deep copy of the data
+            data_collections[current_data_type].append({
+                "data": list(current_transmission),
+                "packets": list(current_transmission_packets)
+            })
+        current_transmission = []
+        current_transmission_packets = []
+        current_data_type = None
+    elif signal_type == "PASSWORD":
+        current_data_type = "password"
+    elif signal_type == "RSA":
+        current_data_type = "rsa"
+    elif signal_type == "ECC":
+        current_data_type = "ecc"
+    elif current_data_type: 
+        ascii_value1, ascii_value2 = find_matching_ascii_pair(first_list, second_list)
         
-        first_list = captured_sequences[idx1]
-        second_list = captured_sequences[idx2]
-        
-        signal_type = get_signal_type(first_list, second_list)
-        
-        if signal_type == "START":
-            # Start of a new transmission
-            current_transmission = []
-            current_transmission_packets = []
-            # Data type will be set by the next packet pair
-        elif signal_type == "END" and current_data_type:
-            # End of current transmission
-            if current_transmission:
-                # Make a deep copy of the data to avoid reference issues
-                data_collections[current_data_type].append({
-                    "data": list(current_transmission),
-                    "packets": list(current_transmission_packets)
-                })
-            current_transmission = []
-            current_transmission_packets = []
-            current_data_type = None
-        elif signal_type == "PASSWORD":
-            current_data_type = "password"
-        elif signal_type == "RSA":
-            current_data_type = "rsa"
-        elif signal_type == "ECC":
-            current_data_type = "ecc"
-        elif current_data_type:  # Regular data packet in an active transmission
-            # Get the ASCII values for this pair
-            ascii_value1, ascii_value2 = find_matching_ascii_pair(first_list, second_list)
-            
-            if ascii_value1 is not None and ascii_value2 is not None:
-                # Add to current transmission
-                current_transmission.append((ascii_value1, ascii_value2))
-                # Store actual packet indices instead of relative ones
-                current_transmission_packets.append((idx1, idx2))
+        if ascii_value1 is not None and ascii_value2 is not None:
+            current_transmission.append((ascii_value1, ascii_value2))
+            current_transmission_packets.append((idx1, idx2))
 
 def packet_callback(packet):
     """
@@ -265,7 +315,7 @@ def packet_callback(packet):
         if packet.haslayer(IP):
             src_ip = packet[IP].src
             dest_ip = packet[IP].dst
-            print(f"TLSClientHello monitored: {src_ip} → {dest_ip}")
+            # print(f"TLSClientHello monitored: {src_ip} → {dest_ip}")
         
 def start_sniffing():
     """
@@ -294,6 +344,10 @@ def main():
     show_details = args.details
     
     print("Starting TLS Covert Channel Monitor...")
+    
+    # Load permutations and create efficient lookup dictionary
+    load_permutations()
+    
     if show_details:
         print("Detailed packet information will be included in reports.")
     else:
