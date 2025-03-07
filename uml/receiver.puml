@@ -1,0 +1,96 @@
+@startuml
+!theme plain
+skinparam sequenceArrowThickness 2
+skinparam sequenceDividerBackgroundColor WhiteSmoke
+skinparam sequenceDividerBorderColor DarkGray
+skinparam participantFontStyle bold
+skinparam sequenceMessageAlign center
+
+' Increase font sizes
+skinparam defaultFontSize 22
+skinparam titleFontSize 24
+skinparam titleFontStyle bold
+
+title TLS Cipher-Suite-Hopping Covert Channel - Receiver Sequence
+
+actor User
+participant "main()" as Main
+participant "threading.Thread()" as ThreadCreator
+participant "run_http_server()" as HTTPServer
+participant "run_https_server()" as HTTPSServer
+participant "SimpleRequestHandler" as RequestHandler
+participant "wolfssl.SSLContext" as SSLContext
+participant "Sender\n(External Client)" as Client
+
+== Initialization ==
+
+User -> Main: Run script
+Main -> ThreadCreator: Create HTTP server thread
+Main -> ThreadCreator: Create HTTPS server thread
+Main -> ThreadCreator: Start HTTP thread
+Main -> ThreadCreator: Start HTTPS thread
+
+== HTTP Server Initialization ==
+
+ThreadCreator -> HTTPServer: Run HTTP server
+HTTPServer -> HTTPServer: Create HTTPServer on port 80
+HTTPServer -> HTTPServer: Listen for connections
+note right of HTTPServer
+  Provides a web interface to 
+  confirm receiver is running
+end note
+
+== HTTPS/TLS Server Initialization ==
+
+ThreadCreator -> HTTPSServer: Run HTTPS server
+HTTPSServer -> HTTPSServer: Create socket
+HTTPSServer -> HTTPSServer: Bind to port 443
+HTTPSServer -> HTTPSServer: Start listening
+
+HTTPSServer -> HTTPSServer: Check for cert.pem and key.pem
+alt Certificate files exist
+    HTTPSServer -> SSLContext: Create TLS context
+    HTTPSServer -> SSLContext: Load certificate chain
+    SSLContext --> HTTPSServer: Context created successfully
+else Certificate files missing
+    HTTPSServer -> HTTPSServer: Log error and return
+end
+
+== Connection Handling Loop ==
+
+loop until interrupted
+    HTTPSServer -> HTTPSServer: Wait for connection (accept)
+    
+    alt Connection received
+        Client -> HTTPSServer: Initiate TLS connection
+        HTTPSServer -> SSLContext: Wrap socket
+        SSLContext --> HTTPSServer: Return secure socket
+        
+        note right of HTTPSServer
+          The covert channel data is extracted by
+          monitoring which cipher suites are used
+          in each connection (not shown in this script)
+        end note
+        
+        HTTPSServer -> HTTPSServer: Close secure socket after handshake
+    else KeyboardInterrupt received
+        HTTPSServer -> HTTPSServer: Break loop
+    end
+end
+
+== HTTP Request Handling ==
+
+Client -> HTTPServer: HTTP GET request
+HTTPServer -> RequestHandler: Handle request
+RequestHandler -> RequestHandler: Set response code 200
+RequestHandler -> RequestHandler: Set Content-type header
+RequestHandler -> Client: Send "Receiver is running!" response
+
+== Shutdown ==
+
+User -> Main: KeyboardInterrupt (Ctrl+C)
+Main -> HTTPServer: Interrupt thread
+Main -> HTTPSServer: Interrupt thread
+Main -> Main: Exit program
+
+@enduml

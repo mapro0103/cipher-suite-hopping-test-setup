@@ -457,8 +457,24 @@ def create_consolidated_report(metrics_by_type, reliability_data, output_dir="."
     report.extend(ratio_table)
     report.append("")
     
+    # Connection efficiency
+    report.append("## 3. Connection Efficiency")
+    
+    connection_table = ["| Data Type | Avg. Connections Per Transmission | Total Connections |", "| --------- | -------------------------------- | ----------------- |"]
+    
+    for data_type, metrics_list in metrics_by_type.items():
+        if metrics_list:
+            aggregated = aggregate_metrics(metrics_list)
+            if aggregated and aggregated["connections_per_transmission"]:
+                avg_connections = np.mean(aggregated["connections_per_transmission"])
+                total_connections = aggregated["total_connections"]
+                connection_table.append(f"| {data_type.upper()} | {avg_connections:.2f} | {total_connections} |")
+    
+    report.extend(connection_table)
+    report.append("")
+    
     # Transmission reliability
-    report.append("## 3. Transmission Reliability")
+    report.append("## 4. Transmission Reliability")
     
     if reliability_data:
         reliability_table = ["| Data Type | Perfect Transmission Rate | Bit-level Accuracy |", "| --------- | ------------------------- | ----------------- |"]
