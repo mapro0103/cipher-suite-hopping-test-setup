@@ -1,6 +1,6 @@
-# TLS Cipher-Suite-Hopping Covert Channel Test Environment
+# Test Environment
 
-This project implements a covert channel using TLS cipher suite permutations to encode and transmit data. The system consists of a sender, receiver, and monitor that work together to establish a hidden communication channel within normal TLS handshakes.
+This project implements a covert channel using TLS cipher suite permutations to encode and transmit data. The system consists of a sender, receiver and monitor that work together to establish a hidden communication channel within normal TLS handshakes.
 
 ## Overview
 
@@ -16,7 +16,7 @@ The environment consists of four containers:
 
 1. **Sender**: Contains the client that initiates TLS connections with encoded data
 2. **Receiver**: Runs the TLS server that accepts connections from the sender
-3. **Intermediate**: Acts as a network intermediary/router between sender and receiver
+3. **Intermediate**: Acts as a network intermediate/router between sender and receiver
 4. **Monitor**: Passively observes network traffic to decode the covert channel
 
 ### Network Configuration
@@ -51,8 +51,8 @@ docker-compose down
 The sender is responsible for encoding and transmitting data through the covert channel:
 
 - Encodes ASCII characters into specific TLS cipher suite permutations
-- Establishes TLS connections with specific cipher suite offerings
-- Supports transmission of passwords, RSA keys, and ECC keys
+- Establishes TLS connections with specific cipher suite selection
+- Supports transmission of passwords, RSA keys and ECC keys
 - Uses special signaling values to indicate the start/end of transmissions
 
 #### Usage
@@ -95,7 +95,7 @@ The monitor passively observes network traffic to decode the covert channel:
 - Extracts cipher suites and maps them to their symbolic representations
 - Decodes the covert message by matching cipher suite permutations to ASCII values
 - Generates detailed reports of captured transmissions
-- Calculates statistics on bandwidth, transmission time, and data rates
+- Calculates statistics on bandwidth, transmission time and data rates
 - Creates detailed reports of all transmissions in `/tmp/tls_report_*` files
 - Exports statistical metrics as JSON files to `/tmp/metrics_*` for later analysis
 
@@ -141,8 +141,6 @@ Cleans up data directories used by the sender and monitor:
 # Remove all data files
 ./cleanup.sh
 ```
-
-This ensures that old data is removed between test runs.
 
 ## Setup Instructions
 
