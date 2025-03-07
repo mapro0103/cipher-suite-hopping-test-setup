@@ -445,14 +445,20 @@ def create_consolidated_report(metrics_by_type, reliability_data, output_dir="."
     # Covert-to-overt ratio
     report.append("## 2. Covert-to-Overt Data Ratio")
     
-    ratio_table = ["| Data Type | Covert:Overt Ratio (%) |", "| --------- | --------------------- |"]
+    ratio_table = ["| Data Type | Covert:Overt Ratio (%) | Avg. Covert Data (kbits) | Avg. Overt Data (kbits) |", 
+                   "| --------- | --------------------- | ------------------------- | ------------------------ |"]
     
     for data_type, metrics_list in metrics_by_type.items():
         if metrics_list:
             aggregated = aggregate_metrics(metrics_list)
             if aggregated and "covert_to_overt_ratio" in aggregated:
                 ratio = aggregated["covert_to_overt_ratio"] * 100
-                ratio_table.append(f"| {data_type.upper()} | {ratio:.4f}% |")
+                
+                # Calculate average covert and overt data per transmission (in kbits)
+                avg_covert_kbits = (aggregated["total_bits"] / aggregated["num_transmissions"]) / 1000 if aggregated["num_transmissions"] > 0 else 0
+                avg_overt_kbits = (aggregated["total_overt_bits"] / aggregated["num_transmissions"]) / 1000 if aggregated["num_transmissions"] > 0 else 0
+                
+                ratio_table.append(f"| {data_type.upper()} | {ratio:.4f}% | {avg_covert_kbits:.3f} | {avg_overt_kbits:.2f} |")
     
     report.extend(ratio_table)
     report.append("")
