@@ -14,7 +14,14 @@
 | RSA | 0.3772% |
 | ECC | 0.3769% |
 
-## 3. Transmission Reliability
+## 3. Connection Efficiency
+| Data Type | Avg. Connections Per Transmission | Total Connections |
+| --------- | -------------------------------- | ----------------- |
+| PASSWORD | 10.00 | 500 |
+| RSA | 1622.16 | 81108 |
+| ECC | 114.00 | 5700 |
+
+## 4. Transmission Reliability
 | Data Type | Perfect Transmission Rate | Bit-level Accuracy |
 | --------- | ------------------------- | ----------------- |
 | PASSWORD | 100.00% | 100.00% |
