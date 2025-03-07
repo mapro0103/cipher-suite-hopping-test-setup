@@ -44,6 +44,15 @@ python metrics_visualizer.py [--output-dir OUTPUT_DIR] [--metric {bandwidth,rati
   - `reliability`: Analyze only transmission reliability
   - `all`: Analyze all metrics
 
+### `cleanup.sh`
+
+Cleans up data directories used by the sender and monitor:
+
+```bash
+# Remove all data files
+./cleanup.sh
+```
+
 ### Input Files
 
 The script expects the following files in the current directory:

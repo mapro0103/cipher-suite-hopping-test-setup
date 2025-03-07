@@ -16,10 +16,6 @@ This Python script generates JSON files containing permutations of specified ele
 - Python 3.6 or higher
 - Standard libraries only (no external dependencies)
 
-## Installation
-
-Simply download the `permutations_generator.py` file to your local machine.
-
 ## Usage
 
 ### Basic Usage
