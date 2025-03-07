@@ -1,0 +1,123 @@
+@startuml
+!theme plain
+skinparam sequenceArrowThickness 2
+skinparam sequenceDividerBackgroundColor WhiteSmoke
+skinparam sequenceDividerBorderColor DarkGray
+skinparam participantFontStyle bold
+skinparam sequenceMessageAlign center
+
+' Increase font sizes
+skinparam defaultFontSize 22
+skinparam titleFontSize 24
+skinparam titleFontStyle bold
+
+title TLS Cipher-Suite-Hopping Covert Channel - Transmission Sequence
+
+actor User
+participant "main()" as Main
+participant "parse_arguments()" as ArgParser
+participant "load_permutations()" as PermLoader
+participant "generate_and_transmit()" as Generator
+participant "send_signal()" as SignalSender
+participant "send_key_over_tls_pairs()" as KeySender
+participant "tls_connection_for_ascii_pair()" as ConnHandler
+participant "get_cipher_lists_for_ascii_pair()" as CipherMapper
+participant "create_tls_connection()" as TLSCreator
+participant "Remote Server\n(192.168.0.20:443)" as Server
+
+== Initialization ==
+
+User -> Main: Run script with args
+Main -> ArgParser: Parse command line args
+ArgParser --> Main: Return parsed args
+Main -> PermLoader: Load permutations
+PermLoader -> PermLoader: Read permutations.json
+PermLoader --> Main: Update ASCII_PAIRS dictionary
+
+== Data Generation and Transmission ==
+
+Main -> Generator: generate_and_transmit(data_type, count)
+
+loop for each item in count
+  alt data_type == "password"
+    Generator -> Generator: generate_random_password()
+  else data_type == "rsa"
+    Generator -> Generator: Generate RSA key
+  else data_type == "ecc"
+    Generator -> Generator: Generate ECC key
+  end
+
+  == Start Signal Transmission ==
+  Generator -> SignalSender: send_signal(SIGNAL_START)
+  SignalSender -> CipherMapper: Get cipher lists for signal
+  CipherMapper --> SignalSender: Return cipher strings
+
+  SignalSender -> TLSCreator: First connection with first cipher string
+  TLSCreator -> Server: Connect with TLS
+  TLSCreator <-- Server: Connection established
+  TLSCreator --> SignalSender: Connection 1 complete
+  
+  SignalSender -> TLSCreator: Second connection with second cipher string
+  TLSCreator -> Server: Connect with TLS
+  TLSCreator <-- Server: Connection established
+  TLSCreator --> SignalSender: Connection 2 complete
+  SignalSender --> Generator: Signal sent
+
+  == Type Signal Transmission ==
+  Generator -> SignalSender: send_signal(data_type_signal)
+  SignalSender -> CipherMapper: Get cipher lists for signal
+  CipherMapper --> SignalSender: Return cipher strings
+  SignalSender -> TLSCreator: First connection with first cipher string
+  TLSCreator -> Server: Connect with TLS
+  TLSCreator <-- Server: Connection established
+  TLSCreator --> SignalSender: Connection 1 complete
+  SignalSender -> TLSCreator: Second connection with second cipher string
+  TLSCreator -> Server: Connect with TLS
+  TLSCreator <-- Server: Connection established
+  TLSCreator --> SignalSender: Connection 2 complete
+  SignalSender --> Generator: Signal sent
+
+  == Data Transmission ==
+  Generator -> KeySender: send_key_over_tls_pairs(ascii_key)
+  
+  loop for each character pair
+    KeySender -> ConnHandler: tls_connection_for_ascii_pair(char1, char2)
+    ConnHandler -> CipherMapper: get_cipher_lists_for_ascii_pair(char1, char2)
+    CipherMapper --> ConnHandler: Return cipher strings
+    
+    ConnHandler -> TLSCreator: create_tls_connection(cipher_string_1)
+    TLSCreator -> Server: Connect with TLS
+    TLSCreator <-- Server: Connection established
+    TLSCreator --> ConnHandler: Connection 1 complete
+    
+    ConnHandler -> TLSCreator: create_tls_connection(cipher_string_2)
+    TLSCreator -> Server: Connect with TLS
+    TLSCreator <-- Server: Connection established
+    TLSCreator --> ConnHandler: Connection 2 complete
+    
+    ConnHandler --> KeySender: Character pair transmitted
+  end
+  
+  KeySender --> Generator: Complete key transmitted
+
+  == End Signal Transmission ==
+  Generator -> SignalSender: send_signal(SIGNAL_END)
+  SignalSender -> CipherMapper: Get cipher lists for signal
+  CipherMapper --> SignalSender: Return cipher strings
+  SignalSender -> TLSCreator: First connection with first cipher string
+  TLSCreator -> Server: Connect with TLS
+  TLSCreator <-- Server: Connection established
+  TLSCreator --> SignalSender: Connection 1 complete
+  SignalSender -> TLSCreator: Second connection with second cipher string
+  TLSCreator -> Server: Connect with TLS
+  TLSCreator <-- Server: Connection established
+  TLSCreator --> SignalSender: Connection 2 complete
+  SignalSender --> Generator: Signal sent
+end
+
+== Final Steps ==
+Generator -> Generator: save_data_to_file(data_type, data_list)
+Generator --> Main: Transmission complete
+Main --> User: Program execution finished
+
+@enduml

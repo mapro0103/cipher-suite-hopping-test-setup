@@ -1,0 +1,122 @@
+@startuml
+!theme plain
+skinparam sequenceArrowThickness 2
+skinparam sequenceDividerBackgroundColor WhiteSmoke
+skinparam sequenceDividerBorderColor DarkGray
+skinparam participantFontStyle bold
+skinparam sequenceMessageAlign center
+
+' Increase font sizes
+skinparam defaultFontSize 22
+skinparam titleFontSize 24
+skinparam titleFontStyle bold
+
+title TLS Cipher-Suite-Hopping Covert Channel - Monitor Sequence
+
+actor User
+participant "main()" as Main
+participant "load_permutations()" as PermLoader
+participant "start_sniffing()" as Sniffer
+participant "sniff()" as ScapySniffer
+participant "packet_callback()" as PacketCallback
+participant "check_timeout()" as TimeoutChecker
+participant "analyze_pcap()" as PcapAnalyzer
+participant "process_all_packet_pairs()" as PairProcessor
+participant "find_matching_ascii_pair()" as ASCIIMapper
+participant "generate_report()" as Reporter
+participant "Network" as Network
+
+== Initialization ==
+
+User -> Main: Run script with arguments
+Main -> Main: Parse command-line arguments
+Main -> PermLoader: Load permutations.json
+PermLoader -> PermLoader: Create lookup dictionary
+PermLoader --> Main: Return loaded permutations
+
+== Start Monitoring ==
+
+Main -> Sniffer: Start network monitoring
+Sniffer -> Sniffer: Clear PCAP file
+Sniffer -> TimeoutChecker: Start timeout thread
+Sniffer -> ScapySniffer: Start packet capture (port 443)
+
+== Packet Capture Loop ==
+
+loop for each network packet
+    Network -> ScapySniffer: TLS packet
+    ScapySniffer -> PacketCallback: Process packet
+    
+    alt Packet has TLSClientHello layer
+        PacketCallback -> PacketCallback: Save to PCAP file
+        PacketCallback -> PacketCallback: Update last_packet_time
+    end
+end
+
+== Timeout Detection ==
+
+loop every 3 seconds
+    TimeoutChecker -> TimeoutChecker: Check time since last packet
+    
+    alt No packets for 3+ seconds & PCAP file exists
+        TimeoutChecker -> PcapAnalyzer: Trigger PCAP analysis
+    end
+end
+
+== PCAP Analysis ==
+
+PcapAnalyzer -> PcapAnalyzer: Load packets from PCAP
+PcapAnalyzer -> PcapAnalyzer: Extract TLSClientHello packets
+
+loop for each TLS packet
+    PcapAnalyzer -> PcapAnalyzer: Extract cipher suites
+    PcapAnalyzer -> PcapAnalyzer: Map to symbolic representation
+    PcapAnalyzer -> PcapAnalyzer: Store in captured_sequences
+end
+
+PcapAnalyzer -> PairProcessor: Process all packet pairs
+
+== Packet Pair Processing ==
+
+PairProcessor -> PairProcessor: Reset data collections
+
+loop for every pair of packets (i, i+1)
+    PairProcessor -> PairProcessor: Get first and second cipher lists
+    PairProcessor -> PairProcessor: Check if signal packet
+    
+    alt Signal == "START"
+        PairProcessor -> PairProcessor: Initialize new transmission
+    else Signal == "END"
+        PairProcessor -> PairProcessor: Store completed transmission
+    else Signal == "PASSWORD/RSA/ECC"
+        PairProcessor -> PairProcessor: Set current_data_type
+    else Regular data packet
+        PairProcessor -> ASCIIMapper: Find matching ASCII values
+        ASCIIMapper --> PairProcessor: Return ASCII pair
+        PairProcessor -> PairProcessor: Add to current_transmission
+    end
+end
+
+== Report Generation ==
+
+loop for each data type (password, rsa, ecc)
+    alt Has collected data
+        PcapAnalyzer -> Reporter: Generate report
+        Reporter -> Reporter: Create report file
+        Reporter -> Reporter: Format and write data
+        Reporter --> PcapAnalyzer: Report generated
+    end
+end
+
+PcapAnalyzer -> PcapAnalyzer: Reset data collections
+PcapAnalyzer -> PcapAnalyzer: Clear PCAP file
+PcapAnalyzer --> TimeoutChecker: Analysis complete
+
+== Shutdown ==
+
+User -> ScapySniffer: KeyboardInterrupt (Ctrl+C)
+ScapySniffer -> Sniffer: Stop sniffing
+Sniffer -> Main: Return control
+Main --> User: Program exit
+
+@enduml
