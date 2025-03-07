@@ -1,0 +1,92 @@
+@startuml
+!theme plain
+skinparam sequenceArrowThickness 2
+skinparam sequenceDividerBackgroundColor WhiteSmoke
+skinparam sequenceDividerBorderColor DarkGray
+skinparam participantFontStyle bold
+skinparam sequenceMessageAlign center
+
+' Increase font sizes
+skinparam defaultFontSize 22
+skinparam titleFontSize 24
+skinparam titleFontStyle bold
+
+title TLS Cipher-Suite-Hopping Covert Channel - Report Generator Sequence
+
+participant "monitor.py" as Monitor
+participant "generate_report()" as Generator
+participant "Aggregated Statistics" as AggStats
+participant "Statistical Analysis" as StatAnalysis
+participant "Transmission Processing" as TransProc
+participant "export_metrics()" as MetricsExport
+participant "ReportFile" as ReportFile
+participant "MetricsFile" as MetricsFile
+
+== Report Generation Process ==
+
+Monitor -> Generator: Call generate_report(data_type, collections, timestamps, etc.)
+
+alt No transmissions found
+    Generator --> Monitor: Return (no report generated)
+else Transmissions exist
+    Generator -> Generator: Initialize report file
+    Generator -> ReportFile: Write report header
+
+    == Aggregate Statistics Calculation ==
+    
+    Generator -> AggStats: Calculate aggregate statistics
+    
+    loop for each transmission
+        AggStats -> AggStats: Count connections
+        AggStats -> AggStats: Calculate transmission time
+        AggStats -> AggStats: Count character pairs
+        AggStats -> AggStats: Calculate total bits
+        AggStats -> AggStats: Calculate data rate
+        AggStats -> AggStats: Calculate overt message size
+    end
+    
+    AggStats --> Generator: Return aggregated values
+    
+    == Statistical Analysis ==
+    
+    Generator -> StatAnalysis: Perform statistical analysis
+    StatAnalysis -> StatAnalysis: Calculate transmission time statistics
+    StatAnalysis -> StatAnalysis: Calculate transmission size statistics
+    StatAnalysis -> StatAnalysis: Calculate data rate statistics
+    StatAnalysis -> StatAnalysis: Calculate connections statistics
+    StatAnalysis -> StatAnalysis: Calculate overt message size statistics
+    StatAnalysis --> Generator: Return statistical values
+    
+    Generator -> ReportFile: Write aggregate statistics
+    Generator -> ReportFile: Write statistical analysis
+    
+    == Detailed Transmission Processing ==
+    
+    loop for each transmission
+        Generator -> TransProc: Process transmission details
+        TransProc -> TransProc: Calculate transmission metrics
+        TransProc -> TransProc: Decode covert message
+        TransProc --> Generator: Return processed details
+        
+        Generator -> ReportFile: Write transmission summary
+        Generator -> ReportFile: Write decoded message
+        
+        alt show_details flag is set
+            loop for each packet pair
+                Generator -> ReportFile: Write detailed packet information
+            end
+        end
+    end
+    
+    == Metrics Export ==
+    
+    Generator -> Generator: Prepare metrics JSON object
+    Generator -> MetricsExport: Export metrics to JSON file
+    MetricsExport -> MetricsFile: Write metrics JSON
+    MetricsExport --> Generator: Return metrics file path
+    
+    Generator -> ReportFile: Finalize report
+    Generator --> Monitor: Return (report generation complete)
+end
+
+@enduml
