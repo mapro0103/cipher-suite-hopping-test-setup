@@ -8,11 +8,11 @@
 | ECC | 365.36 | 334.64 | 386.84 | 13.58 |
 
 ## 2. Covert-to-Overt Data Ratio
-| Data Type | Covert:Overt Ratio (%) |
-| --------- | --------------------- |
-| PASSWORD | 0.3772% |
-| RSA | 0.3772% |
-| ECC | 0.3769% |
+| Data Type | Covert:Overt Ratio (%) | Avg. Covert Data (kbits) | Avg. Overt Data (kbits) |
+| --------- | --------------------- | ------------------------- | ------------------------ |
+| PASSWORD | 0.3772% | 0.160 | 42.42 |
+| RSA | 0.3772% | 25.955 | 6880.16 |
+| ECC | 0.3769% | 1.824 | 483.95 |
 
 ## 3. Connection Efficiency
 | Data Type | Avg. Connections Per Transmission | Total Connections |
