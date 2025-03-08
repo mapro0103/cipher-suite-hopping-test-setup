@@ -192,6 +192,18 @@ def plot_bandwidth_comparison(metrics_by_type, output_dir="."):
     plt.ylabel('Bandwidth (bits/second)', fontsize=12)
     plt.grid(axis='y', linestyle='--', alpha=0.7)
     plt.xticks(x_pos, fontsize=12)
+
+    # Specify the y-axis tick positions
+    y_min = 0
+    y_max = max(bandwidths) + max(std_devs) + 20  # Adjust the buffer as needed
+    y_step = 50  # Define the step size between ticks
+
+    # Create an array of tick positions
+    y_ticks = np.arange(y_min, y_max, y_step)
+
+    # Set the y-axis ticks and limits
+    plt.yticks(y_ticks, fontsize=12)
+    plt.ylim(y_min, y_max)
     
     # Save the figure
     output_file = f"{output_dir}/bandwidth_comparison.svg"
@@ -245,6 +257,20 @@ def plot_bandwidth_boxplot(metrics_by_type, output_dir="."):
     plt.ylabel('Bandwidth (bits/second)', fontsize=12)
     plt.grid(axis='y', linestyle='--', alpha=0.7)
     plt.xticks(fontsize=12)
+
+    # Find min and max values for range
+    all_values = [val for sublist in data_for_boxplot for val in sublist]
+    y_min = min(all_values) * 0.9
+    y_max = max(all_values) * 1.1
+
+    # Set the y-axis limits
+    plt.ylim(y_min, y_max)
+
+    # Use matplotlib's tick locator for "nice" numbers
+    from matplotlib.ticker import MultipleLocator, AutoMinorLocator
+    ax = plt.gca()  # Get current axis
+    ax.yaxis.set_major_locator(MultipleLocator(20))  # Major ticks every 20 units
+    # ax.yaxis.set_minor_locator(AutoMinorLocator(5))  # 4 minor ticks between major ticks
     
     # Save the figure
     output_file = f"{output_dir}/bandwidth_boxplot.svg"
