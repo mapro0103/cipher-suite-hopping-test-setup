@@ -1,11 +1,11 @@
 # TLS COVERT CHANNEL PERFORMANCE ANALYSIS
 
-## 1. Effective Bandwidth Analysis
-| Data Type | Avg. Bandwidth (bits/s) | Min | Max | Std Dev |
-| --------- | ---------------------- | --- | --- | ------- |
-| PASSWORD | 406.39 | 341.57 | 437.28 | 34.48 |
-| RSA | 372.17 | 356.97 | 381.72 | 5.64 |
-| ECC | 365.36 | 334.64 | 386.84 | 13.58 |
+## 1. Bandwidth Analysis
+| Data Type | Avg. Bandwidth (bits/s) | Min | Max | Median | Mean | Std Dev |
+| --------- | ---------------------- | --- | --- | ------ | ---- | ------- |
+| PASSWORD | 406.39 | 341.57 | 437.28 | 428.90 | 409.56 | 34.48 |
+| RSA | 372.17 | 356.97 | 381.72 | 373.35 | 372.25 | 5.64 |
+| ECC | 365.36 | 334.64 | 386.84 | 369.58 | 365.88 | 13.58 |
 
 ## 2. Covert-to-Overt Data Ratio
 | Data Type | Covert:Overt Ratio (%) | Avg. Covert Data (kbits) | Avg. Overt Data (kbits) |
