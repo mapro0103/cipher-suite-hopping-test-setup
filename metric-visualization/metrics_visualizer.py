@@ -182,8 +182,8 @@ def plot_bandwidth_comparison(metrics_by_type, output_dir="."):
     
     # Add values on top of bars
     for bar in bars:
-        height = bar.get_height() + 4
-        plt.text(bar.get_x() + bar.get_width()/2., height + std_devs[bars.index(bar)],
+        height = bar.get_height()
+        plt.text(bar.get_x() + bar.get_width()/2., height + std_devs[bars.index(bar)] + 4,
                  f'{height:.2f}',
                  ha='center', va='bottom', fontsize=12)
     
