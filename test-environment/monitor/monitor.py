@@ -108,27 +108,21 @@ def analyze_pcap():
         packet_types = []
         packet_lengths = []
         
+        # Add handshake counter
+        handshake_count = 0
+        
         # Load packets from PCAP file
         packets = rdpcap(PCAP_FILE)
         print(f"Loaded {len(packets)} packets from PCAP file for analysis")
         
-        # Calculate packets per second
+        # Calculate time span for handshakes per second
         if len(packets) > 1:
-            # Get the timestamp of first and last packet
             first_timestamp = float(packets[0].time)
             last_timestamp = float(packets[-1].time)
-            
-            # Calculate the time span of the capture in seconds
             time_span = last_timestamp - first_timestamp
-            
-            # Calculate packets per second (avoid division by zero)
-            if time_span > 0:
-                packets_per_second = len(packets) / time_span
-            else:
-                packets_per_second = len(packets)  # All packets received in less than a second
         else:
-            packets_per_second = len(packets)  # Only one packet or no packets
-            
+            time_span = 1  # Default to 1 second if only one packet
+        
         # First pass: extract all TLSClientHello packets and their cipher suites
         for packet in packets:
             if packet.haslayer(TLS):
@@ -139,6 +133,9 @@ def analyze_pcap():
                 packet_timestamp = float(packet.time)
                 
                 if packet.haslayer(TLSClientHello):
+                    # Count handshake
+                    handshake_count += 1
+                    
                     client_hello = packet[TLSClientHello]
                     if hasattr(client_hello, 'ciphers'):
                         cipher_suites = client_hello.ciphers
@@ -148,11 +145,11 @@ def analyze_pcap():
                             captured_sequences.append(mapped_symbols)
                             packet_start_times.append(packet_timestamp)
                             packet_types.append(packet_type)
-                            packet_lengths.append(packet_length)  # Store packet length
+                            packet_lengths.append(packet_length) # Store packet length
                         else:
                             print("Warning: Empty cipher sequence detected and skipped")
                             
-        # Second pass: process all packet pairs
+        # Second pass: process all packets in pairs
         process_all_packet_pairs()
         
         # Generate reports for each data type with data
@@ -161,16 +158,22 @@ def analyze_pcap():
                 print(f"Found {len(data_collections[data_type])} {data_type} transmissions to report.")
                 # Call the report generation function with all required arguments
                 generate_report(data_type, data_collections, packet_start_times,
-                                packet_types, packet_lengths, captured_sequences, show_details)
-                
+                               packet_types, packet_lengths, captured_sequences, show_details)
+                               
         # Reset data collections after report generation
         reset_data_collections()
         
-        # Print packets per second
-        print(f"\nTraffic Statistics:")
-        print(f"Total Packets: {len(packets)}")
+        # Calculate and display handshakes per second
+        if time_span > 0:
+            handshakes_per_second = handshake_count / time_span
+        else:
+            handshakes_per_second = handshake_count
+            
+        # Display handshake statistics
+        print(f"\nHandshake Statistics:")
+        print(f"Total Handshakes: {handshake_count}")
         print(f"Time Span: {time_span:.2f} seconds")
-        print(f"Average Packets/Second: {packets_per_second:.2f}")
+        print(f"Handshakes/Second: {handshakes_per_second:.2f}")
         
         # Reset PCAP file for next capture session
         open(PCAP_FILE, 'wb').close()
