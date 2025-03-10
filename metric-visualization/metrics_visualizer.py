@@ -3,7 +3,7 @@
 Enhanced TLS Covert Channel Metrics Visualizer
 
 This script efficiently processes JSON metrics files for password, RSA, and ECC data types to visualize:
-1. Effective bandwidth (bits/second) with statistical distribution analysis
+1. Bandwidth (bits/second) with statistical distribution analysis
 2. Covert-to-overt data ratio analysis
 3. Transmission reliability through bit-accurate comparisons
 """
@@ -182,16 +182,28 @@ def plot_bandwidth_comparison(metrics_by_type, output_dir="."):
     
     # Add values on top of bars
     for bar in bars:
-        height = bar.get_height() + 4
-        plt.text(bar.get_x() + bar.get_width()/2., height + std_devs[bars.index(bar)],
+        height = bar.get_height()
+        plt.text(bar.get_x() + bar.get_width()/2., height + std_devs[bars.index(bar)] + 4,
                  f'{height:.2f}',
                  ha='center', va='bottom', fontsize=12)
     
-    plt.title('Effective Bandwidth Comparison by Data Type', fontsize=14, fontweight='bold')
+    plt.title('Bandwidth Comparison by Data Type', fontsize=14, fontweight='bold')
     plt.xlabel('Data Type', fontsize=12)
     plt.ylabel('Bandwidth (bits/second)', fontsize=12)
     plt.grid(axis='y', linestyle='--', alpha=0.7)
     plt.xticks(x_pos, fontsize=12)
+
+    # Specify the y-axis tick positions
+    y_min = 0
+    y_max = max(bandwidths) + max(std_devs) + 20  # Adjust the buffer as needed
+    y_step = 50  # Define the step size between ticks
+
+    # Create an array of tick positions
+    y_ticks = np.arange(y_min, y_max, y_step)
+
+    # Set the y-axis ticks and limits
+    plt.yticks(y_ticks, fontsize=12)
+    plt.ylim(y_min, y_max)
     
     # Save the figure
     output_file = f"{output_dir}/bandwidth_comparison.svg"
@@ -245,6 +257,20 @@ def plot_bandwidth_boxplot(metrics_by_type, output_dir="."):
     plt.ylabel('Bandwidth (bits/second)', fontsize=12)
     plt.grid(axis='y', linestyle='--', alpha=0.7)
     plt.xticks(fontsize=12)
+
+    # Find min and max values for range
+    all_values = [val for sublist in data_for_boxplot for val in sublist]
+    y_min = min(all_values) * 0.9
+    y_max = max(all_values) * 1.1
+
+    # Set the y-axis limits
+    plt.ylim(y_min, y_max)
+
+    # Use matplotlib's tick locator for "nice" numbers
+    from matplotlib.ticker import MultipleLocator, AutoMinorLocator
+    ax = plt.gca()  # Get current axis
+    ax.yaxis.set_major_locator(MultipleLocator(20))  # Major ticks every 20 units
+    # ax.yaxis.set_minor_locator(AutoMinorLocator(5))  # 4 minor ticks between major ticks
     
     # Save the figure
     output_file = f"{output_dir}/bandwidth_boxplot.svg"
@@ -428,17 +454,22 @@ def create_consolidated_report(metrics_by_type, reliability_data, output_dir="."
     report = ["# TLS COVERT CHANNEL PERFORMANCE ANALYSIS", ""]
     
     # Bandwidth metrics
-    report.append("## 1. Effective Bandwidth Analysis")
+    report.append("## 1. Bandwidth Analysis")
     
-    bandwidth_table = ["| Data Type | Avg. Bandwidth (bits/s) | Min | Max | Std Dev |", "| --------- | ---------------------- | --- | --- | ------- |"]
-    
+    # In the create_consolidated_report function, modify the bandwidth table header:
+    bandwidth_table = ["| Data Type | Avg. Bandwidth (bits/s) | Min | Max | Median | Mean | Std Dev |", 
+                    "| --------- | ---------------------- | --- | --- | ------ | ---- | ------- |"]
+
+    # And then modify the data row to include median and mean:
     for data_type, metrics_list in metrics_by_type.items():
         if metrics_list:
             aggregated = aggregate_metrics(metrics_list)
             if aggregated and "avg_bandwidth_bits" in aggregated:
                 stats = aggregated["stats"]["rate"]
-                bandwidth_table.append(f"| {data_type.upper()} | {aggregated['avg_bandwidth_bits']:.2f} | {stats['min']:.2f} | {stats['max']:.2f} | {stats['std']:.2f} |")
-    
+                data_rates = aggregated["data_rates"]
+                median = np.median(data_rates) if data_rates else 0
+                bandwidth_table.append(f"| {data_type.upper()} | {aggregated['avg_bandwidth_bits']:.2f} | {stats['min']:.2f} | {stats['max']:.2f} | {median:.2f} | {stats['mean']:.2f} | {stats['std']:.2f} |")
+        
     report.extend(bandwidth_table)
     report.append("")
     
@@ -501,7 +532,7 @@ def create_consolidated_report(metrics_by_type, reliability_data, output_dir="."
 
 def run_all_analyses(metrics_by_type, original_data_by_type, output_dir="."):
     """Run all requested analyses."""
-    print("Analyzing effective bandwidth...")
+    print("Analyzing bandwidth...")
     plot_bandwidth_comparison(metrics_by_type, output_dir)
     plot_bandwidth_boxplot(metrics_by_type, output_dir)
     
