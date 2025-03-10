@@ -54,9 +54,6 @@ packet_types = []
 packet_lengths = []  # Added to track raw packet lengths
 last_packet_time = time.time()
 analysis_in_progress = False
-# packet_sequence_numbers = {}  # Dict for packets to sequence numbers assignment
-# next_sequence_number = 0 
-# processed_sequences = set()
 
 # Data collection structures
 current_data_type = None
@@ -104,7 +101,6 @@ def analyze_pcap():
     """
     global captured_sequences, packet_start_times, packet_lengths, packet_types, show_details
     global current_data_type, current_transmission, data_collections, current_transmission_packets
-    
     try:
         # Reset all data collections for clean analysis
         captured_sequences = []
@@ -116,12 +112,28 @@ def analyze_pcap():
         packets = rdpcap(PCAP_FILE)
         print(f"Loaded {len(packets)} packets from PCAP file for analysis")
         
+        # Calculate packets per second
+        if len(packets) > 1:
+            # Get the timestamp of first and last packet
+            first_timestamp = float(packets[0].time)
+            last_timestamp = float(packets[-1].time)
+            
+            # Calculate the time span of the capture in seconds
+            time_span = last_timestamp - first_timestamp
+            
+            # Calculate packets per second (avoid division by zero)
+            if time_span > 0:
+                packets_per_second = len(packets) / time_span
+            else:
+                packets_per_second = len(packets)  # All packets received in less than a second
+        else:
+            packets_per_second = len(packets)  # Only one packet or no packets
+            
         # First pass: extract all TLSClientHello packets and their cipher suites
         for packet in packets:
             if packet.haslayer(TLS):
                 tls_layer = packet[TLS]
                 packet_type = tls_layer.msg[0].__class__.__name__ if tls_layer.msg else "Unknown"
-                
                 # Store packet length for overt channel measurement
                 packet_length = len(bytes(packet))
                 packet_timestamp = float(packet.time)
@@ -131,7 +143,6 @@ def analyze_pcap():
                     if hasattr(client_hello, 'ciphers'):
                         cipher_suites = client_hello.ciphers
                         mapped_symbols = [CIPHER_MAPPING[cipher] for cipher in cipher_suites if cipher in CIPHER_MAPPING]
-                        
                         # Only append non-empty cipher sequences
                         if mapped_symbols:
                             captured_sequences.append(mapped_symbols)
@@ -140,8 +151,8 @@ def analyze_pcap():
                             packet_lengths.append(packet_length)  # Store packet length
                         else:
                             print("Warning: Empty cipher sequence detected and skipped")
-        
-        # Second pass: process all packets in pairs
+                            
+        # Second pass: process all packet pairs
         process_all_packet_pairs()
         
         # Generate reports for each data type with data
@@ -149,11 +160,17 @@ def analyze_pcap():
             if data_collections[data_type]:
                 print(f"Found {len(data_collections[data_type])} {data_type} transmissions to report.")
                 # Call the report generation function with all required arguments
-                generate_report(data_type, data_collections, packet_start_times, 
-                               packet_types, packet_lengths, captured_sequences, show_details)
-        
+                generate_report(data_type, data_collections, packet_start_times,
+                                packet_types, packet_lengths, captured_sequences, show_details)
+                
         # Reset data collections after report generation
         reset_data_collections()
+        
+        # Print packets per second
+        print(f"\nTraffic Statistics:")
+        print(f"Total Packets: {len(packets)}")
+        print(f"Time Span: {time_span:.2f} seconds")
+        print(f"Average Packets/Second: {packets_per_second:.2f}")
         
         # Reset PCAP file for next capture session
         open(PCAP_FILE, 'wb').close()
