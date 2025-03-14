@@ -53,7 +53,7 @@ plt.tight_layout()
 plt.subplots_adjust(left=0.12, right=0.95, top=0.90, bottom=0.12)
 
 # Save cropped diagram
-plt.savefig("encoding_analysis_permutations_cumulative.svg", bbox_inches='tight', pad_inches=0.05)
+plt.savefig("encoding_analysis_permutations_cumulative.png", bbox_inches='tight', pad_inches=0.05)
 
 # Show cropped diagram
 plt.show()
