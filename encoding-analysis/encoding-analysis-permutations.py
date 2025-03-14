@@ -54,6 +54,7 @@ plt.subplots_adjust(left=0.12, right=0.95, top=0.90, bottom=0.12)  # Fine-tune s
 
 # Save cropped diagram
 plt.savefig("encoding_analysis_permutations.svg", bbox_inches='tight', pad_inches=0.05)
+plt.savefig("encoding_analysis_permutations.png", bbox_inches='tight', pad_inches=0.05)
 
 # Show cropped diagram
 plt.show()

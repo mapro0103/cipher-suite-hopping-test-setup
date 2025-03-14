@@ -206,7 +206,7 @@ def plot_bandwidth_comparison(metrics_by_type, output_dir="."):
     plt.ylim(y_min, y_max)
     
     # Save the figure
-    output_file = f"{output_dir}/bandwidth_comparison.svg"
+    output_file = f"{output_dir}/bandwidth_comparison.png"
     plt.savefig(output_file, dpi=300, bbox_inches='tight')
     print(f"Bandwidth comparison chart saved to {output_file}")
     plt.close()
@@ -273,7 +273,7 @@ def plot_bandwidth_boxplot(metrics_by_type, output_dir="."):
     # ax.yaxis.set_minor_locator(AutoMinorLocator(5))  # 4 minor ticks between major ticks
     
     # Save the figure
-    output_file = f"{output_dir}/bandwidth_boxplot.svg"
+    output_file = f"{output_dir}/bandwidth_boxplot.png"
     plt.savefig(output_file, dpi=300, bbox_inches='tight')
     print(f"Bandwidth boxplot saved to {output_file}")
     plt.close()
@@ -313,7 +313,7 @@ def plot_covert_overt_ratio(metrics_by_type, output_dir="."):
     plt.xticks(fontsize=12)
     
     # Save the figure
-    output_file = f"{output_dir}/covert_overt_ratio.svg"
+    output_file = f"{output_dir}/covert_overt_ratio.png"
     plt.savefig(output_file, dpi=300, bbox_inches='tight')
     print(f"Covert to overt ratio chart saved to {output_file}")
     plt.close()
@@ -442,7 +442,7 @@ def plot_reliability_metrics(reliability_data, output_dir="."):
     plt.ylim(0, 110)
     
     # Save the figure
-    output_file = f"{output_dir}/transmission_reliability.svg"
+    output_file = f"{output_dir}/transmission_reliability.png"
     plt.savefig(output_file, dpi=300, bbox_inches='tight')
     print(f"Transmission reliability chart saved to {output_file}")
     plt.close()
