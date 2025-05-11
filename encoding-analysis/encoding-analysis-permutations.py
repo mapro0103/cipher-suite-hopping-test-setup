@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Set the default font size for all text elements
-plt.rcParams.update({'font.size': 12})
+plt.rcParams.update({'font.size': 22})
 
 # Parameter
 n_values = range(5, 9)  # n (Number of Cipher Suites)
@@ -29,32 +29,36 @@ for i, n in enumerate(n_values):
     # Annotate each data point with the y-value
     for j, c in enumerate(c_values):
         ax.text(c, ascii_matrix[i, j], f"{ascii_matrix[i, j]:.2f}",
-                ha='center', va='bottom', fontsize=12)
+                ha='center', va='bottom', fontsize=22)
+        
+ax.set_xlabel("TLS Connections (c)", fontsize=26)
+ax.set_ylabel("Maximum Number of 8-Bit ASCII Values", fontsize=26)
+ax.set_title("Permutations with Fixed Length", fontsize=22, fontweight='bold')  # Increased from 14 to 16
 
-ax.set_xlabel("TLS Connections (c)", fontsize=12)
-ax.set_ylabel("Maximum Number of 8-Bit ASCII Values", fontsize=12)
-ax.set_title("Analysis of Encoded 8-Bit ASCII Values - Permutations with Fixed Length", fontsize=14,fontweight='bold')
-
-# Set legend font size to 12
-ax.legend(title="Cipher Suites (n)", fontsize=12, title_fontsize=12)
+# Set legend font size to 14
+ax.legend(title="Cipher Suites (n)", fontsize=22, title_fontsize=22)
 
 ax.grid(True)
 ax.set_xticks(c_values)
 
-# Set y-axis ticks in 0.1-step increments
-y_ticks = np.arange(0, np.max(ascii_matrix) + 1, 1)
-ax.set_yticks(y_ticks)
+# Set fixed y-axis from 0 to 11
+ax.set_ylim(0, 11)
 
-# Set tick label font sizes to 12
-ax.tick_params(axis='both', which='major', labelsize=12)
+# Set y-axis ticks at regular intervals
+ax.set_yticks(np.arange(0, 11.1, 1))
+
+# Set tick label font sizes to 14
+ax.tick_params(axis='both', which='major', labelsize=22)
 
 # Adjust layout to crop extra margins
+
 plt.tight_layout()  # Automatically crops whitespace
 plt.subplots_adjust(left=0.12, right=0.95, top=0.90, bottom=0.12)  # Fine-tune spacing
 
 # Save cropped diagram
 plt.savefig("encoding_analysis_permutations.svg", bbox_inches='tight', pad_inches=0.05)
 plt.savefig("encoding_analysis_permutations.png", bbox_inches='tight', pad_inches=0.05)
+plt.savefig("encoding_analysis_permutations.pdf", bbox_inches='tight', pad_inches=0.05)
 
 # Show cropped diagram
 plt.show()
