@@ -176,7 +176,7 @@ def analyze_pcap():
         print(f"Handshakes/Second: {handshakes_per_second:.2f}")
         
         # Reset PCAP file for next capture session
-        open(PCAP_FILE, 'wb').close()
+        # open(PCAP_FILE, 'wb').close()
         
     except Exception as e:
         print(f"Error analyzing PCAP file: {e}")
@@ -314,7 +314,7 @@ def check_timeout():
                 print(f"Analyzing PCAP file....")
                 analyze_pcap()
                 print(f"Analysis finished!")
-                analysis_in_progress = False
+                #analysis_in_progress = False
                 # Update last packet time to avoid repeated processing
                 last_packet_time = current_time
 

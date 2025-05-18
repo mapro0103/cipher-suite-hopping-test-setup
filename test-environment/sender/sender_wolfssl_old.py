@@ -81,28 +81,15 @@ def get_cipher_lists_for_ascii_pair(ascii_char1, ascii_char2):
     print(f"No permutation found for ASCII pair {pair_key}.")
     return None, None
 
-def create_tls_connection(ciphers=None):
+def create_tls_connection(ciphers):
     """Establishes a TLS connection using wolfSSL with a specified cipher suite."""
     try:
         bind_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM, 0)
         context = wolfssl.SSLContext(wolfssl.PROTOCOL_TLSv1_3)
-
-        if ciphers:
-            context.set_ciphers(ciphers)
-        else:
-            # Explicitly set the 5 standard TLS 1.3 cipher suites
-            standard_tls13_ciphers = (
-                "TLS13-AES256-GCM-SHA384:"
-                "TLS13-CHACHA20-POLY1305-SHA256:"
-                "TLS13-AES128-GCM-SHA256:"
-                "TLS13-AES128-CCM-SHA256:"
-                "TLS13-AES128-CCM-8-SHA256"
-            )
-            context.set_ciphers(standard_tls13_ciphers)
+        context.set_ciphers(ciphers)
         tls_connection = context.wrap_socket(bind_socket)
         tls_connection.connect((SERVER_IP, 443))
         return tls_connection
-
     except Exception as e:
         print(f"Error establishing TLS connection: {e}")
         return None
@@ -311,31 +298,6 @@ def generate_and_transmit(data_type, count):
     
     return save_data_to_file(data_type, data_list)
 
-def establish_simple_connections(count):
-    """
-    Establishes a specified number of simple TLS connections without modifying cipher suites
-    or encoding data, then terminates them.
-    """
-    successful = 0
-    failed = 0
-    
-    print(f"Establishing {count} simple TLS connections...")
-    
-    for i in range(1, count + 1):
-        print(f"Connection {i}/{count}...")
-        conn = create_tls_connection()
-        
-        if conn:
-            print(f"Connection {i} established successfully")
-            conn.close()
-            successful += 1
-        else:
-            print(f"Connection {i} failed")
-            failed += 1
-    
-    print(f"Completed: {successful} successful, {failed} failed connections")
-    return successful, failed
-
 def parse_arguments():
     """Parse command line arguments."""
     parser = argparse.ArgumentParser(description="TLS Covert Channel Sender")
@@ -345,25 +307,18 @@ def parse_arguments():
     parser.add_argument("--all", action="store_true", 
                         help="Generate and transmit all data types sequentially")
     parser.add_argument("--n", type=int, default=5,
-                        help="Number of keys/passwords to generate or connections to establish (default: 5)")
-    parser.add_argument("--connect", action="store_true",
-                        help="Just establish TLS connections without cipher modifications or data encoding")
+                        help="Number of keys/passwords to generate (default: 5)")
     
     args = parser.parse_args()
     
-    if not args.data and not args.all and not args.connect:
-        parser.error("Either --data, --all, or --connect must be specified")
+    if not args.data and not args.all:
+        parser.error("Either --data or --all must be specified")
     
     return args
 
 def main():
     """Main function to process command line arguments and execute tasks."""
     args = parse_arguments()
-    
-    if args.connect:
-        # Just establish simple TLS connections
-        establish_simple_connections(args.n)
-        return
     
     # Load cipher permutations
     if not load_permutations():
